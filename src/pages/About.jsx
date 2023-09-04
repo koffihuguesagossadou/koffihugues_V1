@@ -12,7 +12,7 @@ export function About() {
                         Hey again, My name is AGOSSADOU Koffi Hugues full stack developer with a proven track record of creating engaging and user-friendly websites.
                     </div>
                     <div className="my-picture">
-                        <img src={avatar} alt="avatar" srcset="" />
+                        <img src={avatar} alt="avatar"/>
                     </div>
                     <div className="description-text">
                         <p>
