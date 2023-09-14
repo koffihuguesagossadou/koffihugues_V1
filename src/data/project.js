@@ -65,4 +65,12 @@ export const archivesProject = [
         ],
         link:"Suspeendiss"
     },
+    {
+        name:"Quisque suscipit",
+        description:"Suspeendiss vestibulum gravida fermentum. Ut finibus feugiat ex nec vehicula. Sed et leo velit. Suspendisse ac nisl tortor. Donec consectetur aliquam aliquet. Vestibulum nulla eros",
+        skills:[
+            'reactjs', 'js',
+        ],
+        link:"Suspeendiss"
+    },
 ]

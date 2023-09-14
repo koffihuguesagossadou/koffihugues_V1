@@ -1,4 +1,6 @@
 import avatar from '../assets/avatar.png'
+import { Experience } from '../components/Experience'
+import {developerExperience} from '../data/experience'
 
 export function About() {
     return(
@@ -29,6 +31,18 @@ export function About() {
                         <div className="back-skills"></div>
                         <div className="others-skills"></div>
                     </div>
+                </div>
+                <div className="my-experiences">
+                    {
+                        developerExperience.map((value, index, array) => {
+                            return (
+                                <Experience
+                                    key={index}
+                                    experience = {value}
+                                />
+                            )
+                        })
+                    }
                 </div>
             </div>
         </section>

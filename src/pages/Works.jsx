@@ -2,6 +2,9 @@ import { ArchiveProject, ProjectCard } from "../components/ProjectCard";
 import { projects, archivesProject } from "../data/project";
 
 export function Works() {
+
+    const limitedData = archivesProject.slice(0, 3);
+
     return(
         <section className="works-section">
             <div className="works-container">

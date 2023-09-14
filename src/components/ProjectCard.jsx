@@ -32,8 +32,8 @@ export function ArchiveProject({name, description, skills, link}) {
                 <div className="archive-project-footer">
                     <div className="archive-project-skills">
                         {
-                            skills.map((value, index, array) => {
-                                return <span index={index}>
+                            skills.map((value, index) => {
+                                return <span key={index}>
                                     {value}
                                 </span>
                             })
