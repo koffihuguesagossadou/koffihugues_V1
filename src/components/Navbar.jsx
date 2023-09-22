@@ -4,15 +4,18 @@ export function Navbar(params) {
     return(
         <nav>
             <div className="brand-wrapper">
-                <p>
-                    koffi<span>hugues</span>
-                </p>
+                <a href="#" className="typo-brand">
+                    koffi<span>Hugues</span>
+                </a>
             </div>
             <div className="hamburger-menu-wrapper">
                 <div className="lines">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                    <div>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    
                 </div>
                 <div className="menu-links-wrapper">
                     <ul className="menu-links">

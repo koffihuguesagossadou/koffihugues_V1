@@ -5,7 +5,7 @@ import {developerExperience} from '../data/experience'
 export function About() {
     return(
         <section className="about-section">
-            <div className="about-container">
+            <div className="about-container container">
                 <div className="introducing-wrapper">
                     <div className="section-title">
                         <h1>about</h1>

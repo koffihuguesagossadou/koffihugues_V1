@@ -15,23 +15,20 @@ function App() {
     <>
       <div id='main-app'>
         <div className="social-media-wrapper">
-          <div className="instagram">
+          <div className="sm instagram">
             <FaInstagram/>
           </div>
-          <div className="instagram">
+          <div className="sm linkedin">
             <FaLinkedinIn/>
           </div>
-          <div className="instagram">
+          <div className="sm x">
             <FaXTwitter/>
           </div>
-          {/* <div className="instagram">
-            <FaInstagram/>
-          </div> */}
         </div>
         <div className="go-down-wrapper">
           {
             goDownTable.map((value, index)=>{
-              return <span key={index}>{value}</span>
+              return <span className={'guideline '+value} key={index}>{value}</span>
             })
           }
           {/* <div className="instagram">

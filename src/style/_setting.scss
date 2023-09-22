@@ -1,0 +1,51 @@
+// import scss files
+
+// Import fonts
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+
+
+// COLORS
+$primary-color : #ff3a6e;
+$secondary-color: #092755;
+$base-font-color: #b0bde3;
+$white : #ccc;
+
+// FONTS
+$base-font: 'Quicksand', sans-serif;
+$special-font: 'Space Grotesk', sans-serif;
+
+// FONT SIZES
+$size-1:80px;
+$size-2: 49px; 
+$size-3: 30px;
+$size-4: 19px;
+$size-5: 11px;
+
+// RADIUS
+
+$radius-4: 5px;
+
+@mixin flexRow {
+    display: flex;
+    flex-direction: row;
+}
+
+@mixin flexColumn {
+    display: flex;
+    flex-direction: column;
+}
+
+.container{
+    margin: 0 6em;
+}
+
+.btn-primary{
+    background-color: $primary-color;
+    line-height: 2em;
+    padding: 15px 25px;
+    border-radius: $radius-4;
+    font-weight: 400
+}
+
+@import './home';

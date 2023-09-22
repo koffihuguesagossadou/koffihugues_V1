@@ -1,0 +1,27 @@
+@import './style/setting';
+
+.social-media-wrapper{
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 1%;
+    .sm{
+        padding: 0.5em;
+        margin: 0.5rem 0;
+
+        svg{
+            transform: scale(1.2);
+        }
+    }
+}
+
+.go-down-wrapper{
+    position: fixed;
+    bottom: 0;
+    left: 1%;
+    .guideline{
+        display: flex;
+        flex-direction: column;
+    }
+}
+

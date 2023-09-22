@@ -1,7 +1,7 @@
 export function Contact() {
     return(
         <section className="contact-section">
-            <div className="contact-container">
+            <div className="contact-container container">
                 <div className="section-title">
                     <h1>Drop me a digital love note</h1>
                 </div>

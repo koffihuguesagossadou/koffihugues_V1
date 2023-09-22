@@ -7,7 +7,7 @@ export function Works() {
 
     return(
         <section className="works-section">
-            <div className="works-container">
+            <div className="works-container container">
                 <div className="section-title">
                     <h1>Works</h1>
                 </div>
