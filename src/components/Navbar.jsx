@@ -20,7 +20,6 @@ export function Navbar(params) {
         };
       }, [menuClicked]);
 
-    console.log(menuClicked)
 
     return(
         <nav>
@@ -55,6 +54,15 @@ export function Navbar(params) {
                     <li className="menu-link"><a href="">Works</a></li>
                     <li className="menu-link"><a href="">Contact</a></li>
                 </ul>
+                <div className="lang-wrapper">
+                    <div className="lang-btn btn-en">
+                        <a href="">EN</a>
+                    </div>
+                    <span></span>
+                    <div className="lang-btn btn-fr">
+                        <a href="">FR</a>
+                    </div>
+                </div>
                 <div className="social-media-menu">
                    <div className="smm insta"><a href=""><FaInstagram/></a></div>
                    <div className="smm linkedin"><a href=""><FaLinkedinIn/></a></div>

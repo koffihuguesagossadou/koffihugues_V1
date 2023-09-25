@@ -39,6 +39,14 @@ $radius-9: 5px;
 // SHADOWS
 
 
+// PADDINGS
+
+//MARGINS
+$margin-1: 6em;
+$margin-2: 5em;
+$margin-2: 2em;
+$margin-3: 1em;
+
 @mixin flexRow {
     display: flex;
     flex-direction: row;
@@ -63,6 +71,10 @@ $radius-9: 5px;
     padding: 15px 25px;
     border-radius: $radius-4;
     font-weight: 400
+}
+
+.addIndex{
+    z-index: -1;
 }
 
 @import './home';
