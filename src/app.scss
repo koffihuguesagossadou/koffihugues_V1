@@ -2,22 +2,30 @@
 
 .social-media-wrapper{
     position: fixed;
+    display: block;
     top: 50%;
     transform: translateY(-50%);
     right: 1%;
     .sm{
-        padding: 0.5em;
-        margin: 0.5rem 0;
-
+        display: block;
+        // padding: 0.5em;
+        // margin: 0.5rem 0;
+        width: 100%;
+        a{
+            display: inline-block;
+            width: fit-content;
+            padding: 0.5em;
+        }
         svg{
-            transform: scale(1.2);
+            transform: scale(1);
         }
     }
 }
 
-.go-down-wrapper{
+.resume-wrapper{
     position: fixed;
-    bottom: 0;
+    top: 50%;
+    transform: translateY(-50%);
     left: 1%;
     .guideline{
         display: flex;

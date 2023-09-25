@@ -2,7 +2,7 @@ import { About } from "./pages/About"
 import { Contact } from "./pages/Contact"
 import { Home } from "./pages/Home"
 import { Works } from "./pages/Works"
-import { FaInstagram, FaLinkedinIn, FaXTwitter } from "react-icons/fa6";
+import { FaInstagram, FaLinkedinIn, FaXTwitter,FaRegFilePdf } from "react-icons/fa6";
 
 function App() {
 
@@ -16,25 +16,27 @@ function App() {
       <div id='main-app'>
         <div className="social-media-wrapper">
           <div className="sm instagram">
-            <FaInstagram/>
+            <a href="http://">
+              <FaInstagram/>
+            </a>
           </div>
           <div className="sm linkedin">
-            <FaLinkedinIn/>
+            <a href="">
+              <FaLinkedinIn/>
+            </a>
           </div>
           <div className="sm x">
-            <FaXTwitter/>
+            <a href="">
+              <FaXTwitter/>
+            </a>
           </div>
         </div>
-        <div className="go-down-wrapper">
-          {
-            goDownTable.map((value, index)=>{
-              return <span className={'guideline '+value} key={index}>{value}</span>
-            })
-          }
-          {/* <div className="instagram">
-            <FaInstagram/>
-          </div> */}
-        </div>
+        {/* <div className="resume-wrapper">
+          <a href="">
+            <FaRegFilePdf/>
+          </a>
+          
+        </div> */}
         <Home/>
         <About/>
         <Works/>
