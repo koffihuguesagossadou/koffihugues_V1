@@ -57,6 +57,17 @@ $margin-3: 1em;
     flex-direction: column;
 }
 
+@mixin flexCenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin transitionAll{
+    transition: var(--pointer) var(--duration) ease-in-out;
+}
+  
+
 .container{
     margin: 0 5em;
 

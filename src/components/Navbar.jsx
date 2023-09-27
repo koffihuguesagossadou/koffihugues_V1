@@ -56,11 +56,11 @@ export function Navbar(params) {
                 </ul>
                 <div className="lang-wrapper">
                     <div className="lang-btn btn-en">
-                        <a href="">EN</a>
+                        <a className="en default-lang" href="">EN</a>
                     </div>
                     <span></span>
                     <div className="lang-btn btn-fr">
-                        <a href="">FR</a>
+                        <a className="fr" href="">FR</a>
                     </div>
                 </div>
                 <div className="social-media-menu">

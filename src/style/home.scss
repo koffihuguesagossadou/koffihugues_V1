@@ -44,14 +44,14 @@ nav{
         justify-content: center;
         align-items: center;
         position: relative;
-        min-width: 50px;
+        min-width: 100px;
         div{
             position: relative;
             width: 100%;
             height: 100%;
             @include flexColumn;
             justify-content: center;
-            align-items: center;
+            align-items: flex-end;
             cursor: pointer;
             span{
                 margin: 0.2em 0;
@@ -60,6 +60,10 @@ nav{
                 height: 3px;
                 background-color: $white;
             }
+        }
+
+        @media screen and (max-width: 768px) {
+            padding: 0 1em;
         }
     }
 
@@ -129,6 +133,10 @@ nav{
                     color: $primary-color;
                     transition: color 0.1s ease-in-out;
                 }
+            }
+
+            .default-lang{
+                color: $primary-color !important;
             }
 
         }
@@ -206,7 +214,7 @@ nav{
     @include flexColumn;
     font-family: $special-font;
     font-weight: 700;
-    padding-top: 5rem;
+    padding-top: 3rem;
     div{
         margin-bottom: 0.3em;
     }
@@ -222,41 +230,83 @@ nav{
         }
     }
     .job-texts-wrapper{
-        position: relative;
         font-size: 6.2vw;
         color: $base-font-color;
         z-index: -1;
-        &::after, &::before{
-            color: $base-font-color;
-            content: "I tranform ideas into captivating web experiences with code.";
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: transprent;
-            overflow: hidden;
-            top: 0;
+        p{
+            position: relative;
+            height: 115px;
+            // overflow: hidden;
+            
+            &::after, &::before{
+                color: $base-font-color;
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                background: transprent;
+                overflow: hidden;
+                top: 0;
+            }
+
+
+            &:nth-of-type(1){
+                display: flex;
+                justify-content: flex-end;
+
+                &::before, &::after{
+                    display: flex;
+                    justify-content: flex-end;
+                    content: 'I tranform ideas into';
+                }
+            }
+            
+            
+            &:nth-of-type(2){
+                display: flex;
+                justify-content: flex-start;
+
+                &::before, &::after{
+                    display: flex;
+                    justify-content: flex-start;
+                    content: 'captivating web';
+                }
+            }
+
+
+
+            &:nth-of-type(3){
+                display: flex;
+                justify-content: center;
+                &::before, &::after{
+                    display: flex;
+                    justify-content: center;
+                    content: 'experiences with code.';
+                }
+            }
+
+            &::before{
+                left: 2px;
+                text-shadow: -2px 0 $primary-color;
+                animation-name: glitch-animation-1;
+                animation-duration: 3s;
+                animation-timing-function: linear;
+                animation-delay: 0s;
+                animation-iteration-count: infinite;
+                animation-direction: alternate-reverse;
+            }
+
+            &::after{
+                left: -2px;
+                text-shadow: -2px 0 $white;
+                animation-name: glitch-animation-2;
+                animation-duration: 3s;
+                animation-timing-function: linear;
+                animation-delay: 0s;
+                animation-iteration-count: infinite;
+                animation-direction: alternate-reverse;        
+            }
         }
 
-        &::before{
-            left: 3px;
-            text-shadow: -2px 0 $primary-color;
-            animation-name: glitch-animation-1;
-            animation-duration: 3s;
-            animation-timing-function: linear;
-            animation-delay: 0s;
-            animation-iteration-count: infinite;
-            animation-direction: alternate-reverse;
-        }
-        &::after{
-            left: -3px;
-            text-shadow: -2px 0 $white;
-            animation-name: glitch-animation-2;
-            animation-duration: 3s;
-            animation-timing-function: linear;
-            animation-delay: 0s;
-            animation-iteration-count: infinite;
-            animation-direction: alternate-reverse;        
-        }
 
         @media screen and (min-width: 1280px) {
             font-size: 7vw;
@@ -283,20 +333,18 @@ nav{
 
 @keyframes glitch-animation-1 {
     $steps: 20;
-    $height: calc(1080 - 80);
     @for $i from 0 through $steps {
       #{percentage($i * calc(1 / $steps))} {
-        clip: rect(random($height) + px, 1280px, random($height) + px, 0px);
+        clip: rect(random(120) + px, 1280px, random(120) + px, 0px);
       }
     }
   }
   
   @keyframes glitch-animation-2 {
     $steps: 20;
-    $height: calc(2000 - 80);
     @for $i from 0 through $steps {
       #{percentage($i * calc(1 / $steps))} {
-        clip: rect(random($height) + px, 1280px, random($height) + px, 0px);
+        clip: rect(random(120) + px, 1280px, random(120) + px, 0px);
       }
     }
   }

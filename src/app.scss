@@ -15,6 +15,19 @@
             display: inline-block;
             width: fit-content;
             padding: 0.5em;
+            transform: translateY(0);
+            --pointer: transform;
+            --duration: .2s;
+            @include transitionAll;
+            &:hover{
+                --pointer: transform;
+                --duration: .2s;
+                transform: translateY(-5px);
+                @include transitionAll;
+                svg{
+                    fill: $primary-color;
+                }
+            }
         }
         svg{
             transform: scale(1);
@@ -22,14 +35,15 @@
     }
 }
 
-.resume-wrapper{
+.scroll-down-wrapper{
     position: fixed;
-    top: 50%;
-    transform: translateY(-50%);
+    bottom: 5%;
     left: 1%;
-    .guideline{
-        display: flex;
-        flex-direction: column;
+    @include flexColumn;
+    span{
+        display: inline-block;
+        transform: rotate(90deg);
+        text-transform: capitalize;
     }
 }
 

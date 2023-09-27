@@ -1,12 +1,13 @@
+import { Value } from "sass";
 import { About } from "./pages/About"
 import { Contact } from "./pages/Contact"
 import { Home } from "./pages/Home"
 import { Works } from "./pages/Works"
-import { FaInstagram, FaLinkedinIn, FaXTwitter,FaRegFilePdf } from "react-icons/fa6";
+import { FaInstagram, FaLinkedinIn, FaXTwitter,FaRegFilePdf, FaSortDown } from "react-icons/fa6";
 
 function App() {
 
-  const text = 'go down'
+  const text = 'scroll'
   const goDownTable = text.split('')
 
   return (
@@ -31,11 +32,15 @@ function App() {
             </a>
           </div>
         </div>
-        {/* <div className="resume-wrapper">
-          <a href="">
-            <FaRegFilePdf/>
-          </a>
-          
+        {/* <div className="scroll-down-wrapper">
+          {
+            goDownTable.map((value, index)=>{
+              return <span key={index}>{value}</span>
+            })
+          }
+          <div className="down-icon">
+            <FaSortDown/>
+          </div>
         </div> */}
         <Home/>
         <About/>
