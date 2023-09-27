@@ -1,17 +1,32 @@
 import { useEffect } from "react";
 import { Navbar } from "../components/Navbar";
 import gsap from "gsap";
+import { useRef } from "react";
 
 export function Home() {
 
-    // useEffect(()=>{
-    //     const textReveal = gsap.timeline()
+    const tl = useRef()
+    
+    useEffect(()=>{
+        let timeLine = gsap.timeline()
 
-    //    textReveal.from('.hi-texts',{
-    //         y: 200
-    //    })
-       
-    // })
+        //hi gsap animated
+        timeLine.fromTo(['.hi-texts span', '.textReveal'],{
+             y: 200,
+             
+        },{
+         y: 0,
+         duration: 1,
+         delay: 0.5,
+        stagger:{
+            amount: 1
+        }
+       })
+
+
+
+       // Reset the transform property to translateY(0) after the animation
+    }, [])
 
     return(
         <>
@@ -19,14 +34,20 @@ export function Home() {
             <section className="home-section">
                 <div className="home-container container">
                     <div className="banner-texts-wrapper">
-                        <div className="hi-texts">
+                        <div className="hi-texts" ref={tl}>
                             <span>Hi, </span>
                             <span>I'm Hugo</span>
                         </div>
                         <div className="job-texts-wrapper" id="banner-text">
-                            <p className="textReveal">I tranform ideas into</p>
-                            <p className="textReveal">captivating web </p>
-                            <p className="textReveal">experiences with code.</p>
+                            <div className="texts-lines">
+                                <p className="textReveal">I tranform ideas into</p>
+                            </div>
+                            <div className="texts-lines">
+                                <p className="textReveal">captivating web </p>
+                            </div>
+                            <div className="texts-lines">
+                                <p className="textReveal">experiences with code.</p>
+                            </div>
                              
                         </div>
                         {/* <div className="resume-download-btn-wrapper">
