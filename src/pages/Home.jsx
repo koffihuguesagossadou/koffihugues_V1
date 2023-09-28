@@ -12,12 +12,13 @@ export function Home() {
 
         //hi gsap animated
         timeLine.fromTo(['.hi-texts span', '.textReveal'],{
-             y: 200,
+             y: 100,
              
         },{
          y: 0,
-         duration: 1,
+         duration: 1.8,
          delay: 0.5,
+         ease: 'power4.out',
         stagger:{
             amount: 1
         }
