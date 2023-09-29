@@ -16,9 +16,9 @@ export function Home() {
              
         },{
          y: 0,
-         duration: 1.8,
+         duration: 1,
          delay: 0.5,
-         ease: 'power4.out',
+         ease: 'circ',
         stagger:{
             amount: 1
         }

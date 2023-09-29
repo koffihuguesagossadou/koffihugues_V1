@@ -217,11 +217,17 @@ nav{
     padding-top: 3rem;
     > div{
         margin-bottom: 0.3em;
+        z-index: -1;
     }
     .hi-texts{
         font-size: $size-3;
         overflow: hidden;
         span{
+
+            @media screen and (max-width: 480) {
+                font-size: $size-3;
+            }
+
             display: inline-block;
             &:first-child{
                 color: $primary-color;
@@ -229,10 +235,13 @@ nav{
             &:last-child{
                 color: $white;
             }
+
+            @media screen and (max-width: 480px) {
+                font-size: $size-3;
+            }
         }
     }
     .job-texts-wrapper{
-        font-size: 6.2vw;
         color: $base-font-color;
         z-index: -1;
         .texts-lines{
@@ -240,8 +249,23 @@ nav{
 
             // lines texts animations
             p{
+
+                font-size: 6.2vw;
+                @media screen and (min-width: 1280px) {
+                    font-size: 7vw;
+                }
+        
+                // @media screen and (max-width: 768px) {
+                //     font-size: $size-2;
+                //     max-height: 120px;
+                // }
+
+                // @media screen and (max-width: 480px) {
+                //     font-size: $size-4;
+                // }
+
                 position: relative;
-                height: 90px;
+                max-height: 160px;
                 overflow: hidden;
                 &::after, &::before{
                     color: $base-font-color;
@@ -323,13 +347,7 @@ nav{
         }
 
 
-        @media screen and (min-width: 1280px) {
-            font-size: 7vw;
-        }
-
-        @media screen and (max-width: 768px) {
-            font-size: $size-2;
-        }
+        
     }
 }
 
