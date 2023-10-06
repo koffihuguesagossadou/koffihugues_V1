@@ -8,13 +8,12 @@
 // COLORS
 $primary-color : #ff3a6e;
 $secondary-color: rgb(9, 39, 85);
-$base-font-color: #b0bde3;
+$base-font-color: rgb(176, 189, 227);
 $white : #ccc;
 $black: rgb(1, 13, 31);
 
 // FONTS
-$base-font: 'Quicksand', sans-serif;
-$special-font: 'Space Grotesk', sans-serif;
+$base-font: 'Space Grotesk', sans-serif;
 
 // FONT SIZES
 $size-0: 128px;
@@ -41,11 +40,23 @@ $radius-9: 5px;
 
 // PADDINGS
 
+
+
 //MARGINS
 $margin-1: 6em;
 $margin-2: 5em;
-$margin-2: 2em;
-$margin-3: 1em;
+$margin-3: 4em;
+$margin-4: 3em;
+$margin-5: 2em;
+$margin-6: 1em;
+
+
+// titles
+
+$h1: $size-2;
+$h2: $size-3;
+$h3: $size-4;
+
 
 @mixin flexRow {
     display: flex;
@@ -70,7 +81,7 @@ $margin-3: 1em;
 
 .container{
     margin: 0 5em;
-
+    margin-bottom: calc($margin-1 + 4em);
     @media screen and (max-width: 768px) {
         margin: 2em;
     }
@@ -84,8 +95,47 @@ $margin-3: 1em;
     font-weight: 400
 }
 
+.section-title{
+    overflow: hidden;
+    position: static;
+    h1{
+        
+        @media screen and (max-width: 768px) {
+            font-size: $h2;
+        }
+        font-size: $size-1;
+        font-weight: 500;
+        text-transform: uppercase;
+        /* position: absolute; */         
+        // left: -7%;
+        top: 0;
+        // transform: rotate(-90deg);
+    }
+}
+.section-subtitle{
+
+        margin-bottom:  $margin-4;
+        
+    }
+
 .addIndex{
     z-index: -1;
 }
 
+// .section-title{
+//     overflow: hidden;
+//     h1{
+//         @media screen and (max-width: 768px) {
+//             font-size: $size-4;
+//         }
+//         font-size: $size-4;
+//         text-transform: capitalize;
+//         position: absolute;
+//         left: -7%;
+//         top: 0;
+//         transform: rotate(-90deg);
+//     }
+// }
+
 @import './home';
+@import './about';

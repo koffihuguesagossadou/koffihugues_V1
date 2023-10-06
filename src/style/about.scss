@@ -1,0 +1,255 @@
+/* .about-container{
+    overflow: hidden;
+} */
+
+.introducing-wrapper{
+    margin-bottom: $margin-1;
+    
+
+        // &::after{
+        //     content: '';
+        //     background-color: $base-font-color;
+        //     width: 100%;
+        //     height: 1px;
+        //     display: block;
+        // }
+    }
+
+
+    .presentation-wrapper{
+        margin-top: $margin-3;
+        .intro-text, .description-text{
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            width: 100%;
+            p{
+
+                @media screen and (max-width: 992px) {
+                    max-width: 100%;
+                }
+
+                @media screen and (max-width: 768px) {
+                    font-size: $size-4;
+                }
+                margin: 5px 0;
+                max-width: 80%;
+                font-size: $size-3;
+                font-weight: 500;
+                line-height: 1.7;
+                .based-city{
+                    color: $primary-color;
+                    font-weight: 600;
+                }
+            }
+        }
+
+        .description-text{
+            margin-top: $margin-5;
+        }
+        .my-picture{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            margin-bottom: $margin-2;
+            img{
+                width: 350px;
+                height: auto;  
+            }
+        }
+}
+
+.my-skills{
+    margin-bottom: $margin-1;
+    overflow: hidden;
+    .sub-skills{
+
+        @media screen and (max-width: 768px) {
+            margin: 0 $margin-5 $margin-4 $margin-5;
+        }
+        margin: 0 $margin-2 $margin-4 $margin-2;
+        
+    }
+
+    .locomotive-wrapper{
+        position: relative;
+        z-index: -1;
+        transform: translate(-50%);
+        >div{
+            display: flex;
+            flex-direction: row;
+            span{
+                @media screen and (max-width: 768px) {
+                    font-size: $size-3;
+                }
+                font-size: $size-2;
+                line-height: 1.7;
+                display: flex;
+                flex-direction: row;
+                .separator-line{
+                    margin: 0 0.2em;
+                }
+            }
+        }
+        .front-skills, .others-skills{
+        }
+
+        .back-skills{
+        }
+    }
+}
+
+
+.my-experiences{
+    .experience-infos{
+        
+        
+        padding-bottom: 2em;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        
+        &::after{
+            content: '';
+            display: block;
+            background-color: $base-font-color;
+            width: 100%;
+            height: 2px;
+        }
+        .main-info{
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            >div{
+                padding: 1em 0;
+
+            }
+            .dates{
+                margin-right: 1em;
+                width: 20%;
+            }
+            .role-company-contain{
+                width: 70%;
+                display: flex;
+                flex-direction: column;
+                line-height: 1.5;
+                .company-wrapper{
+                    a{
+                        color: $primary-color;
+                    }
+                }
+            }
+            .more-btn{
+                width: 10%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                cursor: pointer;
+                .horizontal-line{
+                    position: absolute;
+                    width: 15px;
+                    height: 2px;
+                    background-color: $base-font-color;
+                    transform: rotate(0deg);
+                    transform-origin: center center;
+                    z-index: -1;
+                }
+
+                .vertical-line{
+                    position: absolute;
+                    width: 15px;
+                    height: 2px;
+                    background-color: $base-font-color;
+                    transform: rotate(90deg);
+                    transform-origin: center center;
+                    z-index: -1;
+                    transition: transform .2s ease-in-out;
+
+                    &.reveal{
+                        transform: rotate(0deg);
+                        transition: transform .2s ease-in-out;
+                    }
+                }
+            }
+        }
+
+        .secondary-info{
+            font-size: 0;
+            opacity: 0;
+            padding-left: calc(20% + 1em);
+            transition: font-size .5s ease-in-out, opacity .5s ease-in-out;
+
+            &.show-more{
+                opacity: 1;
+                font-size: calc($size-4 - 2px);
+                transition: font-size .5s ease-in-out, opacity .5s ease-in-out;
+            }
+
+            .company-project-wrapper{
+                @include flexRow;
+                margin: 1em 0;
+
+                .cp-contents{
+                    position: relative;
+                    display: flex;
+                    margin-right: 1em;
+                    /* @include flexCenter; */
+                    .project-name{
+                        padding: 10px;
+                        font-weight: 700;
+                        transition: all .2s ease-in-out;
+                        color: $base-font-color;
+                        svg{
+                            margin-right: 10px;
+                        }
+                        /* text-align: center; */
+                        &:hover{
+                            background-color: rgba(176, 189, 227, .2);
+                            border-radius: 30px;
+                            transition: all .2s ease-in-out;
+                        }
+                    }
+                    .cpi-img-wrapper{
+                        position: absolute;
+                        width: 210px;
+                        height: 210px;
+                        z-index: 20;
+                        right: -50%;
+                        transform: translate3d(0,0,0);
+                        transform: scale(0);
+                        pointer-events: none;
+                        img{
+                            display: block;
+                            max-width: 100%;
+                            width: 210px;
+                            height: 210px;
+                            object-fit: cover;
+                            object-position: center;
+                        }
+                    }
+
+                    &:hover{
+                        img{
+                            display: block;
+                        }
+                    }
+                }
+            }
+
+            .stacks-wrapper{
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                margin-bottom: 1em;
+                span{
+                    margin-right: 10px;
+                }
+            }
+        }
+
+    }
+
+    
+}
+

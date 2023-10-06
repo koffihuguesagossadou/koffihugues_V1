@@ -1,18 +1,19 @@
 export const developerExperience = [
     {
         company: "TechCorp Inc.",
-        startDate: "January 2018",
-        endDate: "December 2020",
+        startDate: "Jan 2018",
+        place: "Abidjan, Côte d'Ivoire",
+        endDate: "Dec 2020",
         role: "Front-end Developer",
         technologyStack: ["HTML", "CSS", "JavaScript", "React", "Node.js"],
         projects: [
             {
-                name: "Task Manager",
-                imgURL: "https://placehold.co/210x120", // Replace with actual image URL
+                name: "TaskM.fr",
+                imgURL: "project.jpg", // Replace with actual image URL
             },
             {
-                name: "Flight Booking System",
-                imgURL: "https://placehold.co/210x120", // Replace with actual image URL
+                name: "Fbs.com",
+                imgURL: "project.jpg", // Replace with actual image URL
             },
         ],
         responsibilities: [
@@ -24,14 +25,15 @@ export const developerExperience = [
     },
     {
         company: "CryptoTech Ltd.",
-        startDate: "March 2021",
-        endDate: "Present",
+        place: "Abidjan, Côte d'Ivoire",
+        startDate: "Mar 2021",
+        endDate: "",
         role: "Full-stack Developer",
         technologyStack: ["React", "Redux", "Node.js", "Express", "MongoDB"],
         projects: [
             {
-                name: "Crypto Portfolio App",
-                imgURL: "https://placehold.co/210x120", // Replace with actual image URL
+                name: "CryptoPortfolioApp.com",
+                imgURL: "project.jpg", // Replace with actual image URL
             },
         ],
         responsibilities: [
@@ -42,3 +44,10 @@ export const developerExperience = [
         ],
     },
 ];
+
+
+export const skills = {
+    front:['html', 'css', 'sass', 'javascript/typescript', 'react.js', 'gsap', 'bootstrap', 'tailwind', 'html', 'css', 'sass', 'javascript/typescript', 'react.js', 'gsap', 'bootstrap', 'tailwind'],
+    back: ['php', 'node.js', 'laravel', 'express.js', 'mongoDB', 'sql', 'firebase', 'php', 'node.js', 'laravel', 'express.js', 'mongoDB', 'sql', 'firebase'],
+    others: ['figma', 'git', 'trello', 'bitbucket/jira', 'docker', 'vercel', 'netlify','figma', 'git', 'trello', 'bitbucket/jira', 'docker', 'vercel', 'netlify']
+}
