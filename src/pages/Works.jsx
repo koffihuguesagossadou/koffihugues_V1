@@ -1,4 +1,5 @@
 import { ArchiveProject, ProjectCard } from "../components/ProjectCard";
+import { Subtitle } from "../components/Titles";
 import { projects, archivesProject } from "../data/project";
 
 export function Works() {
@@ -12,39 +13,22 @@ export function Works() {
                     <h1>Works</h1>
                 </div>
                 <div className="personal-works-wrapper">
-                    <div className="pw-title">
-                        <h2>my projects</h2>
-                    </div>
-                    <div className="personal-projects-carousel">
+                    <Subtitle
+                        text='my projects'
+                        classname='sub-projects'
+                        />
+                    <div className="personal-projects-carousel" datatype="">
                     {
                             projects.map((value, index)=>{
                                 return (<ProjectCard
                                     key={index}
-                                    name={value.name}
-                                    skills={value.skills}
+                                    projectData={value}
                                 />)
                             })
                         }
                     </div>
                 </div>
-                <div className="archive-projects-wrapper">
-                    <div className="ap-title">
-                        <h2>archives</h2>
-                    </div>
-                    <div className="archives-projects-items">
-                        {
-                            archivesProject.map((value, index) => {
-                                return <ArchiveProject
-                                    key={index}
-                                    name={value.name}
-                                    link={value.link}
-                                    description={value.description}
-                                    skills={value.skills}
-                                />
-                            })
-                        }
-                    </div>
-                </div>
+                
             </div>
         </section>
     )

@@ -1,8 +1,11 @@
-export function ProjectCard({name,skills}) {
+export function ProjectCard({projectData}) {
+
+    const {name, image, skills} = projectData
+
     return(
-        <div className="card-infos">
+        <a href="" className="card-infos">
             <div className="project-item">
-                <div className="project-name"></div>
+                <div className="project-name">{name}</div>
                 <div className="skills-used">
                     {
                         skills.map((value, index) => {
@@ -10,11 +13,9 @@ export function ProjectCard({name,skills}) {
                         })
                     }
                 </div>
-                <div className="project-img">
-                    <img src="https://picsum.photos/seed/picsum/300/400" alt={name} />
-                </div>
+                <img src={image} alt={name} />
             </div>
-        </div>
+        </a>
     )
 }
 

@@ -15,7 +15,7 @@ function App() {
 
     <>
       <div id='main-app'>
-        <div className="social-media-wrapper">
+        {/* <div className="social-media-wrapper">
           <div className="sm instagram">
             <a href="http://">
               <FaInstagram/>
@@ -31,7 +31,7 @@ function App() {
               <FaXTwitter/>
             </a>
           </div>
-        </div>
+        </div> */}
         {/* <div className="scroll-down-wrapper">
           {
             goDownTable.map((value, index)=>{

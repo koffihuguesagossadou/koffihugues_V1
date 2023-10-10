@@ -9,7 +9,7 @@ export function About() {
 
     return(
         <section className="about-section">
-            <div style={{marginBottom: 0+'px'}} className="about-container container">
+            <div className="about-container container">
                 <div className="introducing-wrapper">
                     <SectionTitle
                         text={'about'}
@@ -64,7 +64,6 @@ export function About() {
                         </div>
                     </div>
                 </div>
-            </div>
                 <div className="my-skills">
                     <div className="skills">
                         <Subtitle
@@ -88,7 +87,6 @@ export function About() {
                         </div>
                     </div>
                 </div>
-            <div className="about-container container">
                 <div className="my-experiences">
                     <Subtitle
                         text='experiences'

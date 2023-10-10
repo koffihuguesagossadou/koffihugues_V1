@@ -15,40 +15,50 @@ $black: rgb(1, 13, 31);
 // FONTS
 $base-font: 'Space Grotesk', sans-serif;
 
-// FONT SIZES
-$size-0: 128px;
-$size-1:80px;
-$size-2: 49px; 
-$size-3: 30px;
-$size-4: 19px;
-$size-5: 11px;
+/*----------FONT SIZES --------------*/
+
+// body fonts
+$body-1: 1.125em;
+
+//title fonts
+$size-0: 8em;
+$size-1:5em;
+$size-2: 3em; 
+$size-3: 2em;
+$size-4: 1em;
+$size-5: 0.75em;
+
+// mobile fonts
+// $mobile-0: calc($size-0 - );
 
 // RADIUS
-$radius-0: 363px;
-$radius-1: 225px;
-$radius-2: 140px;
-$radius-3: 87px;
-$radius-4: 54px;
-$radius-5: 33px;
-$radius-6: 20px;
-$radius-7: 12px;
-$radius-8: 8px;
-$radius-9: 5px;
+$radius-0: $size-0;
+$radius-1: $size-1;
+$radius-2: $size-2;
+$radius-3: $size-3;
+$radius-4: $size-4;
+$radius-5: $size-5;
+
 
 // SHADOWS
 
 
 // PADDINGS
-
+$padding-1: $size-0;
+$padding-2: $size-1;
+$padding-3: $size-2;
+$padding-4: $size-3;
+$padding-5: $size-4;
+$padding-6: $size-5;
 
 
 //MARGINS
-$margin-1: 6em;
-$margin-2: 5em;
-$margin-3: 4em;
-$margin-4: 3em;
-$margin-5: 2em;
-$margin-6: 1em;
+$margin-1: $size-0;
+$margin-2: $size-1;
+$margin-3: $size-2;
+$margin-4: $size-3;
+$margin-5: $size-4;
+$margin-6: $size-5;
 
 
 // titles
@@ -80,10 +90,11 @@ $h3: $size-4;
   
 
 .container{
-    margin: 0 5em;
-    margin-bottom: calc($margin-1 + 4em);
+    padding: 0 $margin-2;
+    padding-bottom: $margin-1;
     @media screen and (max-width: 768px) {
-        margin: 2em;
+        margin: 0 $margin-4;
+        margin-bottom: $margin-1;
     }
 }
 
@@ -98,12 +109,14 @@ $h3: $size-4;
 .section-title{
     overflow: hidden;
     position: static;
+    margin-bottom: $margin-2;
+
     h1{
         
         @media screen and (max-width: 768px) {
-            font-size: $h2;
+            font-size: $size-3;
         }
-        font-size: $size-1;
+        font-size: $size-2;
         font-weight: 500;
         text-transform: uppercase;
         /* position: absolute; */         
@@ -139,3 +152,5 @@ $h3: $size-4;
 
 @import './home';
 @import './about';
+@import './works';
+@import './contact';

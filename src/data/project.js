@@ -1,21 +1,21 @@
 export const projects = [
     {
-        name:"My portfolio website",
-        image:"",
+        name:"koffi hugues",
+        image:"fake-1.png",
         skills:[
             'reactJS', 'jS'
         ]
     },
     {
         name:"Cassim",
-        image:"",
+        image:"fake-2.png",
         skills:[
             'reactJS', 'jS', 'php'
         ]
     },
     {
         name:"Ome",
-        image:"",
+        image:"fake-3.png",
         skills:[
             'reactJS', 'jS', 'nodejs'
         ]

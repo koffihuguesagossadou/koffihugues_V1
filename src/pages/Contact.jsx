@@ -1,18 +1,45 @@
+import { SectionTitle } from "../components/Titles";
+
 export function Contact() {
     return(
         <section className="contact-section">
             <div className="contact-container container">
-                <div className="section-title">
-                    <h1>Drop me a digital love note</h1>
-                </div>
+                {/* <SectionTitle
+                        text={'Get in touch'}
+                        classname='contact'
+                    /> */}
                 <div className="contact-text-wrapper">
-                    <p>Shoot me an email to <a href="mailto:koffi.agossadou@gmail.com">koffi.agossadou@gmail.com</a> and let's start an epic creative adventure.</p>
+                    <div>
+                        <p>Shoot me an email to</p>
+                    </div>
+                    <a href="mailto:koffi.agossadou@gmail.com">
+                        <span data-text='koffi.agossadou@gmail.com' className="contact-email">koffi.agossadou@gmail.com</span>
+                    </a>
+                    <div>
+                        <p>and let's start an epic creative adventure.</p>
+                    </div>
                 </div>
             </div>
             <footer>
                 <div className="footer-container">
                     <div className="footer-text-wrapper">
-                        <p>Design and built by AKH. Copyright© 2023.</p>
+                        <p><span>Design and built by </span> <a href=""><span className="koffiHugues" data-text='koffiHugues.'>koffiHugues.</span></a> </p>
+                        <p>Copyright© 2023 - All right reserved.</p>
+                    </div>
+                    <div className="social-media">
+                        <a href="" >
+                            <span data-text='Linkedin' className="linkedin">Linkedin</span>
+                        </a>
+                        <a href="">
+                            <span data-text='Instagram' className="instagram">
+                                Instagram
+                            </span>
+                        </a>
+                        <a href="">
+                            <span data-text='Github' className="github">
+                                Github
+                            </span>
+                        </a>
                     </div>
                 </div>
             </footer>
