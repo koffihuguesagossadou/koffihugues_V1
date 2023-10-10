@@ -1,0 +1,156 @@
+// import scss files
+
+// Import fonts
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+
+
+// COLORS
+$primary-color : #ff3a6e;
+$secondary-color: rgb(9, 39, 85);
+$base-font-color: rgb(176, 189, 227);
+$white : #ccc;
+$black: rgb(1, 13, 31);
+
+// FONTS
+$base-font: 'Space Grotesk', sans-serif;
+
+/*----------FONT SIZES --------------*/
+
+// body fonts
+$body-1: 1.125em;
+
+//title fonts
+$size-0: 8em;
+$size-1:5em;
+$size-2: 3em; 
+$size-3: 2em;
+$size-4: 1em;
+$size-5: 0.75em;
+
+// mobile fonts
+// $mobile-0: calc($size-0 - );
+
+// RADIUS
+$radius-0: $size-0;
+$radius-1: $size-1;
+$radius-2: $size-2;
+$radius-3: $size-3;
+$radius-4: $size-4;
+$radius-5: $size-5;
+
+
+// SHADOWS
+
+
+// PADDINGS
+$padding-1: $size-0;
+$padding-2: $size-1;
+$padding-3: $size-2;
+$padding-4: $size-3;
+$padding-5: $size-4;
+$padding-6: $size-5;
+
+
+//MARGINS
+$margin-1: $size-0;
+$margin-2: $size-1;
+$margin-3: $size-2;
+$margin-4: $size-3;
+$margin-5: $size-4;
+$margin-6: $size-5;
+
+
+// titles
+
+$h1: $size-2;
+$h2: $size-3;
+$h3: $size-4;
+
+
+@mixin flexRow {
+    display: flex;
+    flex-direction: row;
+}
+
+@mixin flexColumn {
+    display: flex;
+    flex-direction: column;
+}
+
+@mixin flexCenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin transitionAll{
+    transition: var(--pointer) var(--duration) ease-in-out;
+}
+  
+
+.container{
+    padding: 0 $margin-2;
+    padding-bottom: $margin-1;
+    @media screen and (max-width: 768px) {
+        margin: 0 $margin-4;
+        margin-bottom: $margin-1;
+    }
+}
+
+.btn-primary{
+    background-color: $primary-color;
+    line-height: 2em;
+    padding: 15px 25px;
+    border-radius: $radius-4;
+    font-weight: 400
+}
+
+.section-title{
+    overflow: hidden;
+    position: static;
+    margin-bottom: $margin-2;
+
+    h1{
+        
+        @media screen and (max-width: 768px) {
+            font-size: $size-3;
+        }
+        font-size: $size-2;
+        font-weight: 500;
+        text-transform: uppercase;
+        /* position: absolute; */         
+        // left: -7%;
+        top: 0;
+        // transform: rotate(-90deg);
+    }
+}
+.section-subtitle{
+
+        margin-bottom:  $margin-4;
+        
+    }
+
+.addIndex{
+    z-index: -1;
+}
+
+// .section-title{
+//     overflow: hidden;
+//     h1{
+//         @media screen and (max-width: 768px) {
+//             font-size: $size-4;
+//         }
+//         font-size: $size-4;
+//         text-transform: capitalize;
+//         position: absolute;
+//         left: -7%;
+//         top: 0;
+//         transform: rotate(-90deg);
+//     }
+// }
+
+@import './home';
+@import './about';
+@import './works';
+@import './contact';

@@ -1,33 +1,52 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Value } from "sass";
+import { About } from "./pages/About"
+import { Contact } from "./pages/Contact"
+import { Home } from "./pages/Home"
+import { Works } from "./pages/Works"
+import { FaInstagram, FaLinkedinIn, FaXTwitter,FaRegFilePdf, FaSortDown } from "react-icons/fa6";
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const text = 'scroll'
+  const goDownTable = text.split('')
 
   return (
+
+
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div id='main-app'>
+        {/* <div className="social-media-wrapper">
+          <div className="sm instagram">
+            <a href="http://">
+              <FaInstagram/>
+            </a>
+          </div>
+          <div className="sm linkedin">
+            <a href="">
+              <FaLinkedinIn/>
+            </a>
+          </div>
+          <div className="sm x">
+            <a href="">
+              <FaXTwitter/>
+            </a>
+          </div>
+        </div> */}
+        {/* <div className="scroll-down-wrapper">
+          {
+            goDownTable.map((value, index)=>{
+              return <span key={index}>{value}</span>
+            })
+          }
+          <div className="down-icon">
+            <FaSortDown/>
+          </div>
+        </div> */}
+        <Home/>
+        <About/>
+        <Works/>
+        <Contact/>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }

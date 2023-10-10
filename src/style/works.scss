@@ -1,0 +1,112 @@
+
+
+.personal-projects-carousel{
+    position: relative;
+    overflow: visible;
+    max-width: 6000px;
+    width: 6000px;
+    height: 100vh;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    transform: translate3d(400px, 0, 0);
+    
+    .card-infos{
+        width: 300px;
+        height: 400px;
+        position: relative;
+        display: block;
+        margin-left: $margin-2;
+        border-radius: $radius-4;
+        overflow: hidden;
+
+
+        &:first-child{
+            margin: 0 !important;
+            transform: rotate(-10deg);
+        }
+
+        .project-item{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            border-radius: $radius-4;
+
+            &::before{
+                content: " ";
+                display: block;
+                background-color: rgba(0, 0, 0, 0.5);
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                z-index: 10;
+                opacity: 0;
+                --duration:.2s;
+                --pointer: opacity;
+                @include transitionAll;
+            }
+
+            .project-name, .skills-used{
+                --pointer: opacity;
+                --duration: .2s;
+                position: absolute;
+                left: 5%;
+                z-index: 10;
+                opacity: 0;
+                @include transitionAll;
+            }
+
+            .project-name{
+                font-size: $size-4;
+                top: 2%;
+                font-weight: 700;
+                color: $white;
+
+            }
+
+            .skills-used{
+                bottom: 2%;
+                span{
+                    margin-right: $margin-6;
+                    font-size: $size-5;
+                    color: $white;
+                }
+            }
+
+            img{
+                position: relative;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: $radius-4;
+                transform: scale(1);
+                transition: transform .2s ease-in-out;
+            }
+
+        }
+
+        &:hover{
+            .project-item{
+
+                &::before{
+                    opacity: 1;
+                    --duration:.2s;
+                    --pointer: opacity;
+                    @include transitionAll;
+                }
+                .project-name, .skills-used{
+                    --pointer: opacity;
+                    --duration: .2s;
+                    opacity: 1;
+                    @include transitionAll;
+                }
+                
+                img{
+                    transform: scale(1.01);
+                    transition: transform .2s ease-in-out;
+                }
+            }
+        }
+    }
+}

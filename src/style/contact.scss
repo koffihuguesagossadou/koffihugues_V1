@@ -1,0 +1,160 @@
+.contact-section{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+}
+
+
+.contact-container{
+    padding-bottom: 0 !important;
+    height: 80vh;
+}
+
+.contact-text-wrapper{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    *{
+        line-height: 1.5em;
+    }
+
+    p{
+        font-size: $size-2;
+        font-weight: 500;
+    }
+
+    a{
+        display: block;
+        border-radius: $radius-3;
+        font-size: $size-2;
+        font-weight: 500;
+        overflow: hidden;
+
+        &:hover{
+            .contact-email{
+                transform: translateY(-100%);
+                transition: all .5s ease-in-out;
+                
+            }
+        }
+
+        .contact-email{
+            position: relative;
+            display: block;
+            transform: translateY(0);
+            transition: all .5s ease-in-out;
+            font-style: normal;
+
+            &::after{
+                content: attr(data-text);
+                position: absolute;
+                bottom: -100%;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                color: $primary-color;
+            }
+        }
+    }
+}
+
+footer{
+    justify-self: flex-end;
+}
+
+.footer-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0 $margin-3 $margin-5 $margin-3;
+    .footer-text-wrapper{
+        p{
+            display: flex;
+            padding: calc($padding-6 - 0.5em) 0;
+            font-size: $size-5;
+        }   
+        a{
+            color: $base-font-color;
+            overflow: hidden;
+            margin-left: calc($padding-6 - 0.25em);
+            display: inline-block;
+            &:hover{
+                .koffiHugues{
+                    transform: translateY(-100%);
+                    transition: all .2s ease-in-out;
+                    &::after{
+                        transition: bottom .2s ease-in-out;
+    
+                    }
+                }
+            }
+
+            .koffiHugues{
+                position: relative;
+                display: inline-block;
+                transform: translateY(0);
+                transition: all .2s ease-in-out;
+    
+    
+                &::after{
+                    content: attr(data-text);
+                    position: absolute;
+                    bottom: -100%;
+                    left: 0;
+                    transition: bottom .2s ease-in-out;
+                    width: 100%;
+                    height: 100%;
+                    color: $primary-color;
+                }
+            }
+        }
+    }
+
+    .social-media{
+        display: flex;
+        align-items: end;
+        position: relative;
+        a{     
+            padding: 0 calc($padding-6 - 0.5em);
+            color: $base-font-color;
+            font-size: $size-5;
+            overflow: hidden;
+            &:hover{
+                .linkedin, .instagram, .github{
+                    transform: translateY(-100%);
+                    transition: all .2s ease-in-out;
+                    &::after{
+                        transition: bottom .2s ease-in-out;
+    
+                    }
+                }
+            }
+
+            .linkedin, .instagram, .github{
+                position: relative;
+                display: block;
+                transform: translateY(0);
+                transition: all .2s ease-in-out;
+    
+    
+                &::after{
+                    content: attr(data-text);
+                    position: absolute;
+                    bottom: -100%;
+                    left: 0;
+                    transition: bottom .2s ease-in-out;
+                    width: 100%;
+                    height: 100%;
+                    color: $primary-color;
+                }
+    
+                
+            }
+        }
+
+    }
+}
