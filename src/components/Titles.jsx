@@ -17,6 +17,8 @@ export function Subtitle({text, classname}){
     )
 }
 
+
+
 //skills
 
 export function Skills({kindaSkills, classname}) {
