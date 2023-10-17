@@ -2,27 +2,28 @@
 
 // Import fonts
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Smooch+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Mohave:wght@300;400;500;600;700&display=swap');
 
 
 // COLORS
 $primary-color : #ff3a6e;
-$secondary-color: rgb(9, 39, 85);
-$base-font-color: rgb(176, 189, 227);
+$secondary-color: #092755;
+$base-font-color: #b0bde3;
 $white : #ccc;
 $black: rgb(1, 13, 31);
 
 // FONTS
-$base-font: 'Space Grotesk', sans-serif;
+$base-font: 'Mohave', sans-serif;
 
 /*----------FONT SIZES --------------*/
 
 // body fonts
 $body-1: 1.125em;
 
-//title fonts
+// basique title fonts
 $size-0: 8em;
-$size-1:5em;
+$size-1: 5em;
 $size-2: 3em; 
 $size-3: 2em;
 $size-4: 1em;
@@ -87,10 +88,38 @@ $h3: $size-4;
 @mixin transitionAll{
     transition: var(--pointer) var(--duration) ease-in-out;
 }
+
+
+// LINKS EFFECTS
+
+@mixin divsProperties{
+    perspective: 1000px;
+    transform-style: preserve-3d;
+    overflow: hidden;
+}
+
+@mixin notCloneProperties(){
+    will-change: transform;
+    transform-style: preserve-3d;
+    transition: 0.5s ease-in-out;
+    transition-delay: calc(0.03s * var(--index));
+    transform-origin: bottom;
+    display: inline-block;
+}
+
+@mixin cloneProperties(){
+    will-change: transform;
+    transform-style: preserve-3d;
+    transition: 0.5s ease-in-out;
+    transition-delay: calc(0.03s * var(--index));
+    transform-origin: top;
+    display: inline-block;
+    transform: translate3d(0, 100%, 0) rotateX(90deg);
+}
   
 
 .container{
-    padding: 0 $margin-2;
+    padding: 0 $margin-3;
     padding-bottom: $margin-1;
     @media screen and (max-width: 768px) {
         margin: 0 $margin-4;
@@ -133,6 +162,64 @@ $h3: $size-4;
 
 .addIndex{
     z-index: -1;
+}
+
+
+// socila media 
+
+.smm{
+    position: relative;
+    overflow: hidden;
+    margin: $margin-5 0 $margin-5 $margin-6;
+    a{
+        position: relative;
+        overflow: hidden;
+        display: inline-block;
+        display: flex;
+
+        &:hover{
+            div{
+
+                &:nth-child(1) span{
+                    transform: translate3d(0, -100%, 0) rotateX(-90deg);
+                }
+
+                &:nth-child(2) span{
+                    transform: translate3d(0, 0%, 0) rotateX(0deg);
+                }
+
+
+            }
+        }
+        
+
+        div{
+            @include divsProperties;
+
+            span{
+                font-size: $body-1;
+            }
+
+            &:nth-child(1) span{
+                @include notCloneProperties;
+            }
+
+            &:nth-child(2) span{
+
+                @include cloneProperties;
+                color: $primary-color;     
+            }
+        }
+
+        .sm-clone{
+            position: absolute;
+            left: 0;
+            top: 0;                    
+        }
+
+        
+    }
+
 }
 
 // .section-title{
