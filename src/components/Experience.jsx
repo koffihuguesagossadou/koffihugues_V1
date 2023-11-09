@@ -97,7 +97,7 @@ export function Experience({experience}) {
                                         {value.name}
                                     </a>
                                     <div className="cpi-img-wrapper" ref={ el => cpiRefs.current[index] = el }>
-                                        <img className='company-project-img' src={value.imgURL} alt="company project" />
+                                        <img loading="lazy" className='company-project-img' src={value.imgURL} alt="company project" />
                                     </div>
                                 </div>
                             )

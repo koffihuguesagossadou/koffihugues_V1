@@ -1,7 +1,10 @@
+import { useEffect,useRef } from 'react'
 import avatar from '../assets/avatar.png'
 import { Experience } from '../components/Experience'
 import { SectionTitle, Skills, Subtitle } from '../components/Titles'
 import {developerExperience, skills} from '../data/experience'
+import { splitWord } from '../funcs/app'
+import gsap from 'gsap'
 
 export function About() {
 
@@ -103,6 +106,49 @@ export function About() {
                             )
                         })
                     }
+                </div>
+            </div>
+        </section>
+    )
+}
+
+
+export function BriefAbout() {
+
+    const briefLettersRef = useRef([])
+    const briefWrapperRef = useRef()
+
+    useEffect(()=>{
+
+        gsap.to(briefLettersRef.current,{
+            scrollTrigger:{
+                trigger: briefWrapperRef.current,
+                start:"10% bottom",
+                end: "80%",
+                scrub: .01,
+            },
+            opacity: 1,
+            ease: 'power4.out',
+            stagger:{
+                amount:5,
+            }
+        })
+    }, [])
+
+    const briefContent = `Hello, I'm AGOSSADOU Hugues, full stack developer with a taste for creative development. Based in Abidjan, Côte D'Ivoire, I built interactive interfaces from my 2 years of experience.`
+    return(
+        <section className="brief-about-section">
+            <div className="container">
+                <div ref={briefWrapperRef} className="brief-about-wrapper">
+                    <p>
+                        {
+                            splitWord(briefContent).map((char, i)=>{
+                                return(
+                                    <span ref={el => briefLettersRef.current[i] = el} className='brief-about-letter' key={i}>{char}</span>
+                                )
+                            })
+                        }
+                    </p>
                 </div>
             </div>
         </section>

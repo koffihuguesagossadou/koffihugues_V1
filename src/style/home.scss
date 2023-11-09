@@ -2,13 +2,21 @@
 nav{
     padding: 0 $padding-3;
     height: 80px;
-    position: absolute;
+    position: fixed;
     top: 0;
     width: 100%;
+    z-index: 10;
 
     @media screen and (max-width: 768px) {
         padding: 0.1em;
     }
+
+    // &.sticky {
+    //     position: fixed;
+    //     top: 0;
+    //     z-index: 20;
+    //     background-color: $secondary-color;
+    // }
 }
 
 .menu-wrapper{
@@ -24,15 +32,17 @@ nav{
         z-index: 11 !important;
         .typo-brand{
             font-family: $base-font;
-            font-weight: 700;
             font-size: $size-4;
             color: $base-font-color;
-            letter-spacing: -1px;
-            transform: scaleY(1.2);
-            span{
-                text-transform: capitalize;
+            letter-spacing: 0;
+            transition: all .5s ease-in-out;
+
+            &:hover{
+                transition: all .5s ease-in-out;
+                letter-spacing: .5px;
                 color: $primary-color;
             }
+            
     
             @media screen and (max-width: 768px) {
                 padding: 0 1em;
@@ -106,7 +116,6 @@ nav{
                 font-size: $size-1;
                 font-family: $base-font;
                 font-weight: 700;
-                text-transform: uppercase;
                 display: flex;
                 overflow: hidden;
 
@@ -114,8 +123,11 @@ nav{
                     position: relative;
                     display: inline-block;
                     color: $base-font-color;
+                    font-weight: 900;
                     overflow: visible;
+                    text-transform: uppercase;
                     width: 100%;
+                    font-family: $base-font;
 
                     &:hover{
                         div{
@@ -171,38 +183,7 @@ nav{
         flex-direction: column;
         justify-content: flex-end;
         width: 100%;
-        .lang-wrapper{
-            display: flex;
-            flex-direction: row;
-            justify-content: flex-end;
-            .lang-btn{
-                a{
-                    font-family: $base-font;
-                    font-weight: 700;
-                    font-size: $size-4;
-                    color: $base-font-color;
-                    transition: color 0.1s ease-in-out;
-                    &:hover{
-                        color: $primary-color;
-                        transition: color 0.1s ease-in-out;
-                    }
-                }
-    
-                .default-lang{
-                    color: $primary-color !important;
-                }
-    
-            }
-            span{
-                background-color: $base-font-color;
-                width: 3px;
-                height: 25px;
-                margin: 0 1em;
-            }
-            @media screen and (max-width: 768px) {
-                left: 2em;
-            }
-        }
+        
         .social-media-menu{
             display: flex;
             flex-direction: row;
@@ -231,7 +212,8 @@ nav{
 
 // HOME SECTION
 .home-section{
-    margin-top: 80px;
+    margin-top: 0;
+    padding-top: 80px;
     min-height: calc(100vh - 80px);
     .home-container{
         min-height: inherit;
@@ -241,7 +223,6 @@ nav{
 .banner-texts-wrapper{
 
     justify-content: center;
-    padding-top: $padding-5;
     min-height: inherit;
     @include flexColumn;
     font-family: $base-font;
@@ -275,17 +256,120 @@ nav{
     .job-texts-wrapper{
         color: $base-font-color;
         .texts-lines{
+            display: flex;
+            flex-direction: row;
             overflow: hidden;
             display: flex;
-            // lines texts animations
-            p{
+            height: 13.3vw;
 
-                font-size: 8em;
-                width: 100%;
-                font-weight: 700;
-                @media screen and (min-width: 1281px) {
-                    font-size: 11em;
+            .and-endpoint{
+                font-size: 8vw;
+                margin-left: 6vw;
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                svg{
+                    color: $base-font-color;
+                    display: flex;
+                    justify-content: center;
+                    height: 100%;
+                    path{
+                        stroke-width: 3px;
+                        stroke-dasharray: 1500;
+                        stroke-dashoffset: 1500;
+                    }
                 }
+                span{
+                    font-weight: 400;
+                    font-family: $curve-font;
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%,-50%);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-style: italic;
+                }
+
+                
+            }
+
+            .meta-informations{
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                span{
+                    text-transform: uppercase;
+                    font-weight: 400;
+                    font-size: 1vw;
+                    opacity: .5;
+                }
+
+                .affw-wrapper, .local-time-wrapper{
+                    overflow: hidden;
+                    margin-bottom: $margin-6;
+
+                }
+
+                .affw-wrapper{
+                    span{
+                        display: inline-block;
+                        transform: translate3d(0, 100%, 0);
+                    }
+                }
+
+                .local-time-wrapper{
+                    div{
+                        transform: translate3d(0, 100%, 0);
+                        span{
+                            &:first-child{
+                                padding-right: 7px;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .banner-gif{
+                display: flex;
+                align-items: center;
+                margin-bottom: .7vw;
+                span{
+                    width: 20vw;
+                    height: 8vw;
+                    overflow: hidden;
+                    img{
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        transform: translate3d(0, 100%, 0);
+                    }
+                }
+            }
+
+            // lines texts animations
+            .textReveal{
+                position: relative;
+                font-family: $special-font;
+                font-size: 11vw;
+                min-height: 100%;
+                display: flex;
+                align-items: center;
+                transform: translate3d(0, 100%, 0);
+                
+                @media screen and (min-width: 1281px) {
+                    font-size: $big-size;
+                }
+
+                .tr-letter{
+                    position: absolute;
+                    top: 50%;
+                    right: 30%;
+                    font-size: 10px;
+                }
+
+                
         
                 // @media screen and (max-width: 768px) {
                 //     font-size: $size-2;
@@ -307,9 +391,12 @@ nav{
                     background: transprent;
                     overflow: hidden;
                     top: 0;
+                    align-items: center;
+
                 }
     
                 &::before{
+                    content: attr(data-banner-text);
                     left: 2px;
                     text-shadow: -2px 0 $primary-color;
                     animation-name: glitch-animation-1;
@@ -321,6 +408,7 @@ nav{
                 }
         
                 &::after{
+                    content: attr(data-banner-text);
                     left: -2px;
                     text-shadow: -2px 0 $white;
                     animation-name: glitch-animation-2;
@@ -342,7 +430,6 @@ nav{
                     &::before, &::after{
                         display: flex;
                         justify-content: flex-start;
-                        content: 'FULL STACK';
                     }
                 }
             }
@@ -356,7 +443,19 @@ nav{
                     &::before, &::after{
                         display: flex;
                         justify-content: flex-start;
-                        content: 'WEB DEVELOPER';
+                    }
+                }
+            }
+
+            //Third line div
+            &:nth-of-type(3){
+                display: flex;
+                justify-content: flex-start;
+                p{
+
+                    &::before, &::after{
+                        display: flex;
+                        justify-content: flex-start;
                     }
                 }
             }
@@ -366,32 +465,44 @@ nav{
         .end-text{
             display: flex;
             flex-direction: row;
-            justify-content: space-between;
+            justify-content: flex-end;
 
-            .spinner-text-wrapper{
-                position: relative;
-                width: 70px;
-                height: 70px;
+            // .spinner-text-wrapper{
+            //     position: relative;
+            //     width: 70px;
+            //     height: 70px;
+            //     display: flex;
+            //     align-items: center;
+            //     .spinner-text {
+            //         font-size: $size-5;
+            //         position: absolute;
 
-                .spinner-text {
-                    font-size: $size-5;
-                    position: absolute;
-                    height: 100%;
-                    width: 100%;
-                    animation: spinner-animation 5s linear infinite;
-                    span{
-                        left: 50%;
-                        opacity: .5;
-                        position: absolute;
-                        transform-origin: 0 35px;
-                    }
-                }
-            }
+            //         height: 100%;
+            //         width: 100%;
+            //         animation: spinner-animation 5s linear infinite;
+
+            //         span{
+            //             left: 50%;
+            //             opacity: 0;
+            //             position: absolute;
+            //             transform-origin: 0 35px;
+            //         }
+            //     }
+            // }
             .brief-wrapper{
+                // opacity: 0;
+                overflow: hidden;
                 p{
-                    font-size: $size-3;
-                    text-transform: uppercase;
+                    font-family: $special-font;
+                    display: flex;
+                    font-style: italic;
+                    font-weight: 500;
+                    font-size: $size-2;
                     opacity: .5;
+                    transform: translateY(150%);
+                    @media screen and (min-width: 1281px) {
+                        font-size: $size-1;
+                    }
                 }
             }
         }
