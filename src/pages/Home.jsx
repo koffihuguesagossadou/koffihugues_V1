@@ -10,6 +10,8 @@ export function Home() {
     const ellipseRef = useRef()
     const affwRef = useRef()
     const localTimeRef = useRef()
+    const affwMobileRef = useRef()
+    const localTimeMobileRef = useRef()
     const [currentHour, setCurrentHour] = useState(0);
     const [currentMinute, setCurrentMinute] = useState(0);
     const [currentSecond, setCurrentSecond] = useState(0);
@@ -67,6 +69,15 @@ export function Home() {
                 ease: "power4.out",
             })
         }
+        
+        if(localTimeMobileRef.current && affwMobileRef.current){
+            timeLine.to([affwMobileRef.current, localTimeMobileRef.current],{
+                y: 0,
+                duration: 3,
+                delay: -2.7,
+                ease: "power4.out",
+            })
+        }
 
 
        // Reset the transform property to translateY(0) after the animation
@@ -88,6 +99,8 @@ export function Home() {
                                     />
                                     <span>and</span>
                                 </div>
+                                <p data-banner-text="FULL STACK AND" className="textReveal mobile">FULL STACK AND</p>
+
                             </div>
                             <div className="texts-lines">
                                 <div className="meta-informations">
@@ -106,6 +119,7 @@ export function Home() {
                                     </div>
                                 </div>
                                 <p data-banner-text="CREATIVE DEV" className="textReveal">CREATIVE DEV</p>
+                                <p data-banner-text="CREATIVE DEV" className="textReveal mobile">CREATIVE DEV</p>
                             </div>
                             <div className="texts-lines">
                                 <div className="banner-gif">
@@ -114,8 +128,23 @@ export function Home() {
                                     </span>
                                 </div>
                                 <p data-banner-text="FROM ABIDJAN" className="textReveal">FROM ABIDJAN.</p>
+                                <p data-banner-text="FROM ABIDJAN" className="textReveal mobile">FROM ABIDJAN</p>
                             </div>
-                            
+                            <div className="time-mobile">
+                                <div className="affw-wrapper-m">
+                                    <span ref={affwMobileRef} className="affw-m">available for freelance work</span>
+                                </div>
+                                <div className="local-time-wrapper-m">
+                                    <div ref={localTimeMobileRef}>
+                                        <span>abidjan</span>
+                                        <span>
+                                            {currentHour.toString().length === 2 ? currentHour : '0'+currentHour}
+                                            :{currentMinute.toString().length === 2 ? currentMinute : '0'+currentMinute}
+                                            :{ currentSecond.toString().length === 2? currentSecond : '0'+ currentSecond} GMT
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         {/* <div className="resume-download-btn-wrapper">
                             <a href="" className="btn-primary">Check out my resume</a>

@@ -3,6 +3,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    
 
 }
 
@@ -30,6 +31,11 @@
                 font-size: $size-2;
                 font-weight: 400;
                 text-align: center;
+
+                @media screen and (max-width: 768px) {
+                    font-size: $size-4;
+                }
+
                 @media screen and (min-width: 1281px) {
                     font-size: $size-1;
                 }
@@ -79,6 +85,12 @@ footer{
     justify-content: space-between;
     padding-top: $padding-4;
     margin: 0 $margin-3;
+
+    @media screen and (max-width: 768px) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
     .footer-text-wrapper{
         p{
             display: flex;

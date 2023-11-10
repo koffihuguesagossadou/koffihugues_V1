@@ -1,6 +1,10 @@
 
 .section-title.works{
     margin: $margin-3;
+
+    @media screen and (max-width: 768px) {
+        margin: $margin-4;
+    }
 }
 
 .personal-works-wrapper{
@@ -13,6 +17,11 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+
+    // @media screen and (max-width: 768px) {
+    //     min-height: 0;
+    //     max-height: 100vh !important;
+    // }
     
     .card-infos{
         display: flex;
@@ -60,7 +69,15 @@
                 white-space: nowrap;
                 outline: none;
                 background-color: transparent;
+
+                @media screen and (max-width: 978px){
+                    font-size: $size-1;
+                }
                 
+                @media screen and (max-width: 768px){
+                    font-size: $size-2;
+                }
+
                 &::before{
                     content: "";
                     position: absolute;
@@ -96,12 +113,19 @@
                     animation: marquee 15s linear infinite;
                     will-change: transform;
                     
+                    @media screen and (max-width: 768px) {
+                        display: none;
+                    }
                     
                     span{
                         display: inline-block;
                         font-size: $size-0;
                         text-transform: uppercase;
                         white-space: nowrap;
+
+                        @media screen and (max-width: 978px){
+                            font-size: $size-1;
+                        }
                     }
 
                     .project-img {

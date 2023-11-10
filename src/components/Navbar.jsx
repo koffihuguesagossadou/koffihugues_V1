@@ -25,20 +25,6 @@ export function Navbar() {
         }
         }, [isSticky])
 
-    useEffect(() => {
-        // Disable scrolling on mount
-
-
-        if (menuClicked === 1) {
-            document.body.style.overflow = 'hidden';
-            
-        }
-
-        // Re-enable scrolling on unmount
-        return () => {
-            document.body.style.overflow = 'auto';
-        };
-      }, [menuClicked]);
 
       
 
@@ -101,7 +87,7 @@ export function Navbar() {
                             revealText={'About'}
                         />
                         <MenuLink
-                            name={'Work'}
+                            name={'archives'}
                             revealText={'Archives'}
                         />
                         <MenuLink
