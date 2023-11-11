@@ -246,3 +246,27 @@
     
 }
 
+
+
+.brief-about-wrapper{
+    >p{
+        width: 80%;
+        .brief-about-letter{
+            font-family: $base-font;
+            opacity: .1;
+            font-size: $size-1;
+            font-weight: 700;
+
+            
+
+            
+            @media screen and (max-width: 768px){
+                font-size: $size-3;
+            }
+
+            @media screen and (min-width: 1281px){
+                font-size: $size-0;
+            }
+        }
+    }
+}

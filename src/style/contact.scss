@@ -1,15 +1,16 @@
 .contact-section{
-    height: 100vh;
+    height: calc(100vh - 80px);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    
 
 }
 
 
 .contact-container{
     padding-bottom: 0 !important;
-    height: 80vh;
+    height: 100%;
 }
 
 .contact-text-wrapper{
@@ -17,60 +18,79 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
 
     *{
         line-height: 1.5em;
     }
 
-    p{
-        font-size: $size-2;
-        font-weight: 500;
+    div{
+        &:nth-child(1){
+    
+            p{
+                font-size: $size-2;
+                font-weight: 400;
+                text-align: center;
+
+                @media screen and (max-width: 768px) {
+                    font-size: $size-4;
+                }
+
+                @media screen and (min-width: 1281px) {
+                    font-size: $size-1;
+                }
+            }
+        }
     }
 
+
     a{
-        display: block;
-        border-radius: $radius-3;
-        font-size: $size-2;
-        font-weight: 500;
+        font-family: $curve-font;
+        font-weight: 600;
+        position: relative;
         overflow: hidden;
+        display: inline-block;
+        display: flex;
+        text-align: center;
 
-        &:hover{
-            .contact-email{
-                transform: translateY(-100%);
-                transition: all .5s ease-in-out;
+        &.cursor-none{
+            *{
+                cursor: none;
+            }
+        }
+          
+        div{
+
+            span{
                 
+                font-size: 8vw;
+
             }
+
+            
         }
 
-        .contact-email{
-            position: relative;
-            display: block;
-            transform: translateY(0);
-            transition: all .5s ease-in-out;
-            font-style: normal;
-
-            &::after{
-                content: attr(data-text);
-                position: absolute;
-                bottom: -100%;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                color: $primary-color;
-            }
-        }
+    
+            
     }
 }
 
 footer{
-    justify-self: flex-end;
+    height: 80px;
 }
 
 .footer-container{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin: 0 $margin-3 $margin-5 $margin-3;
+    padding-top: $padding-4;
+    margin: 0 $margin-3;
+
+    @media screen and (max-width: 768px) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
     .footer-text-wrapper{
         p{
             display: flex;
@@ -84,10 +104,9 @@ footer{
             display: inline-block;
             &:hover{
                 .koffiHugues{
-                    transform: translateY(-100%);
-                    transition: all .2s ease-in-out;
                     &::after{
-                        transition: bottom .2s ease-in-out;
+                        width: 100%;
+                        transition: all .3s ease-in-out;
     
                     }
                 }
@@ -96,18 +115,19 @@ footer{
             .koffiHugues{
                 position: relative;
                 display: inline-block;
-                transform: translateY(0);
                 transition: all .2s ease-in-out;
     
     
                 &::after{
-                    content: attr(data-text);
+                    content: "";
                     position: absolute;
-                    bottom: -100%;
+                    display: block;
+                    bottom: 0%;
                     left: 0;
-                    transition: bottom .2s ease-in-out;
-                    width: 100%;
-                    height: 100%;
+                    background-color: $base-font-color;
+                    transition: all .3s ease-in-out;
+                    width: 0%;
+                    height: 2px;
                     color: $primary-color;
                 }
             }
@@ -118,43 +138,20 @@ footer{
         display: flex;
         align-items: end;
         position: relative;
-        a{     
-            padding: 0 calc($padding-6 - 0.5em);
-            color: $base-font-color;
-            font-size: $size-5;
-            overflow: hidden;
-            &:hover{
-                .linkedin, .instagram, .github{
-                    transform: translateY(-100%);
-                    transition: all .2s ease-in-out;
-                    &::after{
-                        transition: bottom .2s ease-in-out;
-    
+        
+        .smm {
+            margin-top: 0;
+            margin-bottom: 0;
+
+            a{
+                div{
+                    span{
+                        font-weight: 400;
+                        font-size: $size-5;
                     }
                 }
             }
-
-            .linkedin, .instagram, .github{
-                position: relative;
-                display: block;
-                transform: translateY(0);
-                transition: all .2s ease-in-out;
-    
-    
-                &::after{
-                    content: attr(data-text);
-                    position: absolute;
-                    bottom: -100%;
-                    left: 0;
-                    transition: bottom .2s ease-in-out;
-                    width: 100%;
-                    height: 100%;
-                    color: $primary-color;
-                }
-    
-                
-            }
         }
-
     }
+
 }

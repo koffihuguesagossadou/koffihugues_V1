@@ -1,21 +1,49 @@
 export const projects = [
     {
         name:"koffi hugues",
-        image:"fake-1.png",
+        image:"/images/work-1.jpg",
         skills:[
             'reactJS', 'jS'
         ]
     },
     {
         name:"Cassim",
-        image:"fake-2.png",
+        image:"/images/work-2.jpg",
         skills:[
             'reactJS', 'jS', 'php'
         ]
     },
     {
         name:"Ome",
-        image:"fake-3.png",
+        image:"/images/work-3.jpg",
+        skills:[
+            'reactJS', 'jS', 'nodejs'
+        ]
+    },
+    {
+        name:"Ome",
+        image:"/images/work-4.jpg",
+        skills:[
+            'reactJS', 'jS', 'nodejs'
+        ]
+    },
+    {
+        name:"Ome",
+        image:"/images/work-5.jpg",
+        skills:[
+            'reactJS', 'jS', 'nodejs'
+        ]
+    },
+    {
+        name:"Ome",
+        image:"/images/work-6.jpg",
+        skills:[
+            'reactJS', 'jS', 'nodejs'
+        ]
+    },
+    {
+        name:"Ome",
+        image:"/images/work-7.jpg",
         skills:[
             'reactJS', 'jS', 'nodejs'
         ]

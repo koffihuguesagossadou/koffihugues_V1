@@ -9,10 +9,15 @@
 body{
     font-family: $base-font;
     font-weight: 400;
-    background-image: linear-gradient(105deg,#092755,30%,#1b3863);
+    background-color: $secondary-color;
+    // background-image: linear-gradient(105deg,#092755,30%,#1b3863);
     color: $base-font-color;
     font-size: $body-1;
-    overflow-x: hidden !important;
+    overflow: hidden !important;
+}
+
+section{
+    margin-top: 15vw;
 }
 
 li{

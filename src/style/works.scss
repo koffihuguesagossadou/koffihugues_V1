@@ -1,112 +1,150 @@
 
+.section-title.works{
+    margin: $margin-3;
+
+    @media screen and (max-width: 768px) {
+        margin: $margin-4;
+    }
+}
+
+.personal-works-wrapper{
+    margin: $margin-1 0;
+}
 
 .personal-projects-carousel{
     position: relative;
     overflow: visible;
-    max-width: 6000px;
-    width: 6000px;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    transform: translate3d(400px, 0, 0);
+    flex-direction: column;
+
+    // @media screen and (max-width: 768px) {
+    //     min-height: 0;
+    //     max-height: 100vh !important;
+    // }
     
     .card-infos{
-        width: 300px;
-        height: 400px;
+        display: flex;
         position: relative;
-        display: block;
-        margin-left: $margin-2;
-        border-radius: $radius-4;
-        overflow: hidden;
+        // border-style: solid;
+        // border-color: $base-font-color;
 
-
-        &:first-child{
-            margin: 0 !important;
-            transform: rotate(-10deg);
+        &.disable-cursor{
+            *{
+                cursor: none;
+            }
         }
 
-        .project-item{
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            border-radius: $radius-4;
-
-            &::before{
-                content: " ";
-                display: block;
-                background-color: rgba(0, 0, 0, 0.5);
-                width: 100%;
-                height: 100%;
-                position: absolute;
-                z-index: 10;
-                opacity: 0;
-                --duration:.2s;
-                --pointer: opacity;
-                @include transitionAll;
-            }
-
-            .project-name, .skills-used{
-                --pointer: opacity;
-                --duration: .2s;
-                position: absolute;
-                left: 5%;
-                z-index: 10;
-                opacity: 0;
-                @include transitionAll;
-            }
-
-            .project-name{
-                font-size: $size-4;
-                top: 2%;
-                font-weight: 700;
-                color: $white;
-
-            }
-
-            .skills-used{
-                bottom: 2%;
-                span{
-                    margin-right: $margin-6;
-                    font-size: $size-5;
-                    color: $white;
-                }
-            }
-
-            img{
-                position: relative;
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                border-radius: $radius-4;
-                transform: scale(1);
-                transition: transform .2s ease-in-out;
-            }
-
-        }
-
-        &:hover{
+        &:last-child{
             .project-item{
-
-                &::before{
-                    opacity: 1;
-                    --duration:.2s;
-                    --pointer: opacity;
-                    @include transitionAll;
+                .project-name{
+                    &::after{
+                        content: "";
+                        position: absolute;
+                        background-color: $base-font-color;
+                        display: block;
+                        width: 100%;
+                        height: .5px;
+                        bottom: 0;
+                        left: 0;
+                    }
                 }
-                .project-name, .skills-used{
-                    --pointer: opacity;
-                    --duration: .2s;
-                    opacity: 1;
-                    @include transitionAll;
+            }
+        }
+
+        overflow: hidden;
+        .project-item{
+            display: flex;
+            flex-direction: row;
+            min-width: 100%;
+            height: 100%;
+            justify-content: center;
+            .project-name{
+                width: 100%;
+                display: block;
+                text-align: center;
+                font-size: $size-0;
+                font-family: $special-font;
+                text-transform: uppercase;
+                white-space: nowrap;
+                outline: none;
+                background-color: transparent;
+
+                @media screen and (max-width: 978px){
+                    font-size: $size-1;
                 }
                 
-                img{
-                    transform: scale(1.01);
-                    transition: transform .2s ease-in-out;
+                @media screen and (max-width: 768px){
+                    font-size: $size-2;
+                }
+
+                &::before{
+                    content: "";
+                    position: absolute;
+                    background-color: $base-font-color;
+                    display: block;
+                    width: 100%;
+                    height: .5px;
+                    top: 0;
+                    left: 0;
+                }
+
+            }
+
+            .projects-infos-wrapper{
+                position: absolute;
+                top: 0;
+                left: 0;
+                overflow: hidden;
+                width: 100%;
+                height: 100%;
+                background-color: $primary-color;
+                transform: translate3d(0, 101%, 0);
+                pointer-events: none;
+                
+                
+                .marquee-items{
+                    display: flex;
+                    width: fit-content;
+                    overflow: visible;
+                    height: 100%;
+                    align-items: center;
+                    position: relative;
+                    animation: marquee 15s linear infinite;
+                    will-change: transform;
+                    
+                    @media screen and (max-width: 768px) {
+                        display: none;
+                    }
+                    
+                    span{
+                        display: inline-block;
+                        font-size: $size-0;
+                        text-transform: uppercase;
+                        white-space: nowrap;
+
+                        @media screen and (max-width: 978px){
+                            font-size: $size-1;
+                        }
+                    }
+
+                    .project-img {
+                        width: 15vw;
+                        height: 70%;
+                        margin: 0 $margin-5;
+                        border-radius: 5vw;
+                        background-size: cover;
+                        background-position: 50% 50%;
+                    }
                 }
             }
         }
     }
+}
+
+
+@keyframes marquee {
+	100% {
+		transform: translate3d(-50%, 0, 0);
+	}
 }

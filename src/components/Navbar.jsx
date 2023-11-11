@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect,useCallback } from "react"
 import { splitWord } from "../funcs/app";
 import gsap from "gsap";
 import { MenuLink, SocialMedia } from "./Links";
@@ -14,22 +14,29 @@ export function Navbar() {
     const {showTransition, setShowTransition} = useContext(PageTransitionContext)
 
     const [menuClicked, setMenuClicked] = useState(0)
+    const [isSticky, setIsSticky] = useState(false);
     const [hoverSocialMedia, setHoverSocialMedia] = useState(false)
 
-    useEffect(() => {
-        // Disable scrolling on mount
-
-
-        if (menuClicked === 1) {
-            document.body.style.overflow = 'hidden';
-            
+    const stickyNavbarHandle = useCallback(() => {
+        if (window.scrollY > 0) {
+            setIsSticky(true);
+        } else {
+            setIsSticky(false);
         }
+        }, [isSticky])
 
-        // Re-enable scrolling on unmount
+
+      
+
+    useEffect(() => {
+
+        window.addEventListener('scroll', stickyNavbarHandle);
+
+        // Clean up the event listener on unmount
         return () => {
-            document.body.style.overflow = 'auto';
+            window.removeEventListener('scroll', stickyNavbarHandle);
         };
-      }, [menuClicked]);
+    }, []);
 
 
     // useEffect(()=>{
@@ -41,7 +48,7 @@ export function Navbar() {
 
 
     return(
-        <nav>
+        <nav className={`navbar ${isSticky ? 'sticky' : ''}`}>
             <div className="menu-wrapper">
                 <div className="brand-wrapper">
                     <a href="#" className="typo-brand">
@@ -80,7 +87,7 @@ export function Navbar() {
                             revealText={'About'}
                         />
                         <MenuLink
-                            name={'Work'}
+                            name={'archives'}
                             revealText={'Archives'}
                         />
                         <MenuLink
@@ -91,7 +98,7 @@ export function Navbar() {
                 </div>
                 
                 <div className="extras">
-                    <div className="lang-wrapper">
+                    {/* <div className="lang-wrapper">
                         <div className="lang-btn btn-en">
                             <a className="en default-lang" href="">EN</a>
                         </div>
@@ -99,7 +106,7 @@ export function Navbar() {
                         <div className="lang-btn btn-fr">
                             <a className="fr" href="">FR</a>
                         </div>
-                    </div>
+                    </div> */}
                     <div className="social-media-menu">
                         <SocialMedia
                             name={'linkedin'}
