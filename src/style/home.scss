@@ -273,7 +273,7 @@ nav{
 
             .and-endpoint{
                 font-size: 8vw;
-                margin-left: 6vw;
+                margin-left: 4vw;
                 position: relative;
                 display: flex;
                 flex-direction: column;
@@ -295,8 +295,9 @@ nav{
                 }
                 span{
                     font-weight: 400;
-                    font-family: $curve-font;
+                    font-family: $special-font;
                     position: absolute;
+                    font-size: 7vw;
                     top: 50%;
                     left: 50%;
                     transform: translate(-50%,-50%);
@@ -313,6 +314,7 @@ nav{
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
+                margin-right: 4vw;
 
                 @media screen and (max-width: 1024px) {
                     display: none;
@@ -352,14 +354,15 @@ nav{
             .banner-gif{
                 display: flex;
                 align-items: center;
-                margin-bottom: .7vw;
+                margin-right: 4vw;
+
 
                 @media screen and (max-width: 1024px) {
                     display: none;
                 }
                 span{
-                    width: 17vw;
-                    height: 8vw;
+                    width: 19vw;
+                    height: 7vw;
                     overflow: hidden;
                     img{
                         width: 100%;
@@ -378,6 +381,7 @@ nav{
                 min-height: 100%;
                 display: flex;
                 align-items: center;
+                font-style: normal;
                 transform: translate3d(0, 100%, 0);
 
                 @media screen and (max-width: 1024px) {

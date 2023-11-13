@@ -45,7 +45,7 @@
 
 
     a{
-        font-family: $curve-font;
+        font-family: $special-font;
         font-weight: 600;
         position: relative;
         overflow: hidden;
@@ -95,7 +95,11 @@ footer{
         p{
             display: flex;
             padding: calc($padding-6 - 0.5em) 0;
-            font-size: $size-5;
+            font-size: $size-4;
+
+            @media screen and (min-width: 1281px) {
+                font-size: $body-1;
+            }
         }   
         a{
             color: $base-font-color;
@@ -136,7 +140,7 @@ footer{
 
     .social-media{
         display: flex;
-        align-items: end;
+        align-items: center;
         position: relative;
         
         .smm {
@@ -147,7 +151,11 @@ footer{
                 div{
                     span{
                         font-weight: 400;
-                        font-size: $size-5;
+                        font-size: $size-4;
+
+                        @media screen and (min-width: 1281px) {
+                            font-size: $body-1;
+                        }
                     }
                 }
             }

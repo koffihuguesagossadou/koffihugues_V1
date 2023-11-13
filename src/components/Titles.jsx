@@ -7,8 +7,14 @@ gsap.registerPlugin(ScrollTrigger)
 export function SectionTitle({text, classname, reference}) {
 
     const titleLetterRefs = useRef([])
+    const paragraphRefs = useRef([])
+    let iRef = 0;
 
     useEffect(()=>{
+
+        console.log(titleLetterRefs.current)
+
+        if(titleLetterRefs.current){
         gsap.to(titleLetterRefs.current, {
             scrollTrigger: {
                 trigger: reference.current,
@@ -17,17 +23,41 @@ export function SectionTitle({text, classname, reference}) {
             y: '0%',
             duration: 1,
             stagger:{
-                amount: .5
+                amount: 1
             }
-          });
+        });
+        }
+
     })
 
     return(
         <div className={"section-title "+ classname}>
             <h1 ref={reference}>{
-                splitWord(text).map((char, i)=>{
+                
+                text.split(' ').length > 1 
+                
+                ? text.split(" ").map((word,i)=>{
+                    return (
+                        <p ref={ el => paragraphRefs.current[i] = el } key={i} className="title-word">
+                            
+                            {
+                                
+                                splitWord(word).map((char, id)=>{
+                                    
+                                    return(
+                                        <span ref={ el => titleLetterRefs.current[i * 1000 + id] = el} className="title-letter" key={id}>{char}</span>
+                                    )
+                                })
+                                
+                            }
+                        </p>
+                    )
+                })
+                : splitWord(text).map((char, index)=>{
                     return(
-                        <span className="title-letter" ref={el => titleLetterRefs.current[i] = el} key={i}>{char}</span>
+                        <p className="title-word">
+                            <span className="title-letter" ref={el => titleLetterRefs.current[index] = el} key={i}>{char}</span>
+                        </p>
                     )
                 })
             }</h1>

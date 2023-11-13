@@ -89,7 +89,7 @@ export function Works() {
         <section className="works-section">
                 <SectionTitle
                         reference= {workTitleRef}
-                        text={'works'}
+                        text={'selected works'}
                         classname='works'
                     />
                 <div ref={workWrapperRef} className="personal-works-wrapper">

@@ -3,9 +3,33 @@
 // Import fonts
 
 
-@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700;1,800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Oranienbaum&display=swap');
+
+@font-face {
+    font-family: 'analogue';
+    src: url('/font/analogue-italic-webfont.woff2') format('woff2'),
+         url('/font/analogue-italic-webfont.woff') format('woff'),
+         url('/font/analogue-italic-webfont.ttf') format('truetype'),
+         url('/font/analogue-italic-webfont.svg#analogueitalic') format('svg');
+    font-weight: normal;
+    font-style: italic;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'analogue';
+    src: url('/font/analogue-webfont.woff2') format('woff2'),
+         url('/font/analogue-webfont.woff') format('woff'),
+         url('/font/analogue-webfont.ttf') format('truetype'),
+         url('/font/analogue-webfont.svg#analogueregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
 
 // COLORS
 $primary-color : #ff3a6e;
@@ -16,8 +40,7 @@ $black: rgb(1, 13, 31);
 
 // FONTS
 $base-font: 'Manrope', sans-serif;
-$special-font: 'Oranienbaum', serif;
-$curve-font: 'EB Garamond', serif;
+$special-font: 'analogue', serif;
 
 /*----------FONT SIZES --------------*/
 
@@ -139,7 +162,6 @@ $h3: $size-4;
 }
 
 .section-title{
-    overflow: hidden;
     position: static;
     position: relative;
     margin: $margin-2 0;
@@ -155,9 +177,25 @@ $h3: $size-4;
         font-weight: 700;
         text-transform: uppercase;
 
+        .title-word{
+            overflow: hidden;
+
+            &:nth-child(2){
+                display: flex;
+                flex-direction: row;
+                justify-content: end;
+
+                .title-letter{
+                    font-style: italic;
+                }
+            }
+        }
+
         .title-letter{
             font-size: $size-0;
             display: inline-block;
+            white-space: nowrap;
+            font-weight: 700;
             transform: translate3d(0, 100%, 0);
             @media screen and (max-width: 768px) {
                 font-size: $size-3;
