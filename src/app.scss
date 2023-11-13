@@ -82,6 +82,10 @@
       transform-origin: center center;
       background-color: $primary-color;
       transform: translate(-50%, -50%);
+
+      @media screen and (min-width: 1281px) {
+        font-size: $size-3;
+      }
     }
   }
 
@@ -105,6 +109,16 @@
       }
   }
   
+}
+
+
+.lazy-loading{
+  position: relative;
+  content: "";
+  display: block;
+  background-color: $secondary-color;
+  width: 100%;
+  height: 100vh;
 }
 
 

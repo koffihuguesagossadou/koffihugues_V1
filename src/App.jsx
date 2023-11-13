@@ -1,17 +1,23 @@
-import { createContext, useState, useContext, useRef, useEffect,Suspense  } from "react";
-import { About, BriefAbout } from "./pages/About"
-import { Contact } from "./pages/Contact"
-import { Home } from "./pages/Home"
-import { Works } from "./pages/Works"
+import { lazy,createContext, useState, useContext, useRef, useEffect,Suspense  } from "react";
+import { Routes, Route } from "react-router-dom"
 import Lenis from '@studio-freight/lenis';
 import gsap from "gsap";
 import {HiOutlineArrowUpRight} from "react-icons/hi2"
+import { Navbar } from "./components/Navbar";
 
 
+const Landing = lazy( ()=> import('./pages/Landing'))
 
+console.log(Landing)
 
 export const PageTransitionContext = createContext();
 export const CursorContext = createContext();
+
+function LazyLoading() {
+  return (
+    <div className="lazy-loading"></div>
+  )
+}
 
 
 function Cursor() {
@@ -19,7 +25,6 @@ function Cursor() {
   const cursorRef = useRef(null)
   const { cursorOnLink, setCursorOnLink } = useContext(CursorContext);
 
-  console.log(cursorOnLink)
   useEffect(()=>{
       function updateMousePosition(eX, eY) {
 
@@ -27,6 +32,7 @@ function Cursor() {
         gsap.to(cursorRef.current,{
           x: eX,
           y: eY,
+          ease: 'sine'
         })
         
       }
@@ -132,40 +138,39 @@ function App() {
 
 
   return (
+      <PageTransitionContext.Provider value={{showTransition, setShowTransition}}>
+        <CursorContext.Provider value={{ cursorOnLink, setCursorOnLink}}>
+            <div id='main-wrapper'>
 
-    <PageTransitionContext.Provider value={{showTransition, setShowTransition}}>
-      <CursorContext.Provider value={{ cursorOnLink, setCursorOnLink}}>
-        <main ref={mainRef} className="main-content">
-          <div id='main-app'>
-
-            <div className="pages-transition">
-              {
-                barArray.map((_, index)=>{
+              <div className="pages-transition">
+                {
+                  barArray.map((_, index)=>{
 
 
-                  return (
-                    <div 
-                      style={showTransition === true ? styleFirstAnimation : null}
-                      ref={ el => barRefs.current[index] = el} 
-                      key={index} 
-                      className="strip"
-                      onAnimationEnd={ index === (barArray.length - 1) ? handleAnimationEnd : null}
-                      ></div>
-                  )
+                    return (
+                      <div 
+                        style={showTransition === true ? styleFirstAnimation : null}
+                        ref={ el => barRefs.current[index] = el} 
+                        key={index} 
+                        className="strip"
+                        onAnimationEnd={ index === (barArray.length - 1) ? handleAnimationEnd : null}
+                        ></div>
+                    )
 
 
-                })
-              }
+                  })
+                }
+              </div>
+              <Navbar/>
+              <Suspense fallback={<LazyLoading/>}>
+                <Routes>
+                  <Route path="/" element={<Landing/>}/>
+                </Routes>
+              </Suspense>
             </div>
-            <Home/>
-            <BriefAbout/>
-            <Works/>
-            <Contact/>
-          </div>
-        </main>
-        <Cursor/>
-      </CursorContext.Provider>
-    </PageTransitionContext.Provider>
+          <Cursor/>
+        </CursorContext.Provider>
+      </PageTransitionContext.Provider>
   )
 }
 

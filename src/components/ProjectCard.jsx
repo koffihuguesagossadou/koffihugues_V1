@@ -7,9 +7,6 @@ export function ProjectCard({projectData, projectReference, handleOnMouseEnter, 
     const {name, image} = projectData
     
 
-    
-
-
     return(
         <div ref={projectReference} href="" className={`card-infos ${disableCursor? 'disable-cursor' : ''}` }>
             <div className="project-item">

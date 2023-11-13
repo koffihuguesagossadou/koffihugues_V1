@@ -86,7 +86,7 @@ export function Home() {
 
     return(
         <>
-            <Navbar/>
+            
             <section className="home-section">
                 <div className="home-container container">
                     <div className="banner-texts-wrapper">
