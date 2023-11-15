@@ -107,7 +107,6 @@ nav{
     z-index: 10;
     padding: 80px $padding-3 0 $padding-3;
     transform: translate3d(100%,0,0);
-    transition: all 0.5s ease-in-out 0.5s;
 
     .ml-container{
         display: flex;
@@ -206,15 +205,6 @@ nav{
     
 }
 
-.close-menu{
-    transform: translate3d(100%,0,0);
-    transition: all 0.5s ease-in-out;
-}
-
-.show-menu{
-    transform: translate3d(0,0,0);
-    transition: all 0.5s ease-in-out 0.5s;
-}
 
 
 // HOME SECTION

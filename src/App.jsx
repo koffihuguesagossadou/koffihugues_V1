@@ -1,14 +1,15 @@
-import { lazy,createContext, useState, useContext, useRef, useEffect,Suspense  } from "react";
+import { lazy,createContext, useState, useContext, useRef, useEffect,Suspense, useCallback } from "react";
 import { Routes, Route } from "react-router-dom"
 import Lenis from '@studio-freight/lenis';
 import gsap from "gsap";
 import {HiOutlineArrowUpRight} from "react-icons/hi2"
 import { Navbar } from "./components/Navbar";
-
+import { useLocation } from "react-router-dom";
+import Preloader from "./components/Preloader";
+import Transition from "./components/Transition";
 
 const Landing = lazy( ()=> import('./pages/Landing'))
 
-console.log(Landing)
 
 export const PageTransitionContext = createContext();
 export const CursorContext = createContext();
@@ -20,6 +21,8 @@ function LazyLoading() {
 }
 
 
+
+// custom cursor function
 function Cursor() {
 
   const cursorRef = useRef(null)
@@ -68,52 +71,9 @@ function App() {
 
   const [cursorOnLink, setCursorOnLink] = useState(null)
   const [showTransition, setShowTransition] = useState(false)
-  const barRefs = useRef([])
-  const mainRef = useRef()
+  const [showPreloader, setShowPreloader] = useState(true)
+  const routeLocation = useLocation()
 
-  const styleFirstAnimation = {
-    animationName: 'page-transition-1',
-    transform: 'translate3d(100%, 0, 0)',
-    animationPlayState: 'running'
-  }
-
-  // create array for bars transition
-  const barArray = Array.from({ length: 8 }, (_, index) => index);
-
-  // useEffect(()=>{
-
-
-  //   if (showTransition) {
-  //     barRefs.current.forEach((value, index)=>{
-  //       value.style.animationPlayState = 'running'
-  //     })
-
-
-  //     // Find the last .strip element
-  //     const lastBarRef = barRefs.current[barRefs.current.length - 1];
-
-  //     // Listen for the animationend event on the last element
-  //     lastBarRef.addEventListener('animationend', handleAnimationEnd);
-  //   }
-
-
-  //   // Cleanup the event listener when the component unmounts
-  //   return () => {
-  //     const lastBarRef = barRefs.current[barRefs.current.length - 1];
-  //     if (lastBarRef) {
-  //       lastBarRef.removeEventListener('animationend', handleAnimationEnd);
-  //     }
-  //   };
-
-    
-  // },[showTransition])
-
-
-  const handleAnimationEnd = () => {
-    // Animation on the last .strip element has finished
-    // Set animationPlayState to 'paused' for all elements
-    setShowTransition(!showTransition)
-  };
 
   useEffect(()=>{
 
@@ -125,7 +85,7 @@ function App() {
       smooth: true,
       smoothTouch: false,
       touchMultiplier: 2,
-  });
+    });
   
     function raf(time) {
         lenis.raf(time);
@@ -134,7 +94,14 @@ function App() {
     
     requestAnimationFrame(raf);
 
-  })
+    if (routeLocation.pathname === "/") {
+      setShowPreloader(true)
+    }
+    else{
+      setShowPreloader(false)
+    }
+
+  }, [])
 
 
   return (
@@ -142,25 +109,8 @@ function App() {
         <CursorContext.Provider value={{ cursorOnLink, setCursorOnLink}}>
             <div id='main-wrapper'>
 
-              <div className="pages-transition">
-                {
-                  barArray.map((_, index)=>{
-
-
-                    return (
-                      <div 
-                        style={showTransition === true ? styleFirstAnimation : null}
-                        ref={ el => barRefs.current[index] = el} 
-                        key={index} 
-                        className="strip"
-                        onAnimationEnd={ index === (barArray.length - 1) ? handleAnimationEnd : null}
-                        ></div>
-                    )
-
-
-                  })
-                }
-              </div>
+              {showPreloader && <Preloader />}
+              <Transition/>
               <Navbar/>
               <Suspense fallback={<LazyLoading/>}>
                 <Routes>

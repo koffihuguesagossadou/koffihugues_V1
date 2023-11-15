@@ -12,7 +12,6 @@ export function SectionTitle({text, classname, reference}) {
 
     useEffect(()=>{
 
-        console.log(titleLetterRefs.current)
 
         if(titleLetterRefs.current){
         gsap.to(titleLetterRefs.current, {
