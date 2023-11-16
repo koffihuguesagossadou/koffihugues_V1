@@ -7,6 +7,7 @@ export default function Transition() {
 
     const {showTransition, setShowTransition } = useContext(PageTransitionContext)
     const barRefs = useRef([])
+    const pageTransitionWrapperRef = useRef()
     
     // create array for bars transition
     const barArray = Array.from({ length: 8 }, (_, index) => index);
@@ -26,19 +27,15 @@ export default function Transition() {
             const tl = gsap.timeline();
 
             // Add the animation to the timeline
-            tl.to(barRefs.current, { x: '0%', stagger:{amount: .5} })  // Move to x: '0%'
+            tl.to([pageTransitionWrapperRef.current,barRefs.current], { x: '0%', stagger:{amount: .5} })  // Move to x: '0%'
                 .to(barRefs.current, { 
                     x: '-100%', 
                     delay: .3,
-                    onInterrupt:  ()=>{
+                    onUpdate: ()=>{
                         setShowTransition(false)
-                        tl.set(barRefs.current, {
-                            x: '100%',
-                        }, 0)
                     },
                     onComplete: ()=>{
-                        setShowTransition(false)
-                        tl.set(barRefs.current, {
+                        tl.set([barRefs.current, pageTransitionWrapperRef.current], {
                             x: '100%',
                         }, 0)
                     },
@@ -48,11 +45,10 @@ export default function Transition() {
                 }); // Move back to x: '-100%'
         }
 
-        console.log(showTransition)
     }, [showTransition])
 
     return (
-        <div className="pages-transition">
+        <div ref={pageTransitionWrapperRef} className="pages-transition">
             {
                 barArray.map((_, index)=>{
 

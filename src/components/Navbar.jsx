@@ -82,9 +82,6 @@ export function Navbar() {
                                 menuClicked ?"closeBarRight"
                                 : ''
                             }></span>
-                            <span 
-                                style={ !menuClicked ? {display: 'inline'} : {display:'none'}}
-                            ></span>
                             <span className={
                                 menuClicked ? "closeBarLeft"
                                 : ''

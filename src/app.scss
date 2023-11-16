@@ -8,7 +8,6 @@
   left: 0;
   bottom: 0;
   background-color: transparent;
-  pointer-events: none;
 
   .band{
     height: calc(100vh / 8);
@@ -22,7 +21,6 @@
 
 .loader-content-texts, .bottom-item{
   position: fixed;
-  z-index: 9999;
 }
 
 .loader-content-texts{
@@ -30,6 +28,8 @@
   left: 50%;
   width: 100%;
   transform: translate(-50%, -50%);
+
+  
 
 
   .text-item{
@@ -82,12 +82,13 @@
 
 .pages-transition{
     position: fixed;
-    z-index: 20;
+    z-index: 999999;
     top: 0;
     right: 0;
     left: 0;
     bottom: 0;
-    pointer-events: none;
+    transform: translate3d(100%,0,0);
+
 
     .strip{
         height: calc(100vh / 8);
@@ -111,6 +112,10 @@
   border-radius: 50%;
   transform: translate(-50%, -50%);
   border: 1px solid $base-font-color;
+
+  @media screen and (max-width: 768px) {
+    border: none;
+  }
   
   svg{
     display: none;

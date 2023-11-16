@@ -35,7 +35,6 @@ function Cursor() {
         gsap.to(cursorRef.current,{
           x: eX,
           y: eY,
-          ease: 'sine'
         })
         
       }
@@ -52,7 +51,7 @@ function Cursor() {
     })
     }
 
-  })
+  }, [])
 
 
   return(
