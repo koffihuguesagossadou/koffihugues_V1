@@ -100,6 +100,9 @@ footer{
             @media screen and (min-width: 1281px) {
                 font-size: $body-1;
             }
+            @media screen and (max-width: 768px) {
+                font-size: $size-5;
+            }
         }   
         a{
             color: $base-font-color;
@@ -155,6 +158,9 @@ footer{
 
                         @media screen and (min-width: 1281px) {
                             font-size: $body-1;
+                        }
+                        @media screen and (max-width: 768px) {
+                            font-size: $size-5;
                         }
                     }
                 }

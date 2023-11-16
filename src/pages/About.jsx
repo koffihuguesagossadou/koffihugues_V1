@@ -124,8 +124,8 @@ export function BriefAbout() {
             scrollTrigger:{
                 trigger: briefWrapperRef.current,
                 start:"10% bottom",
-                end: "80%",
-                scrub: .01,
+                end: "100%",
+                scrub: .03,
             },
             opacity: 1,
             ease: 'power4.out',

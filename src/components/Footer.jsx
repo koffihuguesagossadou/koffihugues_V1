@@ -5,7 +5,7 @@ export function Footer() {
         <footer>
             <div className="footer-container">
                 <div className="footer-text-wrapper">
-                    <p>Copyright © 2023 - All right reserved.</p>
+                    <p>© 2023 - All right reserved.</p>
                 </div>
                 <div className="footer-text-wrapper">
                     <p><span>Designed & built by </span> <a href=""><span className="koffiHugues" data-text='koffiHugues.'>AGOSSADOU.</span></a> </p>

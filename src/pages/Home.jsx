@@ -39,12 +39,14 @@ export function Home() {
 
 
         let timeLine = gsap.timeline()
+        const textDelay = 2.6
 
         //home texts animations
             
         timeLine.to('.textReveal',{
             y: 0,
             duration: 3,
+            delay: textDelay,
             ease: "power4.out",
             stagger :{
             amount: .5

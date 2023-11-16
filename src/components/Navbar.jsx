@@ -1,4 +1,4 @@
-import { useState, useEffect,useCallback } from "react"
+import { useState, useEffect,useCallback, useRef } from "react"
 import { splitWord } from "../funcs/app";
 import gsap from "gsap";
 import { MenuLink, SocialMedia } from "./Links";
@@ -13,9 +13,10 @@ export function Navbar() {
 
     const {showTransition, setShowTransition} = useContext(PageTransitionContext)
 
-    const [menuClicked, setMenuClicked] = useState(0)
+    const [menuClicked, setMenuClicked] = useState(false)
     const [isSticky, setIsSticky] = useState(false);
     const [hoverSocialMedia, setHoverSocialMedia] = useState(false)
+    const menuRef = useRef()
 
     const stickyNavbarHandle = useCallback(() => {
         if (window.scrollY > 0) {
@@ -23,7 +24,7 @@ export function Navbar() {
         } else {
             setIsSticky(false);
         }
-        }, [isSticky])
+    }, [isSticky])
 
 
       
@@ -32,11 +33,26 @@ export function Navbar() {
 
         window.addEventListener('scroll', stickyNavbarHandle);
 
+        const tl = gsap.timeline()
+
+        menuClicked
+
+        ? tl.to(menuRef.current, {
+            x: '0%',
+            delay: .5
+        })
+
+        : tl.to(menuRef.current, {
+            x: '100%',
+            delay: 1,
+        })
+
         // Clean up the event listener on unmount
         return () => {
             window.removeEventListener('scroll', stickyNavbarHandle);
         };
-    }, []);
+
+    }, [menuClicked]);
 
 
     // useEffect(()=>{
@@ -57,28 +73,25 @@ export function Navbar() {
                 </div>
                 <div className="hamburger-menu-wrapper">
                     <div className="lines">
-                        <div onClick={(e)=> { 
-                            menuClicked === 0? setMenuClicked(1) : setMenuClicked(0) 
-                            setShowTransition(!showTransition)
+                        <div 
+                            onClick={(e)=> { 
+                                setMenuClicked(!menuClicked) 
+                                setShowTransition(true)
                             }}>
                             <span className={
-                                menuClicked === 1?"closeBarRight"
+                                menuClicked ?"closeBarRight"
                                 : ''
                             }></span>
-                            <span 
-                                style={menuClicked === 0? {display: 'inline'} : {display:'none'}}
-                            ></span>
                             <span className={
-                                menuClicked === 1?"closeBarLeft"
+                                menuClicked ? "closeBarLeft"
                                 : ''
                             }></span>
                         </div>
                     </div>
                 </div>
             </div>
-            <div className={
-                    menuClicked === 0 ? 'menu-links-wrapper'
-                    : 'menu-links-wrapper show-menu'}>
+
+            <div ref={menuRef} className='menu-links-wrapper'>
                 <div className="ml-container">
                     <ul className="menu-links">
                         

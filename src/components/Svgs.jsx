@@ -5,9 +5,9 @@ export function Ellipse({reference}) {
 
     useEffect(()=>{
         gsap.to(reference.current, {
-            duration: 5,
+            duration: 3,
+            delay: 2.6,
             strokeDashoffset: 0,
-            ease: "power4.out"
         })
     }, [])
 
