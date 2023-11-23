@@ -13,13 +13,6 @@ export default function Transition() {
     const barArray = Array.from({ length: 8 }, (_, index) => index);
 
     
-      
-    const handleAnimationEnd = useCallback(() => {
-    // Animation on the last .strip element has finished
-    // Set animationPlayState to 'paused' for all elements
-    setShowTransition(!showTransition)
-    }, [showTransition]);
-
 
     useEffect (()=>{
         if (showTransition) {
@@ -30,7 +23,7 @@ export default function Transition() {
             tl.to([pageTransitionWrapperRef.current,barRefs.current], { x: '0%', stagger:{amount: .5} })  // Move to x: '0%'
                 .to(barRefs.current, { 
                     x: '-100%', 
-                    delay: .3,
+                    delay: 1,
                     onUpdate: ()=>{
                         setShowTransition(false)
                     },

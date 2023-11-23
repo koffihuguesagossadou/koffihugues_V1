@@ -1,114 +1,190 @@
 import { useEffect,useRef } from 'react'
-import avatar from '../assets/avatar.png'
-import { Experience } from '../components/Experience'
-import { SectionTitle, Skills, Subtitle } from '../components/Titles'
 import {developerExperience, skills} from '../data/experience'
 import { splitWord } from '../funcs/app'
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import gsap from 'gsap'
+gsap.registerPlugin(ScrollTrigger)
+
 
 export function About() {
 
-    const passion = "I love building websites and web applications! It's not just my job; it's my passion. I enjoy creating websites that work smoothly and make people's lives easier. I stay updated with the newest web trends and tech so I can build better websites and bring cool ideas to reality. I'm always learning and looking for new ways to make websites awesome."
+    // const passion = "I love building websites and web applications! It's not just my job; it's my passion. I enjoy creating websites that work smoothly and make people's lives easier.  so I can build better websites and bring cool ideas to reality. I'm always learning and looking for new ways to make websites awesome."
+    // const aboutTitleRef = useRef(null)
+    const timeline = gsap.timeline()
+
+    const workWithRef = {
+        title: useRef(),
+        wrapper: useRef(),
+        separator: useRef()
+    }
+
+    const refKeys = [
+        'description',
+        'workWithTitle',
+        'workWithTitleWrapper',
+        'workWithSeparator',
+        'skillsTitle',
+        'skillsWrapper',
+        'skillsSeparator',
+        // Add more keys as needed
+      ];
+    
+      const refs = refKeys.reduce((acc, key) => {
+        acc[key] = useRef(null);
+        return acc;
+      }, {});
+
+    useEffect(()=>{
+
+
+        timeline.to('.a-text',{
+            y: '0%',
+            duration: 3,
+            ease: 'power4.out',
+            stagger:{
+                amount: .2
+            }
+        })
+
+        // description animations
+        if (refs.description.current) {
+
+            gsap.to(refs.description.current, {
+                scrollTrigger:{
+                    trigger: refs.description.current,
+                    start: "20% bottom"
+                },
+                opacity: 1,
+                duration: 3,
+                ease: 'power4.out'
+            })
+        }
+
+        // skills animation        
+        if(refs.skillsTitle.current){
+            gsap.to(refs.skillsTitle.current, {
+                scrollTrigger:{
+                    trigger: refs.skillsWrapper.current
+                },
+                opacity: 1,
+                y: '0%',
+                duration: 2,
+                ease: 'power4.out'
+            })
+        }
+
+        if(refs.skillsSeparator.current){
+            gsap.to(refs.skillsSeparator.current, {
+                scrollTrigger:{
+                    trigger: refs.skillsWrapper.current,
+                },
+                width: '100%',
+                duration: 3,
+                ease: 'power4.out'
+            })
+        }
+        
+
+        // experiences animation
+        if(refs.workWithTitle.current){
+            gsap.to(refs.workWithTitle.current, {
+                scrollTrigger:{
+                    trigger: refs.workWithTitleWrapper.current
+                },
+                opacity: 1,
+                y: '0%',
+                duration: 1,
+                ease: 'power4.out'
+            })
+        }
+
+        if(refs.workWithSeparator.current){
+            gsap.to(refs.workWithSeparator.current, {
+                scrollTrigger:{
+                    trigger: refs.workWithTitleWrapper.current,
+                },
+                width: '100%',
+                duration: 3,
+                ease: 'power4.out'
+            })
+        }
+        console.log(refs.description.current)
+    }, [])
 
     return(
-        <section className="about-section">
-            <div className="about-container container">
-                <div className="introducing-wrapper">
-                    <SectionTitle
-                        text={'about'}
-                        classname='about'
-                    />
-                    <div className="presentation-wrapper">
-                        <div className="intro-text">
-                            <p>
-                                {
-                                    ("My name is AGOSSADOU Koffi Hugues full stack developer based in Abidjan Côte d'Ivoire, with a proven track record of creating engaging and user-friendly websites.").split(' ').map((element, index)=>{
-                                        return (
-                                            // word
-                                            <span key={index} className='word'> {
+        <div className="a-about-wrapper">
+            <div className="container">
 
-                                                // letter
-                                                element.split('').map((letter, i)=>{
-                                                    return(
-                                                        <span key={i} className='letter'>{letter}</span>
-                                                    )
-                                                })
-
-                                            } </span>
-                                        )
-                                    })
-                                }
-                                
-                            </p>
+                <section className="title-section">
+                    <div className="a-big-title">
+                        <div className="a-title-text-wrapper">
+                            <p data-about-text='MORE' className='a-text'>MORE</p>
                         </div>
-                        {/* <div className="my-picture">
-                            <img src={avatar} alt="avatar"/>
-                        </div> */}
-                        <div className="description-text">
-                            <p>
-                                {
-                                    passion.split(' ').map((element, index)=>{
-                                        return (
-                                            // word
-                                            <span key={index} className='word'> {
-
-                                                // letter
-                                                element.split('').map((letter, i)=>{
-                                                    return(
-                                                        <span key={i} className='letter'>{letter}</span>
-                                                    )
-                                                })
-
-                                            } </span>
-                                        )
-                                    })
-                                }
-                            </p>
+                        <div className="a-title-text-wrapper">
+                            <p data-about-text='ABOUT ME' className='a-text'>ABOUT ME</p>
                         </div>
                     </div>
-                </div>
-                <div className="my-skills">
-                    <div className="skills">
-                        <Subtitle
-                            text='skills'
-                            classname='sub-skills'
-                            />
-                            
-                        {/* Skills */}
-                        <div className="locomotive-wrapper">
-
-                            <Skills
-                                kindaSkills={skills.front}
-                                classname='front'/>
-                            <Skills
-                                kindaSkills={skills.back}
-                                classname='back'/>
-                            <Skills
-                                kindaSkills={skills.others}
-                                classname='others'/>
-
+                </section>
+                <section className="a-description-section">
+                    <div className="description-wrapper">
+                        <p ref={refs.description} className='description-p'>
+                            My name is Agossadou Koffi Hugues <span></span> <em>full stack and creative developer</em> (I just start it).
+                            My job is to meet people needs by building interactive and smoothly websites.
+                            I'm multi-skilled and stay updated with the newest web trends and tech.
+                            Originally from Abidjan (Ivory Coast) I studied at Iua where I got my bachelor on computer science. 
+                            I’m able to work alone on projects as well as in a team if it’s needed.
+                            When I’m not at the computer, I’m usually reading mangas, watching animes or playing guitar.
+                        </p>
+                    </div>
+                </section>
+                <section className='a-skills-section' >
+                    <span ref={refs.skillsSeparator} className='separator'></span>
+                    <div ref={refs.skillsWrapper} className="a-section-title">
+                        <h1  ref={refs.skillsTitle}>Technologies I <i>use</i></h1>
+                    </div>
+                    <div className="a-skills-wrapper">
+                        {
+                            skills.map((skill, i)=>{
+                                return(
+                                    <div key={i} className="a-skill">
+                                        <span>{ skill }</span>
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+                </section>
+                <section className='a-experience-with' >
+                    <span ref={refs.workWithSeparator} className='separator'></span>
+                    <div ref={refs.workWithTitleWrapper} className="a-section-title">
+                        <h1 ref={refs.workWithTitle} >I worked <em>with</em></h1>
+                    </div>
+                    <div className="a-experiences-wrapper">
+                        {
+                            developerExperience.map((experience, i)=>{
+                                return(
+                                    <div key={i} className="a-experience">
+                                        <span className='a-company'>{experience.company} -</span>
+                                        <span className='a-role'> {experience.role} - </span>
+                                        <span className='a-date'> {experience.startDate} to {experience.endDate==='' ? 'now' : experience.endDate} </span>
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+                </section>
+                <section className='a-about-contact'>
+                    <div className="a-contact-wrapper">
+                        <div className="a-label">
+                            <h2>shoot me an email and let's work together</h2>
+                        </div>
+                        <div className="a-email">
+                            <a href="mailto:koffi.agossadou@gmail.fr">koffi.agossadou@gmail.com</a>
                         </div>
                     </div>
-                </div>
-                <div className="my-experiences">
-                    <Subtitle
-                        text='experiences'
-                        classname='sub-experiences'
-                        />
-                    
-                    {
-                        developerExperience.map((value, index, array) => {
-                            return (
-                                <Experience
-                                    key={index}
-                                    experience = {value}
-                                />
-                            )
-                        })
-                    }
-                </div>
+                </section>
             </div>
-        </section>
+        </div>
     )
 }
 
@@ -135,7 +211,7 @@ export function BriefAbout() {
         })
     }, [])
 
-    const briefContent = `Hello, I'm AGOSSADOU Hugues, full stack developer with a taste for creative development. Based in Abidjan, Côte D'Ivoire, I built interactive interfaces from my 2 years of experience.`
+    const briefContent = `Hello I'm hugo, full stack developer with a taste for creative development. Based in Abidjan, Côte D'Ivoire, I built interactive interfaces from my 2 years of experience.`
     return(
         <section className="brief-about-section">
             <div className="container">

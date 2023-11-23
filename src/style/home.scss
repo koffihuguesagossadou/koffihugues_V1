@@ -88,6 +88,7 @@ nav{
                     transition: transform 0.3s ease-in-out 1.2s;
 
                     &:nth-child(1){
+                        height: .5px;
                         transform: rotate(0deg) translateY( -7px);
                     }
                     &:nth-child(2){
@@ -113,6 +114,7 @@ nav{
 }
 
 .closeBarLeft,.closeBarRight{
+    height: 3px;
     transform-origin: center center;
     transition: transform 0.3s ease-in-out 1.2s;
 }
@@ -250,7 +252,6 @@ nav{
 // HOME SECTION
 .home-section{
     margin-top: 0;
-    padding-top: 80px;
     min-height: calc(100vh - 80px);
     .home-container{
         min-height: inherit;
@@ -289,7 +290,7 @@ nav{
     //             font-size: $size-3;
     //         }
     //     }
-    // }
+    // }h
     .job-texts-wrapper{
         color: $base-font-color;
         .texts-lines{
@@ -407,7 +408,7 @@ nav{
             .textReveal{
                 position: relative;
                 font-family: $special-font;
-                font-size: 11vw;
+                font-size: $responsive-size-1;
                 min-height: 100%;
                 display: flex;
                 align-items: center;

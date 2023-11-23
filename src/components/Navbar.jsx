@@ -4,6 +4,7 @@ import gsap from "gsap";
 import { MenuLink, SocialMedia } from "./Links";
 import { useContext } from "react";
 import { PageTransitionContext } from "../App";
+import { Link } from "react-router-dom";
 
 
 
@@ -15,7 +16,6 @@ export function Navbar() {
 
     const [menuClicked, setMenuClicked] = useState(false)
     const [isSticky, setIsSticky] = useState(false);
-    const [hoverSocialMedia, setHoverSocialMedia] = useState(false)
     const menuRef = useRef()
 
     const stickyNavbarHandle = useCallback(() => {
@@ -25,6 +25,13 @@ export function Navbar() {
             setIsSticky(false);
         }
     }, [isSticky])
+
+
+    const handleClickedLink = (()=>{
+        
+        setMenuClicked(false)
+        setShowTransition(true)
+    })
 
 
       
@@ -67,9 +74,11 @@ export function Navbar() {
         <nav className={`navbar ${isSticky ? 'sticky' : ''}`}>
             <div className="menu-wrapper">
                 <div className="brand-wrapper">
-                    <a href="#" className="typo-brand">
+                    <Link to="/"
+                        onClick={handleClickedLink} 
+                        className="typo-brand">
                         AGOSSADOU
-                    </a>
+                    </Link>
                 </div>
                 <div className="hamburger-menu-wrapper">
                     <div className="lines">
@@ -98,14 +107,22 @@ export function Navbar() {
                         <MenuLink
                             name={'About'}
                             revealText={'About'}
+                            link={'/about'}
+                            handleClick = {handleClickedLink}
                         />
                         <MenuLink
                             name={'archives'}
                             revealText={'Archives'}
+                            link={'/archives'}
+                            handleClick = {handleClickedLink}
+
                         />
                         <MenuLink
                             name={'Contact'}
                             revealText={'Contact'}
+                            link={'/contact'}
+                            handleClick = {handleClickedLink}
+
                         />
                     </ul>
                 </div>

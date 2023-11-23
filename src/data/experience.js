@@ -46,8 +46,8 @@ export const developerExperience = [
 ];
 
 
-export const skills = {
-    front:['html', 'css', 'sass', 'javascript/typescript', 'react.js', 'gsap', 'bootstrap', 'tailwind', 'html', 'css', 'sass', 'javascript/typescript', 'react.js', 'gsap', 'bootstrap', 'tailwind'],
-    back: ['php', 'node.js', 'laravel', 'express.js', 'mongoDB', 'sql', 'firebase', 'php', 'node.js', 'laravel', 'express.js', 'mongoDB', 'sql', 'firebase'],
-    others: ['figma', 'git', 'trello', 'bitbucket/jira', 'docker', 'vercel', 'netlify','figma', 'git', 'trello', 'bitbucket/jira', 'docker', 'vercel', 'netlify']
-}
+export const skills = [
+    'html', 'css', 'sass', 'javascript','typescript', 'react.js', 'gsap', 'tailwind',
+    'php', 'node.js', 'laravel', 'express.js', 'mongoDB', 'sql', 'firebase',
+    'figma', 'git', 'bitbucket', 'jira', 'docker', 'vercel', 'netlify'
+]

@@ -1,7 +1,7 @@
-import { BriefAbout } from "./About";
-import { Contact } from "./Contact";
-import { Home } from "./Home";
-import { Works } from "./Works";
+import { BriefAbout } from "../About";
+import { Contact } from "../Contact";
+import { Home } from "../Home";
+import { Works } from "../Works";
 
 function Landing() {
     return (

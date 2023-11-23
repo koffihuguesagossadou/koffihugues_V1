@@ -1,6 +1,7 @@
 import { useRef } from "react"
 import { splitWord } from "../funcs/app"
 import gsap from "gsap"
+import { Link } from "react-router-dom"
 
 export function SocialMedia({name}) {
 
@@ -35,13 +36,13 @@ export function SocialMedia({name}) {
 }
 
 
-export function MenuLink({name, revealText}){
+export function MenuLink({name, revealText, link, handleClick}){
 
 
 
     return(
         <li className="menu-link">
-            <a href="">
+            <Link onClick={handleClick} to={link}>
                 <div>
                     
                     {
@@ -62,7 +63,7 @@ export function MenuLink({name, revealText}){
                         })
                     }
                 </div>
-            </a>
+            </Link>
         </li>
     )
 }

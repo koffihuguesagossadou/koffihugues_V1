@@ -7,8 +7,10 @@ import { Navbar } from "./components/Navbar";
 import { useLocation } from "react-router-dom";
 import Preloader from "./components/Preloader";
 import Transition from "./components/Transition";
+import { Footer } from "./components/Footer";
 
-const Landing = lazy( ()=> import('./pages/Landing'))
+const Landing = lazy( ()=> import('./pages/Landing/Landing'))
+const AboutP = lazy( ()=> import('./pages/About/AboutP') )
 
 
 export const PageTransitionContext = createContext();
@@ -70,11 +72,12 @@ function App() {
 
   const [cursorOnLink, setCursorOnLink] = useState(null)
   const [showTransition, setShowTransition] = useState(false)
-  const [showPreloader, setShowPreloader] = useState(true)
-  const routeLocation = useLocation()
 
 
   useEffect(()=>{
+
+  
+  
 
     const lenis = new Lenis({
       duration: 3,
@@ -93,13 +96,9 @@ function App() {
     
     requestAnimationFrame(raf);
 
-    if (routeLocation.pathname === "/") {
-      setShowPreloader(true)
-    }
-    else{
-      setShowPreloader(false)
-    }
+    
 
+    
   }, [])
 
 
@@ -108,14 +107,20 @@ function App() {
         <CursorContext.Provider value={{ cursorOnLink, setCursorOnLink}}>
             <div id='main-wrapper'>
 
-              {showPreloader && <Preloader />}
+              <Preloader/>
               <Transition/>
-              <Navbar/>
-              <Suspense fallback={<LazyLoading/>}>
-                <Routes>
-                  <Route path="/" element={<Landing/>}/>
-                </Routes>
-              </Suspense>
+              <header>
+                <Navbar/>
+              </header>
+              <main className="main-content">
+                <Suspense fallback={null}>
+                  <Routes>
+                    <Route index element={<Landing/>}/>
+                    <Route path="/about" element={<AboutP/>}/>
+                  </Routes>
+                </Suspense>
+              </main>
+              <Footer/>
             </div>
           <Cursor/>
         </CursorContext.Provider>
