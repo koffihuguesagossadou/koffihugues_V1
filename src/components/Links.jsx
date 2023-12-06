@@ -1,24 +1,44 @@
-import { useRef } from "react"
+import { useRef, useEffect } from "react"
 import { splitWord } from "../funcs/app"
 import gsap from "gsap"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 
-export function SocialMedia({name}) {
+export function SocialMedia({name, href}) {
 
-
+    const timeline = gsap.timeline()
+    const locator = useLocation()
+    const noCloneRef = useRef()
+    
+    useEffect(()=>{
+        timeline.to('.fst-smm',{
+            y: '0%',
+            delay: 2.7,
+            duration: 3,
+            ease: 'power4.out',
+            stagger : {
+                amount: .3
+            }
+        })
+    },[locator])
 
     return(
         <div className={`smm ${name}`}>
-            <a href="">
+            <a href={name === 'email' 
+                ? `mailto:${href}`
+                : href
+            }>
                 <div>
-                    
-                    {
-                        splitWord(name).map((char, i)=>{
-                            return (
-                                <span style={{"--index": i}} key={i} className="sm letter">{char}</span>
-                            )
-                        })
-                    }
+                    <div ref={noCloneRef} className="fst-smm">
+
+                        {
+                            splitWord(name).map((char, i)=>{
+                                return (
+                                    
+                                    <span style={{"--index": i}} key={i} className="sm letter">{char}</span>
+                                )
+                            })
+                        }
+                    </div>
                 </div>
 
                 <div className="sm-clone">
@@ -38,27 +58,44 @@ export function SocialMedia({name}) {
 
 export function MenuLink({name, revealText, link, handleClick}){
 
+    const timeline = gsap.timeline()
+    const routeLocation = useLocation()
+
+    useEffect(()=>{
+
+        timeline.to('.fst-sm',{
+            y: '0%',
+            delay: 2.7,
+            duration: 3,
+            ease: 'power4.out',
+            stagger:{
+                amount:.3
+            }
+        })
+
+    }, [routeLocation])
 
 
     return(
         <li className="menu-link">
             <Link onClick={handleClick} to={link}>
-                <div>
-                    
-                    {
-                        splitWord(name).map((char, i)=>{
-                            return (
-                                <span style={{"--index": i}} key={i} className="sm letter">{char}</span>
-                            )
-                        })
-                    }
+                <div >
+                    <div className="fst-sm">
+                        {
+                            splitWord(name).map((char, i)=>{
+                                return (
+                                    <span style={{"--index": i}} key={i} className="sm-letter">{char}</span>
+                                )
+                            })
+                        }
+                    </div>
                 </div>
 
                 <div className="menu-clone">
                     {
                         splitWord(revealText).map((char, i)=>{
                             return (
-                                <span style={{"--index": i}} key={i} className="sm letter">{char}</span>
+                                <span style={{"--index": i}} key={i} className="sm letter clone">{char}</span>
                             )
                         })
                     }

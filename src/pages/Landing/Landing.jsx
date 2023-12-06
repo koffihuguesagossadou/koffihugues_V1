@@ -1,15 +1,13 @@
-import { BriefAbout } from "../About";
-import { Contact } from "../Contact";
+import { Scene } from "../../components/Scene";
 import { Home } from "../Home";
-import { Works } from "../Works";
 
 function Landing() {
     return (
         <main className="landing">
             <Home/>
-            <BriefAbout/>
+            {/* <BriefAbout/>
             <Works/>
-            <Contact/>
+            <Contact/> */}
         </main>
     )
 }

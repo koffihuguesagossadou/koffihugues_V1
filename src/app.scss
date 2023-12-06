@@ -2,9 +2,7 @@
 
 
 
-.main-content{
-  margin-top: 80px;
-}
+
 .preloader-wrapper{
   position: fixed;
   z-index: 20;
@@ -106,6 +104,7 @@
 }
 
 
+
 .cursor{
   position: fixed;
 	top: 0;
@@ -133,21 +132,21 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 8.5vw;
-      height: 8.5vw;
+      width: 4vw;
+      height: 4vw;
       border-radius: 50%;
       position: absolute;
       font-family: $base-font;
       border: 1px solid $base-font-color;
-      font-size: $size-4;
+      font-size: $size-5;
       top: 50%;
       left: 50%;
       transform-origin: center center;
-      background-color: $primary-color;
+      background-color: $secondary-color;
       transform: translate(-50%, -50%);
 
       @media screen and (min-width: 1281px) {
-        font-size: $size-3;
+        font-size: $size-4;
       }
     }
   }

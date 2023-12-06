@@ -2,248 +2,144 @@
     overflow: hidden;
 } */
 
-.a-about-wrapper{
-    .title-section{
-        margin: 0;
     
-        .a-big-title{
-            .a-title-text-wrapper{
-                overflow: hidden;
-                p{
+    .a-section{
+        margin-top: 100px;
+        min-height: calc(100vh - (100px + 70px));
+        overflow: hidden;
+        font-size: $size-5;
 
-                    font-family: $special-font;
-                    font-size: 19vw;
-                    position: relative;
-                    display: flex;
-                    flex-wrap: wrap;
-                    line-height: 100%;
-                    overflow: hidden;
-                    transform: translate3d(0,100%,0);
-
-                    &::after, &::before{
-                        color: $base-font-color;
-                        position: absolute;
-                        width: 100%;
-                        height: 100%;
-                        background: transprent;
-                        overflow: hidden;
-                        top: 0;
-                        align-items: center;
-    
-                    }
-
-
-                    &::before{
-                        content: attr(data-about-text);
-                        left: 2px;
-                        text-shadow: -2px 0 $primary-color;
-                        animation-name: glitch-animation-1;
-                        animation-duration: 3s;
-                        animation-timing-function: linear;
-                        animation-delay: 0s;
-                        animation-iteration-count: infinite;
-                        animation-direction: alternate-reverse;
-                    }
-            
-                    &::after{
-                        content: attr(data-about-text);
-                        left: -2px;
-                        text-shadow: -2px 0 $white;
-                        animation-name: glitch-animation-2;
-                        animation-duration: 3s;
-                        animation-timing-function: linear;
-                        animation-delay: 0s;
-                        animation-iteration-count: infinite;
-                        animation-direction: alternate-reverse;        
-                    }
-                }
-                
-
-            }
-        }
-    }
-
-    .a-description-section{
-        .description-wrapper{
-            @include flexRow;
-            flex-direction: row;
-            justify-content: center;
-            
-            .description-p{
-                width: 60vw;
-                font-family: $special-font;
-                font-size: $size-2;
-                text-align: center;
-                line-height: 1.4;
-                opacity: 0;
-
-
-                @media screen and (max-width: 768px) {
-                    width: 100%;
-                    line-height: 1.4;
-                }
-                @media screen and (max-width: 768px) {
-                    font-size: 8vw;
-                    width: 100%;
-                    line-height: 1.4;
-                }
-
-
-                @media screen and (min-width: 1281px) {
-                    font-size: $size-1;
-                }
-
-                span{
-                    
-                    display: inline-block;
-                    width: 30px;
-                    height: 2px;
-                    background-color: $base-font-color;
-                }
-            }
-        }
-    }
-
-    .a-skills-section{
-
-        
-        .a-skills-wrapper{
-            margin-top: $size-3;
-            display: grid;
-            grid-template-columns: repeat(3, 200px);
-            column-gap: 8vw;
-            margin-left: 11vw;
-
-            @media screen and (max-width: 768px) {
-                margin-left: 0;
-            }
-
-            @media screen and (max-width: 978px) {
-                grid-template-columns: repeat(2, minmax(50px, 100px));
-            }
-
-            .a-skill{
-                span{
-                    font-size: $size-3;
-                    font-weight: 400;
-                    text-transform: capitalize;
-                    line-height: 1.8;
-
-                    @media screen and (max-width: 998px) {
-                        font-size: $body-1;
-                    }
-                    
-                }
-            }
-        }
-    }
-
-    .a-experience-with{
-
-
-        .a-experiences-wrapper{
-            margin-top: $margin-3;
-            margin-left: 11vw;
-            display: grid;
-            grid-template-rows: 1fr;
-            row-gap: 20px;
-
-            @media screen and (max-width: 768px) {
-                margin-left: 0;
-            }
-
-            span{
-                line-height: 1.8;
-                font-size: $size-3;
-
-                @media screen and (max-width: 768px) {
-                    font-size: $size-4;
-                }
-            }
-
-            .a-dash{
-                background-color: $base-font-color;
-                width: 20px;
-                height: 2px;
-                display: flex;
-                align-items: center;
-            }
-
-            .a-company{
-                line-height: 1.8;
-                font-weight: 600;
-            }
-
-            .a-role{
-                font-weight: 400;
-            }
-
-            .a-date{
-                font-weight: 200;
-            }
-        }
-    }
-}
-
-.a-about-contact{
-    height: calc(100vh - 80px);
-    .a-contact-wrapper{
-
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        .a-label{
-            h2{
-                font-family: $special-font;
-                font-style: italic;
-                font-size: 4vw;
-                text-align: center;
-
-                @media screen and (max-width: 768px) {
-                    font-size: $size-4;
-                }
-            }
-        }
-
-        .a-email{
+        .name-title{
+            display: flex;
+            flex-direction: column;
             font-family: $special-font;
-            font-weight: 500;
-            font-size: 7vw;
-            text-align: center;
-            line-height: 1.8;
-        }
-    }
-}
 
-.separator{
-    display: inline-block;
-    position: relative;
-    content: "";
-    width: 0%;
-    height: 2px;
-    background-color: rgba(176, 189, 227, .2);
-}
+            @media screen and (min-width: 1281px) {
+                margin-bottom: $margin-2;
+            }
 
+            .first-name, .last-name{
+                overflow: hidden;
+                span{
+                    display: inline-block;
+                    font-size: calc($size-1 + 1em);
+                    transform: translate3d(0, 100%, 0);
 
-
-.brief-about-wrapper{
-    >p{
-        width: 80%;
-        .brief-about-letter{
-            font-family: $base-font;
-            opacity: .1;
-            font-size: $size-1;
-            font-weight: 700;
+                    @media screen and (max-width: 768px) {
+                        font-size: $size-2;
+                    }
+                    @media screen and (min-width: 1281px) {
+                        font-size: calc($size-0 + 3em);
+                    }
+                }
+            }
             
-            @media screen and (max-width: 768px){
-                font-size: $size-3;
+        }
+
+        .infos-wrapper{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+
+            @media screen and (max-width: 768px) {
+                flex-direction: column;
+                
             }
 
-            @media screen and (min-width: 1281px){
-                font-size: $size-0;
+            .description-wrapper{
+                flex-basis: 40%;
+                .description-p{
+                    
+                    p{
+                        overflow: hidden;
+                        span{
+                            display: inline-block;
+                            transform: translate3d(0, 100%, 0);
+                        }
+                    }
+
+
+                    .job-role{
+                        margin-bottom: $margin-3;
+                        font-family: $special-font;
+
+                        span{
+                            
+                            @media screen and (min-width: 1281px) {
+                                font-size: calc($size-4 + 3px) !important;
+                            }
+                        }
+                    }
+                    line-height: 1.5;
+                    text-transform: uppercase;
+                    
+                }
             }
+
+            .clients-wrapper, .skills-wrapper{
+                flex-basis: 20%;
+                div{
+                    overflow: hidden;
+                    div{
+                        >span{
+                            display: inline-block;
+                            line-height: 1.2;
+                            text-transform: uppercase;
+                        }
+                    }
+                }
+            }
+            
+            .clients-wrapper{
+                .a-experiences-wrapper{
+                    div{
+                        div{
+                            transform: translate3d(0, 100%, 0);
+                            
+                        }
+                    }
+                }
+            }
+
+            .skills-wrapper{
+                .a-skills-wrapper{
+                        
+                    display: grid;
+                    grid-template-columns: repeat(3, 1fr); 
+                    column-gap: 10px;
+
+                    @media screen and (min-height: 596px) {
+                        grid-template-columns: repeat(2, 1fr);  
+                        column-gap: none;
+                    }
+
+                    div{
+                        div{
+                            transform: translate3d(0, 100%, 0);
+                            
+                        }
+                    }
+                }
+            }
+
+        }
+
+    }
+
+    .a-block-title{
+        margin-bottom: $margin-3;
+        overflow: hidden;
+
+        @media screen and (max-width: 768px) {
+            margin-top: $margin-3;
+        }
+        h3{
+            text-transform: uppercase;
+            transform: translate3d(0, 100%, 0);
         }
     }
-}
+
+
+
+
+

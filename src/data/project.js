@@ -1,6 +1,7 @@
 export const projects = [
     {
         name:"koffi hugues",
+        slug: "koffihugues",
         image:"/images/work-1.jpg",
         skills:[
             'reactJS', 'jS'
@@ -8,6 +9,7 @@ export const projects = [
     },
     {
         name:"Cassim",
+        slug: "cassim",
         image:"/images/work-2.jpg",
         skills:[
             'reactJS', 'jS', 'php'
@@ -15,6 +17,7 @@ export const projects = [
     },
     {
         name:"Ome",
+        slug: "ome",
         image:"/images/work-3.jpg",
         skills:[
             'reactJS', 'jS', 'nodejs'
@@ -22,6 +25,7 @@ export const projects = [
     },
     {
         name:"Ome",
+        slug: "ome1",
         image:"/images/work-4.jpg",
         skills:[
             'reactJS', 'jS', 'nodejs'
@@ -29,6 +33,7 @@ export const projects = [
     },
     {
         name:"Ome",
+        slug: "ome2",
         image:"/images/work-5.jpg",
         skills:[
             'reactJS', 'jS', 'nodejs'
@@ -36,18 +41,12 @@ export const projects = [
     },
     {
         name:"Ome",
+        slug: "ome3",
         image:"/images/work-6.jpg",
         skills:[
             'reactJS', 'jS', 'nodejs'
         ]
-    },
-    {
-        name:"Ome",
-        image:"/images/work-7.jpg",
-        skills:[
-            'reactJS', 'jS', 'nodejs'
-        ]
-    },
+    }
     
 
 ]
