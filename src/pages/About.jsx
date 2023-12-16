@@ -1,8 +1,9 @@
-import { useEffect,useRef } from 'react'
+import { useEffect,useRef,useContext } from 'react'
 import {developerExperience, skills} from '../data/experience'
-import { splitWord } from '../funcs/app'
+import { gsapConfig } from '../config/defaults'
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import gsap from 'gsap'
+import { PageTransitionContext, PreloaderContext } from '../App';
 gsap.registerPlugin(ScrollTrigger)
 
 
@@ -10,6 +11,9 @@ export function About() {
 
     // const passion = "I love building websites and web applications! It's not just my job; it's my passion. I enjoy creating websites that work smoothly and make people's lives easier.  so I can build better websites and bring cool ideas to reality. I'm always learning and looking for new ways to make websites awesome."
     // const aboutTitleRef = useRef(null)
+    const {showTransition} = useContext(PageTransitionContext)
+    const { preloaderPerformed } = useContext(PreloaderContext)
+
     const timeline = gsap.timeline()
 
     const workWithRef = {
@@ -24,19 +28,20 @@ export function About() {
 
     useEffect(()=>{
 
-        console.log(expsRef.current)
+        if((!showTransition && showTransition !== null) || preloaderPerformed){
 
-        timeline.to(['.fn-letter', 'p>span','div>h3' ,expsRef.current, skillsRef.current], {
-            y: '0%',
-            duration: 2,
-            ease: 'power4.out',
-            delay: 2.7,
-            stagger:{
-                amount: .5
-            }
-        })
+            timeline.to(['.fn-letter', 'p>span','div>h3' ,expsRef.current, skillsRef.current], {
+                y: '0%',
+                duration: gsapConfig.duration,
+                ease: gsapConfig.ease,
+                stagger:{
+                    amount: gsapConfig.staggerAmount
+                }
+            })
+        }
+
         
-    }, [])
+    }, [showTransition, preloaderPerformed])
 
     return(
                 

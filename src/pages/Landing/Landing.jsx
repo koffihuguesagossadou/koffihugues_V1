@@ -1,4 +1,3 @@
-import { Scene } from "../../components/Scene";
 import { Home } from "../Home";
 
 function Landing() {

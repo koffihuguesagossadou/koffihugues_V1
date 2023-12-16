@@ -2,10 +2,11 @@ import { useState, useEffect,useCallback, useRef } from "react"
 import gsap from "gsap";
 import { MenuLink } from "./Links";
 import { useContext } from "react";
-import { PageTransitionContext } from "../App";
+import { PageTransitionContext, PreloaderContext } from "../App";
 import { useLocation, Link } from "react-router-dom";
 import { GoArrowLeft } from "react-icons/go";
-
+import { useNavigate } from "react-router-dom";
+import { gsapConfig } from "../config/defaults";
 
 
 function Navbar() {
@@ -13,28 +14,43 @@ function Navbar() {
 
 
     const {showTransition, setShowTransition} = useContext(PageTransitionContext)
+    const { preloaderPerformed } = useContext(PreloaderContext)
 
     const [currentHour, setCurrentHour] = useState(0);
     const [currentMinute, setCurrentMinute] = useState(0);
     const [currentSecond, setCurrentSecond] = useState(0)
     const timeline = gsap.timeline()
     const routeLocation = useLocation()
-
+    const navigate = useNavigate()
 
 
     const handleClickedLink = useCallback(()=>{
         
         setShowTransition(true)
+
+    })
+    
+    const asyncHandleClickedLink = useCallback((e, location)=>{
+        
+        e.preventDefault()
+        setShowTransition(true)
+        setTimeout(()=>{
+            navigate(location)
+        }, 1500)
+
     })
       
     useEffect(()=>{
 
-        timeline.to('.al-text',{
-            y: '0',
-            delay: 2.7,
-            duration: 3,
-            ease: 'power4.out'
-        })
+        console.log(showTransition, preloaderPerformed)
+
+        if((!showTransition && showTransition !== null) || preloaderPerformed ){
+            timeline.to('.al-text',{
+                y: '0',
+                duration: gsapConfig.duration,
+                ease: gsapConfig.ease
+            })
+        }
 
 
         // Function to update the current time components
@@ -54,7 +70,7 @@ function Navbar() {
 
         // Clean up the interval when the component unmounts
         return () => clearInterval(intervalId);
-    }, [routeLocation])
+    }, [routeLocation, showTransition, preloaderPerformed])
 
 
 
@@ -66,13 +82,14 @@ function Navbar() {
                     routeLocation.pathname !== '/'
                     ? 
                         <div className="go-back-wrapper">
-                            <Link
-                                to=''
-                                onClick={handleClickedLink} 
+                            <a
+                                href="/"
+                                onClick={(e)=>asyncHandleClickedLink(e, '/')} 
                             >
                                 <GoArrowLeft />
-                            </Link>
+                            </a>
                         </div>
+
                     :
                     <>
                     
@@ -104,14 +121,14 @@ function Navbar() {
                             name='about'
                             revealText='about'
                             link='about'
-                            handleClick={handleClickedLink}
+                            handleClick={(e)=>asyncHandleClickedLink(e, '/about')}
                         />
 
                         <MenuLink
                             name='archives'
                             revealText='archives'
                             link='archives'
-                            handleClick={handleClickedLink}
+                            handleClick={(e)=>asyncHandleClickedLink(e, '/archives')}
                         />
                         
                     </ul>

@@ -1,3 +1,6 @@
+import { useNavigate } from "react-router-dom";
+
+
 export function splitWord(word){
     return word.split('');
 }
@@ -41,3 +44,17 @@ export function map (num, min1, max1, min2, max2, round = false) {
 export const findObject = (array, propertyName, propertyValue) => {
     return array.find(obj => obj[propertyName] === propertyValue);
 };
+
+
+
+
+// // wait before navigate to
+export const NavigateAsync = (reachRoute,time)=>{
+
+
+    
+        setTimeout(()=>{
+            reachRoute
+        }, time)
+    
+}

@@ -1,5 +1,7 @@
-import { Scene } from "../components/Scene";
 import Hero from "../components/Hero";
+import { lazy, Suspense } from "react";
+
+const Scene = lazy(()=> import('../components/Scene') )
 
 export function Home() {
 
@@ -7,7 +9,9 @@ export function Home() {
         <>
             
             <section className="home-section">
-                <Scene/>
+                <Suspense fallback={null}>
+                    <Scene/>
+                </Suspense>
                 <Hero/>
             </section>
         </>

@@ -2,7 +2,7 @@ import {Canvas} from '@react-three/fiber'
 import { ProjectsCards } from './ProjectCard';
 import { Preload } from '@react-three/drei';
 
-export function Scene() {
+ function Scene() {
 
     // const { width } = useThree((state) => state.viewport)
 
@@ -20,3 +20,5 @@ export function Scene() {
         
     )
 }
+
+export default Scene

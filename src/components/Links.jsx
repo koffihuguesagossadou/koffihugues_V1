@@ -1,25 +1,36 @@
-import { useRef, useEffect } from "react"
+import { useRef, useEffect, useContext } from "react"
 import { splitWord } from "../funcs/app"
 import gsap from "gsap"
 import { Link, useLocation } from "react-router-dom"
+import { gsapConfig } from "../config/defaults"
+import { PageTransitionContext, PreloaderContext } from "../App"
 
 export function SocialMedia({name, href}) {
+
+    const {showTransition, } = useContext(PageTransitionContext)
+    const { preloaderPerformed } = useContext(PreloaderContext)
 
     const timeline = gsap.timeline()
     const locator = useLocation()
     const noCloneRef = useRef()
     
     useEffect(()=>{
-        timeline.to('.fst-smm',{
-            y: '0%',
-            delay: 2.7,
-            duration: 3,
-            ease: 'power4.out',
-            stagger : {
-                amount: .3
-            }
-        })
-    },[locator])
+
+        if((!showTransition && showTransition !== null) || preloaderPerformed){
+
+            timeline.to('.fst-smm',{
+                y: '0%',
+                duration: gsapConfig.duration,
+                ease: gsapConfig.ease,
+                stagger : {
+                    amount: gsapConfig.staggerAmount - .2
+                }
+            })
+        }
+
+
+
+    },[locator, showTransition, preloaderPerformed])
 
     return(
         <div className={`smm ${name}`}>
@@ -56,29 +67,35 @@ export function SocialMedia({name, href}) {
 }
 
 
-export function MenuLink({name, revealText, link, handleClick}){
+export function MenuLink({name, revealText, link, handleClick, children}){
+
+    const {showTransition, } = useContext(PageTransitionContext)
+    const { preloaderPerformed } = useContext(PreloaderContext)
 
     const timeline = gsap.timeline()
     const routeLocation = useLocation()
 
     useEffect(()=>{
 
-        timeline.to('.fst-sm',{
-            y: '0%',
-            delay: 2.7,
-            duration: 3,
-            ease: 'power4.out',
-            stagger:{
-                amount:.3
-            }
-        })
+        if((!showTransition && showTransition !== null) || preloaderPerformed){
 
-    }, [routeLocation])
+            timeline.to('.fst-sm',{
+                y: '0%',
+                duration: gsapConfig.duration,
+                ease: gsapConfig.ease,
+                stagger:{
+                    amount: gsapConfig.staggerAmount - .2
+                }
+            })
+        }
+
+
+    }, [routeLocation, showTransition, preloaderPerformed])
 
 
     return(
         <li className="menu-link">
-            <Link onClick={handleClick} to={link}>
+            <a onClick={handleClick} href={link}>
                 <div >
                     <div className="fst-sm">
                         {
@@ -100,7 +117,7 @@ export function MenuLink({name, revealText, link, handleClick}){
                         })
                     }
                 </div>
-            </Link>
+            </a>
         </li>
     )
 }
@@ -133,21 +150,22 @@ export function DefaultLink({text, url}) {
     )
 }
 
-export function ProjectLink({text, url}) {
+export function ProjectLink({text, url, reference}) {
 
 
     return(
         <div className="project-links-wrapper">
             <a className="project-link" href={url}>
                 <div>
-                    
-                    {
-                        splitWord(text).map((char, i)=>{
-                            return (
-                                <span style={{"--index": i}} key={i} className="sm letter">{char === " " ? <pre> </pre> : char}</span>
-                            )
-                        })
-                    }
+                    <div ref={reference} className="a-p">
+                        {
+                            splitWord(text).map((char, i)=>{
+                                return (
+                                    <span style={{"--index": i}} key={i} className="sm letter">{char === " " ? <pre> </pre> : char}</span>
+                                )
+                            })
+                        }
+                    </div>
                 </div>
 
                 <div className="project-link-clone">

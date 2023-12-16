@@ -1,13 +1,14 @@
-import React from 'react'
+import React, {useContext, useEffect, useRef} from 'react'
 import gsap from "gsap";
-import { useEffect } from 'react';
-import { useRef } from 'react';
+import { PreloaderContext } from '../App';
+
 
 export default function Preloader({display}) {
 
     const bottomItemRef = useRef()
     const bandsRefs = useRef([])
     const preloaderRef = useRef()
+    const { preloaderPerformed, setPreloaderPerformed } = useContext(PreloaderContext)
 
 
 
@@ -19,6 +20,9 @@ export default function Preloader({display}) {
                 gsap.to(bandsRefs.current,{
                     x: "-100%",
                     delay: 2.6,
+                    onComplete: ()=>{
+                        setPreloaderPerformed(true)
+                    },
                     stagger:{
                         amount: .5
                     }

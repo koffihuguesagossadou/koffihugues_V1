@@ -1,10 +1,13 @@
-import React from 'react'
-import { Works } from '../Works'
+import React, {Suspense, lazy} from 'react'
+const Works = lazy( ()=> import('../Works'))
 
 export default function WorkP() {
 
 
   return (
-    <Works/>
+
+    <Suspense fallback={null} >
+      <Works/>
+    </Suspense>
   )
 }

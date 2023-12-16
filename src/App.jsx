@@ -18,6 +18,7 @@ const WorkP = lazy(()=> import('./pages/Work/WorkP'))
 
 export const PageTransitionContext = createContext();
 export const CursorContext = createContext();
+export const PreloaderContext = createContext();
 
 function LazyLoading() {
   return (
@@ -74,7 +75,8 @@ function Cursor() {
 function App() {
 
   const [cursorOnLink, setCursorOnLink] = useState(null)
-  const [showTransition, setShowTransition] = useState(false)
+  const [showTransition, setShowTransition] = useState(null)
+  const [preloaderPerformed, setPreloaderPerformed] = useState(false)
   const routeLocation = useLocation()
 
 
@@ -103,6 +105,7 @@ function App() {
   }, [routeLocation])
 
   return (
+    <PreloaderContext.Provider value={{ preloaderPerformed, setPreloaderPerformed }}>
       <PageTransitionContext.Provider value={{showTransition, setShowTransition}}>
         <CursorContext.Provider value={{ cursorOnLink, setCursorOnLink}}>
             <div id='main-wrapper'>
@@ -110,6 +113,7 @@ function App() {
               <Transition/>
               <Navbar/>
               <main className="main-content">
+                
                 <Suspense fallback={null}>
                   <Routes>
                     <Route index element={<Landing/>}/>
@@ -123,6 +127,7 @@ function App() {
           <Cursor/>
         </CursorContext.Provider>
       </PageTransitionContext.Provider>
+    </PreloaderContext.Provider>
   )
 }
 

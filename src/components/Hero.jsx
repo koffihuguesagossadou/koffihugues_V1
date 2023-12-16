@@ -1,20 +1,30 @@
-import React, {useRef, useEffect} from 'react'
+import React, {useRef, useEffect, useContext} from 'react'
 import { SocialMedia } from './Links'
 import gsap from 'gsap';
+import { PageTransitionContext, PreloaderContext } from '../App';
+import { gsapConfig } from '../config/defaults';
 
 export default function Hero() {
 
-
+    const {showTransition} = useContext(PageTransitionContext)
+    const { preloaderPerformed } = useContext(PreloaderContext)
     const timeline = gsap.timeline()
     
     useEffect(()=>{
-        timeline.to('.hero-role-text',{
-            y: '0',
-            delay: 2.7,
-            duration: 3,
-            ease: 'power4.out'
-        })
-    }, [])
+
+        if((!showTransition && showTransition !== null) || preloaderPerformed)
+        {
+            timeline.to('.hero-role-text',{
+                y: '0',
+                duration: gsapConfig.duration,
+                ease: gsapConfig.ease,
+                stagger:{
+                    amount: gsapConfig.staggerAmount
+                }
+            })
+        }
+
+    }, [showTransition, preloaderPerformed])
 
     return (
         <div className='hero-bottom'>

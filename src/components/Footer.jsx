@@ -1,24 +1,32 @@
 import { SocialMedia } from "./Links";
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import gsap from 'gsap'
 import { useLocation } from "react-router-dom";
+import { gsapConfig } from "../config/defaults";
+import { PageTransitionContext, PreloaderContext } from "../App";
 
 export default function Footer() {
+
+    const {showTransition} = useContext(PageTransitionContext)
+    const { preloaderPerformed } = useContext(PreloaderContext)
 
     const timeline = gsap.timeline()
     const locator = useLocation()
 
     useEffect(()=>{
-        timeline.to('.f-cp>span',{
-            y: '0%',
-            ease: 'power4.out',
-            duration: 3,
-            delay: 2.7,
-            stagger:{
-                amount: .3
-            }
-        })
-    }, [])
+        if((!showTransition && showTransition !== null) || preloaderPerformed)
+        {
+            timeline.to('.f-cp>span',{
+                y: '0%',
+                ease: gsapConfig.ease,
+                duration: gsapConfig.duration,
+                stagger:{
+                    amount: gsapConfig.staggerAmount
+                }
+            })
+
+        }
+    }, [showTransition, preloaderPerformed])
     
     return(
         <footer>

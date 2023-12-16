@@ -1,11 +1,13 @@
 import React from 'react'
 import { useContext, useRef, useCallback, useEffect } from 'react';
-import { PageTransitionContext } from '../App';
+import { PageTransitionContext, PreloaderContext } from '../App';
 import gsap from 'gsap'
+import { gsapConfig } from '../config/defaults';
 
 export default function Transition() {
 
     const {showTransition, setShowTransition } = useContext(PageTransitionContext)
+    const { setPreloaderPerformed } = useContext(PreloaderContext)
     const barRefs = useRef([])
     const pageTransitionWrapperRef = useRef()
     
@@ -24,16 +26,19 @@ export default function Transition() {
                 .to(barRefs.current, { 
                     x: '-100%', 
                     delay: 1,
-                    onUpdate: ()=>{
-                        setShowTransition(false)
+                    onStart:()=>{
+
+                        //set preloader animation to false so page animation can perform after transition animation
+                        setPreloaderPerformed(false)
                     },
                     onComplete: ()=>{
                         tl.set([barRefs.current, pageTransitionWrapperRef.current], {
                             x: '100%',
                         }, 0)
+                        setShowTransition(false)
                     },
                     stagger:{
-                        amount: .5
+                        amount: gsapConfig.staggerAmount
                     }
                 }); // Move back to x: '-100%'
         }

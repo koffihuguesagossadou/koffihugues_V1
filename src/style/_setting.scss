@@ -100,6 +100,10 @@ $h2: $size-3;
 $h3: $size-4;
 
 
+//cubic bezier
+$cb1: cubic-bezier(.35,1.09,1,.95);
+
+
 @mixin flexRow {
     display: flex;
     flex-direction: row;
@@ -254,7 +258,7 @@ $h3: $size-4;
 
 // socila media 
 
-.smm{
+.smm, .project-links-wrapper{
     position: relative;
     overflow: hidden;
     display: flex;
@@ -296,7 +300,7 @@ $h3: $size-4;
             }
         }
 
-        .sm-clone{
+        .sm-clone,.project-link-clone{
             position: absolute;
             left: 0;
             top: 0;                    

@@ -2,20 +2,33 @@ import { useRef, useMemo, useContext, useCallback, useEffect, useState } from "r
 import { projects } from "../data/project"
 import { extend, useFrame, useLoader, useThree } from "@react-three/fiber"
 import { Color, Texture, TextureLoader, MathUtils } from "three"
-import { ScrollControls, Scroll, shaderMaterial, Text, useScroll } from '@react-three/drei';
-import { CursorContext } from "../App";
+import { ScrollControls, Scroll, shaderMaterial, Text, useScroll, Image } from '@react-three/drei';
+import { CursorContext, PageTransitionContext } from "../App";
+import vertexShader from '../glsl/vertexShaders.glsl'
+import fragmentShader from '../glsl/fragmentShaders.glsl'
+import { useSpring, animated } from '@react-spring/three'
+import { useNavigate } from "react-router-dom"; 
+import gsap from 'gsap';
 
 
-export function ProjectCard({name, img, x, width}) {
+export function ProjectCard({name, img, index, width,slug}) {
     
 
-    const [texture] = useMemo(() => useLoader(TextureLoader, [img]));
+    const texture = useMemo(() => useLoader(TextureLoader, img));
+
+
     const meshRef = useRef();
     const imageRef = useRef();
     const shaderRef = useRef();
     const textRef = useRef()
+
+
     const { cursorOnLink, setCursorOnLink } = useContext(CursorContext);
+    const { showTransition, setShowTransition } = useContext(PageTransitionContext)
     const [hovered, setHovered] = useState(false)
+    const navigate = useNavigate()
+
+    const scroll = useScroll()
 
     // mesh functions
     const handleMeshOnPointerEnter = useCallback(() => {
@@ -26,255 +39,239 @@ export function ProjectCard({name, img, x, width}) {
         setHovered(false)
     })
 
+    const handleOnCLick = useCallback(()=>{
+        setShowTransition(true)
+        
+        setTimeout(()=>{
+            navigate(`/project/${slug}`)
+        }, 1500)
+    })
+
+    
     
     const photo = useMemo(() => {
         return {
-          width: 3,
-          height: 4,
-          gap: 1,
-          x: (3+1) * x ,
+          width: 2.5,
+          height: 3,
+          gap: 0.5,
+          x: (2.5 + 0.3) * index ,
           y: 0,
         };
-      }, [x]);
+    }, [index]);
 
 
+    // spring animation config
     
 
-    const WaveShaderMaterial = shaderMaterial(
-        //uniforms
-        {
-            uTime: 0,
-            uTexture: new Texture(),
-            uColor: new Color(0.5, 0.5, 0.5)
-        },
-        // vertex shader
-        `   
-            precision mediump float;
+    // const WaveShaderMaterial = shaderMaterial({
+    //     uTime: 0,
+    //     uTexture: new Texture(),
+    //     uColor: new Color(0.5, 0.5, 0.5)
+        
+    // },vertexShader, fragmentShader);
 
-            uniform float uTime;
-            varying vec2 vUv;
-            varying float vWave;
-            
-            vec3 mod289(vec3 x) {
-                return x - floor(x * (1.0 / 289.0)) * 289.0;
-            }
-
-            vec4 mod289(vec4 x) {
-                return x - floor(x * (1.0 / 289.0)) * 289.0;
-            }
-
-
-            vec4 permute(vec4 x) {
-                return mod289(((x*34.0)+1.0)*x);
-            }
-
-            vec4 taylorInvSqrt(vec4 r)
-            {
-                return 1.79284291400159 - 0.85373472095314 * r;
-            }
-
-            float snoise(vec3 v) {
-                const vec2  C = vec2(1.0/6.0, 1.0/3.0) ;
-                const vec4  D = vec4(0.0, 0.5, 1.0, 2.0);
-                
-                // First corner
-                vec3 i  = floor(v + dot(v, C.yyy) );
-                vec3 x0 =   v - i + dot(i, C.xxx) ;
-                
-                // Other corners
-                vec3 g = step(x0.yzx, x0.xyz);
-                vec3 l = 1.0 - g;
-                vec3 i1 = min( g.xyz, l.zxy );
-                vec3 i2 = max( g.xyz, l.zxy );
-              
-                //   x0 = x0 - 0.0 + 0.0 * C.xxx;
-                //   x1 = x0 - i1  + 1.0 * C.xxx;
-                //   x2 = x0 - i2  + 2.0 * C.xxx;
-                //   x3 = x0 - 1.0 + 3.0 * C.xxx;
-                vec3 x1 = x0 - i1 + C.xxx;
-                vec3 x2 = x0 - i2 + C.yyy; // 2.0*C.x = 1/3 = C.y
-                vec3 x3 = x0 - D.yyy;      // -1.0+3.0*C.x = -0.5 = -D.y
-                
-                // Permutations
-                i = mod289(i);
-                vec4 p = permute( permute( permute(
-                           i.z + vec4(0.0, i1.z, i2.z, 1.0 ))
-                         + i.y + vec4(0.0, i1.y, i2.y, 1.0 ))
-                         + i.x + vec4(0.0, i1.x, i2.x, 1.0 ));
-                         
-                // Gradients: 7x7 points over a square, mapped onto an octahedron.
-                // The ring size 17*17 = 289 is close to a multiple of 49 (49*6 = 294)
-                float n_ = 0.142857142857; // 1.0/7.0
-                vec3  ns = n_ * D.wyz - D.xzx;
-              
-                vec4 j = p - 49.0 * floor(p * ns.z * ns.z);  //  mod(p,7*7)
-              
-                vec4 x_ = floor(j * ns.z);
-                vec4 y_ = floor(j - 7.0 * x_ );    // mod(j,N)
-              
-                vec4 x = x_ *ns.x + ns.yyyy;
-                vec4 y = y_ *ns.x + ns.yyyy;
-                vec4 h = 1.0 - abs(x) - abs(y);
-              
-                vec4 b0 = vec4( x.xy, y.xy );
-                vec4 b1 = vec4( x.zw, y.zw );
-              
-                //vec4 s0 = vec4(lessThan(b0,0.0))*2.0 - 1.0;
-                //vec4 s1 = vec4(lessThan(b1,0.0))*2.0 - 1.0;
-                vec4 s0 = floor(b0)*2.0 + 1.0;
-                vec4 s1 = floor(b1)*2.0 + 1.0;
-                vec4 sh = -step(h, vec4(0.0));
-              
-                vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy ;
-                vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww ;
-              
-                vec3 p0 = vec3(a0.xy,h.x);
-                vec3 p1 = vec3(a0.zw,h.y);
-                vec3 p2 = vec3(a1.xy,h.z);
-                vec3 p3 = vec3(a1.zw,h.w);
-                
-                // Normalise gradients
-                vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2, p2), dot(p3,p3)));
-                p0 *= norm.x;
-                p1 *= norm.y;
-                p2 *= norm.z;
-                p3 *= norm.w;
-                
-                // Mix final noise value
-                vec4 m = max(0.6 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);
-                m = m * m;
-                return 42.0 * dot( m*m, vec4( dot(p0,x0), dot(p1,x1),
-                                              dot(p2,x2), dot(p3,x3) ) );
-              }
-
-            void main(){
-                vUv = uv;
-                
-                vec3 pos = position;
-                float noiseFreq = 0.5;
-                float noiseAmp = 0.05;
-                vec3 noisePos = vec3(pos.x , pos.y * noiseFreq + uTime, pos.z);
-                pos.z += snoise(noisePos) * noiseAmp;
-
-
-                gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.);
-            }
-        `,
-        //fragment shader
-        `   
-            precision mediump float;
-
-            uniform sampler2D uTexture;
-            uniform vec3 uColor;
-            varying float vWave;
-            varying vec2 vUv;
-            
-            void main(){
-
-                float ambientStrength = .3; // Adjust the ambient strength
-
-                float wave = vWave * 0.2;
-                vec3 texture = texture2D(uTexture, vUv + wave).rgb;
-
-                // Apply ambient lighting
-                vec3 finalColor = texture + uColor * ambientStrength;
-                gl_FragColor = vec4(finalColor, 1.0);
-            }
-        `
-    );
-
-    extend({ WaveShaderMaterial })
+    // extend({ WaveShaderMaterial })
 
     useFrame(({clock}) => {
-        shaderRef.current.uTime = clock.getElapsedTime()
-        textRef.current.scale.x = hovered ? MathUtils.lerp(textRef.current.scale.x, 1, 0.25) : MathUtils.lerp(textRef.current.scale.x, 0, 0.25)
-        
+        // shaderRef.current.uTime = clock.getElapsedTime()
+        // textRef.current.scale.x = hovered ? MathUtils.lerp(textRef.current.scale.x, 1, 0.25) : MathUtils.lerp(textRef.current.scale.x, 0, 0.25)
+        // const a = scroll.curve(index / projects.length - -0.5 / projects.length , 1 / projects.length)
+        // meshRef.current.position.z = a / 2
+        // imageRef.current.scale.y = 3 + a
+        imageRef.current.material.grayscale = hovered ? MathUtils.lerp(imageRef.current.material.grayscale, 0, 0.1) :  MathUtils.lerp(imageRef.current.material.grayscale, 0.9, 0.1)
+        imageRef.current.material.zoom = hovered ? MathUtils.lerp(imageRef.current.material.zoom, 1.6, 0.1) : MathUtils.lerp(imageRef.current.material.zoom, 1.4, 0.1)
     });
 
-    useEffect(()=>{
-
-        document.body.style.cursor = hovered ? 'pointer' : 'auto'
-
-        
-    }, [hovered])
-
-    
+    // useEffect(()=>{
+    // },[])
     
     return(
         <>
         
-            <group>   
+            {/* <group>   
                 
-                <mesh 
+                <animated.mesh 
                     ref={meshRef} 
-                    onPointerEnter={handleMeshOnPointerEnter} 
-                    onPointerLeave={handleMeshOnPointerLeave}
-                    
-
-                    position={[photo.x, photo.y, 0.5]}
+                    onPointerOver={handleMeshOnPointerEnter} 
+                    onPointerOut={handleMeshOnPointerLeave}
+                    onClick={ handleOnCLick }
+                    position={[photo.x, photo.y, 0]}
                 >
                     <planeGeometry ref={imageRef} args={[photo.width,photo.height, 20, 20]} />
                     <waveShaderMaterial ref={ shaderRef } uTexture={texture}/>
-                </mesh>
+                </animated.mesh>
 
                 
                 
                 <Text 
                     ref={textRef} 
-                    fontSize=".2" 
+                    fontSize=".22" 
                     font='/font/analogue-webfont.ttf' 
                     color={[0.67, 0.67, 0.67]}  
                     scale={[0, 1, 1]}
-                    position={[photo.x, -2.3, 0.5]}
+                    position={[photo.x, -2.3, 0]}
                     onPointerEnter={()=>{setHovered(true)}}
                     onPointerLeave={()=>{setHovered(false)}}
                 >
 
                     {name.toUpperCase()}
                 </Text>
-            </group>
+            </group> */}
+
+            <Image 
+                ref={imageRef}
+                url={img} 
+                zoom={1.4}
+                position={[photo.x, photo.y, 0]} 
+                scale={[photo.width, photo.height, 1]} 
+                onPointerOver={ handleMeshOnPointerEnter }
+                onPointerOut={ handleMeshOnPointerLeave }
+                onClick={ handleOnCLick }
+                
+            />
         </>
 
     )
 }
 
 
-export function ProjectsCards({gap = 1, imageW = 3, damping=0.3 }) {
+export function ProjectsCards({gap = 0.3, imageW = 2.5, damping=0.3 }) {
 
-    const { width } = useThree((state) => state.viewport)
+    const speedWheel = 0.03;
+    const speedDrag = -0.1;
+
+    const [$root, setRoot] = useState();
+    const { viewport } = useThree();
     const xW = imageW + gap
     const projectLength = projects.length
-    const infiniteProjectsArray = [...projects, ...projects]
 
+
+    const progress = useRef(0);
+    const startX = useRef(0);
+    const isDown = useRef(false)
+    const $items = useMemo(() => {
+        if ($root) return $root.children;
+    }, [$root]);
+
+
+    // display idem on scroll
+    const displayItems = (item, index, active) => {
+        gsap.to(item.position, {
+            x: (index - active) * xW,
+            y: 0,
+            duration: 2.5,
+            ease: "power3.out",
+        });
+    };
+
+    //handle on wheel
+    const handleWheel = (e)=>{
+        const isVerticalScroll = Math.abs(e.deltaY) > Math.abs(e.deltaX);
+         const wheelProgress = isVerticalScroll ? e.deltaY : e.deltaX;
+         progress.current = progress.current + wheelProgress * speedWheel;
+        console.log(progress.current)
+    }
+
+    /*--------------------
+    Handle Move
+    --------------------*/
+    const handleMove = (e) => {
+        if (!isDown.current) return;
+        const x = e.clientX || (e.touches && e.touches[0].clientX) || 0;
+        const mouseProgress = (x - startX.current) * speedDrag;
+        progress.current = progress.current + mouseProgress;
+        startX.current = x;
+    }
+
+    // handle on pointerDown
+    const handleDown = (e) => {
+        isDown.current = true;
+        startX.current = e.clientX || (e.touches && e.touches[0].clientX) || 0;
+    };
+    
+    
+    // handle on pointerDown
+    const handleUp = (e) => {
+        isDown.current = false;
+    };
+
+
+    // animation frame
+    useFrame(()=>{
+        progress.current = Math.max(0, Math.min(progress.current, 100));
+
+        const active = Math.floor((progress.current / 100) * ($items.length - 1));
+        $items.forEach((item, index) => displayItems(item, index, active));
+    })
+
+    useEffect(()=>{
+
+    }, [])
     
 
     return(
 
-        <ScrollControls 
-            style={{overflow: 'hidden'}} 
-            horizontal 
-            pages={(width - xW + (projectLength) * xW) / (width ) } 
-            damping={damping}
-        >
+        // <ScrollControls 
+        //     style={{overflow: 'hidden'}} 
+        //     horizontal 
+        //     pages={(width - xW + (projectLength) * xW) / (width ) } 
+        //     damping={damping}
+        // >
                 
-                <Scroll>
+        //         <Scroll>
 
-                    {
-                        projects.map((project, i)=>{
-                            return(
+        //             {
+        //                 projects.map((project, i)=>{
+        //                     return(
                                 
-                                <ProjectCard
-                                    key={i}
-                                    x = {i}
-                                    img = {project.image}
-                                    name = { project.name}
-                                    width = {width}
-                                />
-                            )
-                        })
-                    }
-                </Scroll>
-            </ScrollControls>
+        //                         <ProjectCard
+        //                             key={i}
+        //                             index = {i}
+        //                             img = {project.image}
+        //                             name = { project.name}
+        //                             slug = { project.slug }
+        //                             width = {width}
+        //                         />
+        //                     )
+        //                 })
+        //             }
+        //         </Scroll>
+        //     </ScrollControls>
+
+        
+        <>
+        
+        
+            <mesh
+                onWheel={ handleWheel }
+                onPointerMove={ handleMove }
+                onPointerDown={ handleDown }
+                onPointerLeave={ handleUp }
+                onPointerCancel={ handleUp }
+                onPointerUp={ handleUp }
+            >
+                <planeGeometry args={[viewport.width, viewport.height]} />
+                <meshBasicMaterial transparent={true} opacity={0} />
+            </mesh>
+            <group
+                ref={setRoot}
+            >
+                {
+                    projects.map((project, i)=>{
+                        return(
+                            
+                            <ProjectCard
+                                key={i}
+                                index = {i}
+                                img = {project.image}
+                                name = { project.name}
+                                slug = { project.slug }
+                            />
+                        )
+                    })
+                }
+            </group>
+        </>
     )
 }
 
