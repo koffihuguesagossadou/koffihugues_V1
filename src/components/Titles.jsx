@@ -29,6 +29,7 @@ export function SectionTitle({text, classname, reference}) {
 
     })
 
+
     return(
         <div className={"section-title "+ classname}>
             <h1 ref={reference}>{
@@ -55,7 +56,7 @@ export function SectionTitle({text, classname, reference}) {
                 : splitWord(text).map((char, index)=>{
                     return(
                         <p className="title-word">
-                            <span className="title-letter" ref={el => titleLetterRefs.current[index] = el} key={i}>{char}</span>
+                            <span className="title-letter" ref={el => titleLetterRefs.current[index] = el} key={index}>{char}</span>
                         </p>
                     )
                 })

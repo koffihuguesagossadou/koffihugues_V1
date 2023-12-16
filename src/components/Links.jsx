@@ -1,23 +1,55 @@
-import { useRef } from "react"
+import { useRef, useEffect, useContext } from "react"
 import { splitWord } from "../funcs/app"
 import gsap from "gsap"
+import { Link, useLocation } from "react-router-dom"
+import { gsapConfig } from "../config/defaults"
+import { PageTransitionContext, PreloaderContext } from "../App"
 
-export function SocialMedia({name}) {
+export function SocialMedia({name, href}) {
+
+    const {showTransition, } = useContext(PageTransitionContext)
+    const { preloaderPerformed } = useContext(PreloaderContext)
+
+    const timeline = gsap.timeline()
+    const locator = useLocation()
+    const noCloneRef = useRef()
+    
+    useEffect(()=>{
+
+        if((!showTransition && showTransition !== null) || preloaderPerformed){
+
+            timeline.to('.fst-smm',{
+                y: '0%',
+                duration: gsapConfig.duration,
+                ease: gsapConfig.ease,
+                stagger : {
+                    amount: gsapConfig.staggerAmount - .2
+                }
+            })
+        }
 
 
+
+    },[locator, showTransition, preloaderPerformed])
 
     return(
         <div className={`smm ${name}`}>
-            <a href="">
+            <a href={name === 'email' 
+                ? `mailto:${href}`
+                : href
+            }>
                 <div>
-                    
-                    {
-                        splitWord(name).map((char, i)=>{
-                            return (
-                                <span style={{"--index": i}} key={i} className="sm letter">{char}</span>
-                            )
-                        })
-                    }
+                    <div ref={noCloneRef} className="fst-smm">
+
+                        {
+                            splitWord(name).map((char, i)=>{
+                                return (
+                                    
+                                    <span style={{"--index": i}} key={i} className="sm letter">{char}</span>
+                                )
+                            })
+                        }
+                    </div>
                 </div>
 
                 <div className="sm-clone">
@@ -35,29 +67,52 @@ export function SocialMedia({name}) {
 }
 
 
-export function MenuLink({name, revealText}){
+export function MenuLink({name, revealText, link, handleClick, children}){
 
+    const {showTransition, } = useContext(PageTransitionContext)
+    const { preloaderPerformed } = useContext(PreloaderContext)
+
+    const timeline = gsap.timeline()
+    const routeLocation = useLocation()
+
+    useEffect(()=>{
+
+        if((!showTransition && showTransition !== null) || preloaderPerformed){
+
+            timeline.to('.fst-sm',{
+                y: '0%',
+                duration: gsapConfig.duration,
+                ease: gsapConfig.ease,
+                stagger:{
+                    amount: gsapConfig.staggerAmount - .2
+                }
+            })
+        }
+
+
+    }, [routeLocation, showTransition, preloaderPerformed])
 
 
     return(
         <li className="menu-link">
-            <a href="">
-                <div>
-                    
-                    {
-                        splitWord(name).map((char, i)=>{
-                            return (
-                                <span style={{"--index": i}} key={i} className="sm letter">{char}</span>
-                            )
-                        })
-                    }
+            <a onClick={handleClick} href={link}>
+                <div >
+                    <div className="fst-sm">
+                        {
+                            splitWord(name).map((char, i)=>{
+                                return (
+                                    <span style={{"--index": i}} key={i} className="sm-letter">{char}</span>
+                                )
+                            })
+                        }
+                    </div>
                 </div>
 
                 <div className="menu-clone">
                     {
                         splitWord(revealText).map((char, i)=>{
                             return (
-                                <span style={{"--index": i}} key={i} className="sm letter">{char}</span>
+                                <span style={{"--index": i}} key={i} className="sm letter clone">{char}</span>
                             )
                         })
                     }
@@ -95,21 +150,22 @@ export function DefaultLink({text, url}) {
     )
 }
 
-export function ProjectLink({text, url}) {
+export function ProjectLink({text, url, reference}) {
 
 
     return(
         <div className="project-links-wrapper">
             <a className="project-link" href={url}>
                 <div>
-                    
-                    {
-                        splitWord(text).map((char, i)=>{
-                            return (
-                                <span style={{"--index": i}} key={i} className="sm letter">{char === " " ? <pre> </pre> : char}</span>
-                            )
-                        })
-                    }
+                    <div ref={reference} className="a-p">
+                        {
+                            splitWord(text).map((char, i)=>{
+                                return (
+                                    <span style={{"--index": i}} key={i} className="sm letter">{char === " " ? <pre> </pre> : char}</span>
+                                )
+                            })
+                        }
+                    </div>
                 </div>
 
                 <div className="project-link-clone">

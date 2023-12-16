@@ -1,140 +1,142 @@
 import { useState, useEffect,useCallback, useRef } from "react"
-import { splitWord } from "../funcs/app";
 import gsap from "gsap";
-import { MenuLink, SocialMedia } from "./Links";
+import { MenuLink } from "./Links";
 import { useContext } from "react";
-import { PageTransitionContext } from "../App";
+import { PageTransitionContext, PreloaderContext } from "../App";
+import { useLocation, Link } from "react-router-dom";
+import { GoArrowLeft } from "react-icons/go";
+import { useNavigate } from "react-router-dom";
+import { gsapConfig } from "../config/defaults";
 
 
-
-export function Navbar() {
+function Navbar() {
 
 
 
     const {showTransition, setShowTransition} = useContext(PageTransitionContext)
+    const { preloaderPerformed } = useContext(PreloaderContext)
 
-    const [menuClicked, setMenuClicked] = useState(false)
-    const [isSticky, setIsSticky] = useState(false);
-    const [hoverSocialMedia, setHoverSocialMedia] = useState(false)
-    const menuRef = useRef()
-
-    const stickyNavbarHandle = useCallback(() => {
-        if (window.scrollY > 0) {
-            setIsSticky(true);
-        } else {
-            setIsSticky(false);
-        }
-    }, [isSticky])
+    const [currentHour, setCurrentHour] = useState(0);
+    const [currentMinute, setCurrentMinute] = useState(0);
+    const [currentSecond, setCurrentSecond] = useState(0)
+    const timeline = gsap.timeline()
+    const routeLocation = useLocation()
+    const navigate = useNavigate()
 
 
+    const handleClickedLink = useCallback(()=>{
+        
+        setShowTransition(true)
+
+    })
+    
+    const asyncHandleClickedLink = useCallback((e, location)=>{
+        
+        e.preventDefault()
+        setShowTransition(true)
+        setTimeout(()=>{
+            navigate(location)
+        }, 1500)
+
+    })
       
+    useEffect(()=>{
 
-    useEffect(() => {
+        console.log(showTransition, preloaderPerformed)
 
-        window.addEventListener('scroll', stickyNavbarHandle);
-
-        const tl = gsap.timeline()
-
-        menuClicked
-
-        ? tl.to(menuRef.current, {
-            x: '0%',
-            delay: .5
-        })
-
-        : tl.to(menuRef.current, {
-            x: '100%',
-            delay: 1,
-        })
-
-        // Clean up the event listener on unmount
-        return () => {
-            window.removeEventListener('scroll', stickyNavbarHandle);
-        };
-
-    }, [menuClicked]);
+        if((!showTransition && showTransition !== null) || preloaderPerformed ){
+            timeline.to('.al-text',{
+                y: '0',
+                duration: gsapConfig.duration,
+                ease: gsapConfig.ease
+            })
+        }
 
 
-    // useEffect(()=>{
+        // Function to update the current time components
+        const updateCurrentTime = () => {
+            const currentTime = new Date();
+            setCurrentHour(currentTime.getUTCHours());
+            setCurrentMinute(currentTime.getUTCMinutes());
+            setCurrentSecond(currentTime.getUTCSeconds());
+            };
+    
+            // Set up an interval to update the time components every second
+            const intervalId = setInterval(updateCurrentTime, 1000);
+    
+            
 
-    //     menuClicked === 0 ? setShowTransition(false) : setShowTransition(true)
+        
 
-    // }, [menuClicked])
+        // Clean up the interval when the component unmounts
+        return () => clearInterval(intervalId);
+    }, [routeLocation, showTransition, preloaderPerformed])
 
 
 
     return(
-        <nav className={`navbar ${isSticky ? 'sticky' : ''}`}>
+        <nav className='navbar'>
             <div className="menu-wrapper">
-                <div className="brand-wrapper">
-                    <a href="#" className="typo-brand">
-                        AGOSSADOU
-                    </a>
-                </div>
-                <div className="hamburger-menu-wrapper">
-                    <div className="lines">
-                        <div 
-                            onClick={(e)=> { 
-                                setMenuClicked(!menuClicked) 
-                                setShowTransition(true)
-                            }}>
-                            <span className={
-                                menuClicked ?"closeBarRight"
-                                : ''
-                            }></span>
-                            <span className={
-                                menuClicked ? "closeBarLeft"
-                                : ''
-                            }></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div ref={menuRef} className='menu-links-wrapper'>
-                <div className="ml-container">
-                    <ul className="menu-links">
-                        
-                        <MenuLink
-                            name={'About'}
-                            revealText={'About'}
-                        />
-                        <MenuLink
-                            name={'archives'}
-                            revealText={'Archives'}
-                        />
-                        <MenuLink
-                            name={'Contact'}
-                            revealText={'Contact'}
-                        />
-                    </ul>
-                </div>
                 
-                <div className="extras">
-                    {/* <div className="lang-wrapper">
-                        <div className="lang-btn btn-en">
-                            <a className="en default-lang" href="">EN</a>
+                {
+                    routeLocation.pathname !== '/'
+                    ? 
+                        <div className="go-back-wrapper">
+                            <a
+                                href="/"
+                                onClick={(e)=>asyncHandleClickedLink(e, '/')} 
+                            >
+                                <GoArrowLeft />
+                            </a>
                         </div>
-                        <span></span>
-                        <div className="lang-btn btn-fr">
-                            <a className="fr" href="">FR</a>
+
+                    :
+                    <>
+                    
+                        <div className="brand-wrapper">
+                            <a href="/"
+                                className="typo-brand">
+                                AGOSSADOU
+                            </a>
                         </div>
-                    </div> */}
-                    <div className="social-media-menu">
-                        <SocialMedia
-                            name={'linkedin'}
+                        <div className="availability-wrapper">
+                            <div className="local-time-wrapper">
+                                <div>
+                                    <span className="al-text">abidjan</span>
+                                    <span className="al-text">
+                                        {currentHour.toString().length === 2 ? currentHour : '0'+currentHour}
+                                        :{currentMinute.toString().length === 2 ? currentMinute : '0'+currentMinute}
+                                        :{ currentSecond.toString().length === 2? currentSecond : '0'+ currentSecond}
+                                    </span>
+                                    <span className="al-text">GMT</span>
+                                </div>
+                            </div>
+                        </div>
+                    </>
+                     
+                }
+                <div className="menu-links-container">
+                    <ul className="menu-lists">
+                        <MenuLink
+                            name='about'
+                            revealText='about'
+                            link='about'
+                            handleClick={(e)=>asyncHandleClickedLink(e, '/about')}
                         />
-                        <SocialMedia
-                            name={'instagram'}
-                        />
-                        <SocialMedia
-                            name={'github'}
+
+                        <MenuLink
+                            name='archives'
+                            revealText='archives'
+                            link='archives'
+                            handleClick={(e)=>asyncHandleClickedLink(e, '/archives')}
                         />
                         
-                    </div>
+                    </ul>
                 </div>
             </div>
         </nav>
 
     )
 }
+
+export default Navbar;

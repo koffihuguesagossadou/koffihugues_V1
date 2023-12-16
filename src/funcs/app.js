@@ -1,3 +1,6 @@
+import { useNavigate } from "react-router-dom";
+
+
 export function splitWord(word){
     return word.split('');
 }
@@ -25,4 +28,33 @@ function findClosestEdge(ev,el) {
     const y = ev.pageY - el.offsetTop;
 
     return closestEdge(x,y, el.clientWidth, el.clientHeight);
+}
+
+export function map (num, min1, max1, min2, max2, round = false) {
+    const num1 = (num - min1) / (max1 - min1)
+    const num2 = (num1 * (max2 - min2)) + min2
+   
+    if (round) return Math.round(num2)
+   
+    return num2
+  }
+
+
+// Function to find an object by a specific property value
+export const findObject = (array, propertyName, propertyValue) => {
+    return array.find(obj => obj[propertyName] === propertyValue);
+};
+
+
+
+
+// // wait before navigate to
+export const NavigateAsync = (reachRoute,time)=>{
+
+
+    
+        setTimeout(()=>{
+            reachRoute
+        }, time)
+    
 }

@@ -1,39 +1,50 @@
-import React from 'react'
+import React, {useContext, useEffect, useRef} from 'react'
 import gsap from "gsap";
-import { useEffect } from 'react';
-import { useRef } from 'react';
+import { PreloaderContext } from '../App';
 
-export default function Preloader() {
+
+export default function Preloader({display}) {
 
     const bottomItemRef = useRef()
     const bandsRefs = useRef([])
     const preloaderRef = useRef()
+    const { preloaderPerformed, setPreloaderPerformed } = useContext(PreloaderContext)
+
+
 
     useEffect(()=>{
 
-        if (bandsRefs.current) {
-            gsap.to(bandsRefs.current,{
-                x: "-100%",
-                delay: 2.6,
-                stagger:{
-                    amount: .5
-                }
-            })
-        }
 
-        if (bottomItemRef.current) {
-            gsap.to(bottomItemRef.current, {
-                opacity: 0,
-                delay: 2.4
-            })
-        }
 
-        if (preloaderRef.current) {
-            gsap.to(preloaderRef.current, {
-                x: '-100%',
-                delay: 3.4
-            })
-        }
+            if (bandsRefs.current) {
+                gsap.to(bandsRefs.current,{
+                    x: "-100%",
+                    delay: 2.6,
+                    onComplete: ()=>{
+                        setPreloaderPerformed(true)
+                    },
+                    stagger:{
+                        amount: .5
+                    }
+                })
+            }
+    
+            if (bottomItemRef.current) {
+                gsap.to(bottomItemRef.current, {
+                    opacity: 0,
+                    delay: 2.4
+                })
+            }
+    
+            if (preloaderRef.current) {
+                gsap.to(preloaderRef.current, {
+                    x: '-100%',
+                    delay: 3.4
+                })
+            }
+
+
+
     }, [])
 
     return (

@@ -1,119 +1,181 @@
-import { useState, useEffect, useRef,useCallback } from "react";
-import {  ProjectCard } from "../components/ProjectCard";
-import { projects } from "../data/project";
-import { SectionTitle } from "../components/Titles";
+import { useState, useEffect, useRef,useCallback,useContext } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useContext } from "react";
-import { CursorContext } from "../App";
-gsap.registerPlugin(ScrollTrigger)
+import { useParams } from "react-router-dom";
+import { projects } from "../data/project";
+import { findObject } from "../funcs/app";
+import { MdOutlineArrowOutward } from "react-icons/md";
+import { ProjectLink } from "../components/Links";
+import { gsapConfig } from "../config/defaults";
+import { PageTransitionContext, PreloaderContext } from "../App";
 
-export function Works() {
+const metaDataTableLenght = 4;
+const tableLabelText = ["client", "role", "year", "skills"]
 
-    // cursor context
-    const { cursorOnLink, setCursorOnLink} = useContext(CursorContext)
+function ProjectLabel({labelText, data, reference}) {
+    return(
+        <div className="p-l-d">
+            <div ref={reference}>
+                <span className="p-l">{ labelText }</span>
+                <span className="p-d"> { data } </span>
+            </div>
+        </div>
+    )
+}
 
 
-    const tl = gsap.timeline({defaults: {ease: 'expo', duration: .6}})
 
-    const [revealProject, setRevealProject] = useState(null)
-    const workTitleRef = useRef()
-    const workWrapperRef = useRef()
-    const workCarouselRef = useRef()
+export default function Works() {
 
-    const marqueeWrapperRefs = projects.map(() => useRef(null));
-    const projectsRefs = projects.map(() => useRef(null));
+    const {showTransition} = useContext(PageTransitionContext)
+    const { preloaderPerformed } = useContext(PreloaderContext)
     
 
+    const { projectName } = useParams();
+    let projectData = findObject(projects, 'slug', projectName);
+    const nextProjectData = findObject(projects, 'id', projectData.id + 1)
+    const [currentImage, setCurrentImage] = useState(0)
+    const pcActiveRef = useRef()
+    const timeline = gsap.timeline()
 
-    // find closest side to the mouse when entering/leaving
-    
-    function isMouseCloserToTopOrBottom(mouseEvent, element) {
-        const mouseY = mouseEvent.clientY;
-        const elementRect = element.getBoundingClientRect();
-        const elementTop = elementRect.top;
-        const elementBottom = elementRect.bottom;
-      
-        const distanceToTopEdge = mouseY - elementTop;
-        const distanceToBottomEdge = elementBottom - mouseY;
-      
-        return distanceToTopEdge < distanceToBottomEdge ? 'top' : 'bottom';
-    }
-    
+    const pNumRef = useRef()
+    const pTitleRef = useRef()
+    const descsRef = useRef([])
+    const labelRef = useRef([])
+    const visitLinkRef = useRef()
+    const nextProjectRef = useRef([])
 
-    const handleOnclick = useCallback((e, index) => {
-        // Your callback logic here
+    const handleClickImage = useCallback((imageId)=>{
+        setCurrentImage(imageId)
+    })
 
-        
-        e.preventDefault()
-        setRevealProject(index)
-    }, []);
-    
-    
-    const handleOnMouseEnter = useCallback((e, index) => {
-        // change component state
-        setRevealProject(index)
-        setCursorOnLink("work")
-        
-        // find closest side to the mouse
-        const edge = isMouseCloserToTopOrBottom(e, projectsRefs[index].current);
+    useEffect(()=>{
 
-        if (marqueeWrapperRefs[index].current) {
+        if ((!showTransition && showTransition !== null) || preloaderPerformed) {
             
-            tl
-            .set(marqueeWrapperRefs[index].current, {y: edge === 'top' ? '-101%' : '101%'}, 0)
-            .to(marqueeWrapperRefs[index].current,{ y: '0%'}, 0)
+            timeline.to([pNumRef.current, pTitleRef.current, descsRef.current, labelRef.current, visitLinkRef.current, nextProjectRef.current],{
+                y: '0%',
+                duration: gsapConfig.duration,
+                ease: gsapConfig.ease,
+                stagger:{
+                    amount: gsapConfig.staggerAmount
+                }
+            })
         }
 
-        
-    }, [revealProject]);
-
-
-    const handleOnMouseLeave = useCallback((e, index) => {
-
-        // find closest side to the mouse
-        const edge = isMouseCloserToTopOrBottom(e, projectsRefs[index].current);
-
-        if (marqueeWrapperRefs[index].current) {
-            
-            tl
-            .to(marqueeWrapperRefs[index].current, {y: edge === 'top' ? '-101%' : '101%'}, 0)
-        }
-
-        setRevealProject(null)
-        setCursorOnLink(null)
-    }, [revealProject]);
-
+    },[showTransition, preloaderPerformed])
 
     return(
-        <section className="works-section">
-                <SectionTitle
-                        reference= {workTitleRef}
-                        text={'selected works'}
-                        classname='works'
-                    />
-                <div ref={workWrapperRef} className="personal-works-wrapper">
-                    
-                    <div ref={workCarouselRef} className="personal-projects-carousel" datatype="">
-                        {
-                            projects.map((value, index)=>{
-                                return (<ProjectCard
-                                    key={index}
-                                    handleOnClick={(e)=> handleOnclick(e,index)}
-                                    handleOnMouseEnter = { (e)=>handleOnMouseEnter(e, index) }
-                                    handleOnMouseLeave = {(e)=>handleOnMouseLeave(e, index) }
-                                    state= {revealProject}
-                                    disableCursor = {revealProject=== index ? true : false}
-                                    marqueeReference= {marqueeWrapperRefs[index]}
-                                    projectReference= {projectsRefs[index]}
-                                    projectData={value}
-                                />)
-                            })
-                        }
+        <section className="project-section">
+            <div className="container">
+                <div className="p-carousel-wrapper">
+                    <div className="p-pics">
+                        <div className="main-pic-dis">
+                            <picture>
+                                <source src="" type="image/webp" />
+                                <img loading="lazy" src={projectData.imgs[currentImage]} alt={projectData.name} srcSet="" />
+                            </picture>
+                        </div>
+                        <div className="carousel-pics"> 
+                            <div className="p-name">
+                                <div className="p-num">
+                                    <span ref={pNumRef}> 
+                                        {
+                                            projectData.id >= 10 
+                                            ? `0${projectData.id}`
+                                            : `00${projectData.id}`
+                                        } 
+                                    </span>
+                                </div>
+                                <div className="p-title"> 
+                                    <span ref={pTitleRef}> { projectData.name } </span>
+                                </div>
+                            </div>
+                            <div className="c-pics">
+                                <div style={{"--index": currentImage}} ref={pcActiveRef} className="p-c-active"></div>
+                                {
+                                    projectData.imgs.map((pic, i)=>{
+                                        return(
+                                            <div
+                                                onClick={()=>handleClickImage(i)}
+                                                key={i} className="c-pic">
+                                                <picture>
+                                                    <source src="" type="image/webp" />
+                                                    <img loading="lazy" src={pic} alt="" srcSet="" />
+                                                </picture>
+                                            </div>
+                                        )
+                                    })
+                                }
+                            </div>
+                            
+                        </div>
                     </div>
                 </div>
-                
-            
+                <div className="p-infos">
+                    
+                    <div className="p-meta">
+                        <div className="p-desc">
+                            { 
+                                projectData.description.map((line, i)=>{
+                                    return(
+                                        <p key={i}>
+                                            <span ref={el=> descsRef.current[i] = el}>{line}</span>
+                                        </p>
+                                    )
+                                })
+                            }
+                        </div>
+                        
+                        <div className="p-more-i">
+                            <div className="p-label">
+                                {
+                                    tableLabelText.map((label, i)=>{
+                                        return (
+                                            <ProjectLabel
+                                                reference = {el => labelRef.current[i] = el}
+                                                key={i}
+                                                data={ projectData[label] }
+                                                labelText={label}
+                                            />
+                                        ) 
+                                    })
+                                }
+                                
+                            </div>
+                        </div>
+                        <div className="p-visit">
+                            <div className="p-v-wrapper">
+                                <a  href={projectData.link}>
+                                    <span ref={visitLinkRef}>
+                                        <span>visit site</span>
+                                        <MdOutlineArrowOutward />
+                                    </span>
+                                    
+                                </a>
+                            </div>
+                            <div className="p-next-lgh">
+                                <div className="n-label">
+                                    <span ref={el=> nextProjectRef.current[0] = el} >next project</span>
+                                </div>
+                                <ProjectLink
+                                    text={nextProjectData.name}
+                                    link={nextProjectData.link}
+                                    reference={el => nextProjectRef.current[1] = el}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {/* <div className="p-next-xlh">
+                    <div className="n-label">
+                        <span>next project</span>
+                    </div>
+                    <ProjectLink
+                        text='next one'
+                        link=''
+                    />
+                </div> */}
+            </div>
         </section>
     )
 }

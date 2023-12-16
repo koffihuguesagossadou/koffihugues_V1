@@ -1,18 +1,24 @@
 import { lazy,createContext, useState, useContext, useRef, useEffect,Suspense, useCallback } from "react";
 import { Routes, Route } from "react-router-dom"
-import Lenis from '@studio-freight/lenis';
 import gsap from "gsap";
 import {HiOutlineArrowUpRight} from "react-icons/hi2"
-import { Navbar } from "./components/Navbar";
-import { useLocation } from "react-router-dom";
 import Preloader from "./components/Preloader";
 import Transition from "./components/Transition";
+import { useLocation } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import Lenis from '@studio-freight/lenis';
 
-const Landing = lazy( ()=> import('./pages/Landing'))
+
+const Landing = lazy( ()=> import('./pages/Landing/Landing'))
+const AboutP = lazy( ()=> import('./pages/About/AboutP') )
+const WorkP = lazy(()=> import('./pages/Work/WorkP'))
+
 
 
 export const PageTransitionContext = createContext();
 export const CursorContext = createContext();
+export const PreloaderContext = createContext();
 
 function LazyLoading() {
   return (
@@ -69,57 +75,59 @@ function Cursor() {
 function App() {
 
   const [cursorOnLink, setCursorOnLink] = useState(null)
-  const [showTransition, setShowTransition] = useState(false)
-  const [showPreloader, setShowPreloader] = useState(true)
+  const [showTransition, setShowTransition] = useState(null)
+  const [preloaderPerformed, setPreloaderPerformed] = useState(false)
   const routeLocation = useLocation()
 
 
   useEffect(()=>{
 
-    const lenis = new Lenis({
-      duration: 3,
-      easing: (t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t)),
-      direction: "vertical",
-      gestureDirection: "vertical",
-      smooth: true,
-      smoothTouch: false,
-      touchMultiplier: 2,
-    });
-  
-    function raf(time) {
-        lenis.raf(time);
-        requestAnimationFrame(raf);
-    }
+    if(routeLocation.pathname !== '/'){
+
+        const lenis = new Lenis({
+        duration: 3,
+        easing: (t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t)),
+        direction: "vertical",
+        gestureDirection: "vertical",
+        smooth: true,
+        smoothTouch: false,
+        touchMultiplier: 2,
+      });
     
-    requestAnimationFrame(raf);
-
-    if (routeLocation.pathname === "/") {
-      setShowPreloader(true)
+      function raf(time) {
+          lenis.raf(time);
+          requestAnimationFrame(raf);
+      }
+      
+      requestAnimationFrame(raf);
     }
-    else{
-      setShowPreloader(false)
-    }
 
-  }, [])
-
+  }, [routeLocation])
 
   return (
+    <PreloaderContext.Provider value={{ preloaderPerformed, setPreloaderPerformed }}>
       <PageTransitionContext.Provider value={{showTransition, setShowTransition}}>
         <CursorContext.Provider value={{ cursorOnLink, setCursorOnLink}}>
             <div id='main-wrapper'>
-
-              {showPreloader && <Preloader />}
+              <Preloader/>
               <Transition/>
               <Navbar/>
-              <Suspense fallback={<LazyLoading/>}>
-                <Routes>
-                  <Route path="/" element={<Landing/>}/>
-                </Routes>
-              </Suspense>
+              <main className="main-content">
+                
+                <Suspense fallback={null}>
+                  <Routes>
+                    <Route index element={<Landing/>}/>
+                    <Route path="/about" element={<AboutP/>}/>
+                    <Route path="/project/:projectName" element={<WorkP />} />
+                  </Routes>
+                </Suspense>
+              </main>
+              {routeLocation.pathname !== '/' && <Footer/>}
             </div>
           <Cursor/>
         </CursorContext.Provider>
       </PageTransitionContext.Provider>
+    </PreloaderContext.Provider>
   )
 }
 
