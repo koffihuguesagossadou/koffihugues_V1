@@ -2,7 +2,7 @@ import { useState, useEffect, useRef,useCallback,useContext } from "react";
 import gsap from "gsap";
 import { useParams } from "react-router-dom";
 import { projects } from "../data/project";
-import { findObject } from "../funcs/app";
+import { findObject, pageAnimation } from "../funcs/app";
 import { MdOutlineArrowOutward } from "react-icons/md";
 import { ProjectLink } from "../components/Links";
 import { gsapConfig } from "../config/defaults";
@@ -35,7 +35,6 @@ export default function Works() {
     const nextProjectData = findObject(projects, 'id', projectData.id + 1)
     const [currentImage, setCurrentImage] = useState(0)
     const pcActiveRef = useRef()
-    const timeline = gsap.timeline()
 
     const pNumRef = useRef()
     const pTitleRef = useRef()
@@ -50,17 +49,21 @@ export default function Works() {
 
     useEffect(()=>{
 
-        if ((!showTransition && showTransition !== null) || preloaderPerformed) {
+        pageAnimation(showTransition, preloaderPerformed, 
+            [pNumRef.current, pTitleRef.current, descsRef.current, labelRef.current, visitLinkRef.current, nextProjectRef.current]
+        )
+
+        // if ((!showTransition && showTransition !== null) || preloaderPerformed) {
             
-            timeline.to([pNumRef.current, pTitleRef.current, descsRef.current, labelRef.current, visitLinkRef.current, nextProjectRef.current],{
-                y: '0%',
-                duration: gsapConfig.duration,
-                ease: gsapConfig.ease,
-                stagger:{
-                    amount: gsapConfig.staggerAmount
-                }
-            })
-        }
+        //     timeline.to([pNumRef.current, pTitleRef.current, descsRef.current, labelRef.current, visitLinkRef.current, nextProjectRef.current],{
+        //         y: '0%',
+        //         duration: gsapConfig.duration,
+        //         ease: gsapConfig.ease,
+        //         stagger:{
+        //             amount: gsapConfig.staggerAmount
+        //         }
+        //     })
+        // }
 
     },[showTransition, preloaderPerformed])
 

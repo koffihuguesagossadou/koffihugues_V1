@@ -1,12 +1,11 @@
 import { useState, useEffect,useCallback, useRef } from "react"
-import gsap from "gsap";
 import { MenuLink } from "./Links";
 import { useContext } from "react";
 import { PageTransitionContext, PreloaderContext } from "../App";
 import { useLocation, Link } from "react-router-dom";
 import { GoArrowLeft } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
-import { gsapConfig } from "../config/defaults";
+import { pageAnimation } from "../funcs/app";
 
 
 function Navbar() {
@@ -19,16 +18,14 @@ function Navbar() {
     const [currentHour, setCurrentHour] = useState(0);
     const [currentMinute, setCurrentMinute] = useState(0);
     const [currentSecond, setCurrentSecond] = useState(0)
-    const timeline = gsap.timeline()
+
+    const localTimeRef = useRef()
+
     const routeLocation = useLocation()
     const navigate = useNavigate()
 
 
-    const handleClickedLink = useCallback(()=>{
-        
-        setShowTransition(true)
 
-    })
     
     const asyncHandleClickedLink = useCallback((e, location)=>{
         
@@ -42,16 +39,8 @@ function Navbar() {
       
     useEffect(()=>{
 
-        console.log(showTransition, preloaderPerformed)
-
-        if((!showTransition && showTransition !== null) || preloaderPerformed ){
-            timeline.to('.al-text',{
-                y: '0',
-                duration: gsapConfig.duration,
-                ease: gsapConfig.ease
-            })
-        }
-
+        const target = localTimeRef.current
+        pageAnimation(showTransition, preloaderPerformed, target)
 
         // Function to update the current time components
         const updateCurrentTime = () => {
@@ -59,17 +48,14 @@ function Navbar() {
             setCurrentHour(currentTime.getUTCHours());
             setCurrentMinute(currentTime.getUTCMinutes());
             setCurrentSecond(currentTime.getUTCSeconds());
-            };
-    
-            // Set up an interval to update the time components every second
-            const intervalId = setInterval(updateCurrentTime, 1000);
-    
-            
+        };
 
-        
+        // Set up an interval to update the time components every second
+        const intervalId = setInterval(updateCurrentTime, 1000);
 
         // Clean up the interval when the component unmounts
         return () => clearInterval(intervalId);
+
     }, [routeLocation, showTransition, preloaderPerformed])
 
 
@@ -101,7 +87,7 @@ function Navbar() {
                         </div>
                         <div className="availability-wrapper">
                             <div className="local-time-wrapper">
-                                <div>
+                                <div ref={localTimeRef}>
                                     <span className="al-text">abidjan</span>
                                     <span className="al-text">
                                         {currentHour.toString().length === 2 ? currentHour : '0'+currentHour}

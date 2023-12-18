@@ -145,51 +145,100 @@ export const projects = [
 
 export const archivesProject = [
     {
-        name:"Quisque suscipit",
-        description:"Suspeendiss vestibulum gravida fermentum. Ut finibus feugiat ex nec vehicula. Sed et leo velit. Suspendisse ac nisl tortor. Donec consectetur aliquam aliquet. Vestibulum nulla eros",
-        skills:[
-            'reactjs', 'js',
+        "name": "Lorem Ipsum",
+        "year": 2023,
+        "client": "Lorem Client",
+        "stacks": [
+            "angular", "typescript"
         ],
-        link:"Suspeendiss"
+        "links": {
+            "visit": "https://example.com",
+            "github": "https://github.com/example"
+        }
     },
     {
-        name:"Quisque suscipit",
-        description:"Suspeendiss vestibulum gravida fermentum. Ut finibus feugiat ex nec vehicula. Sed et leo velit. Suspendisse ac nisl tortor. Donec consectetur aliquam aliquet. Vestibulum nulla eros",
-        skills:[
-            'reactjs', 'js',
+        "name": "Vivamus Egestas",
+        "year": 2022,
+        "client": "Egestas Client",
+        "stacks": [
+            "vuejs", "javascript"
         ],
-        link:"Suspeendiss"
+        "links": {
+            "visit": "https://egestas.com",
+            "github": "https://github.com/egestas"
+        }
     },
     {
-        name:"Quisque suscipit",
-        description:"Suspeendiss vestibulum gravida fermentum. Ut finibus feugiat ex nec vehicula. Sed et leo velit. Suspendisse ac nisl tortor. Donec consectetur aliquam aliquet. Vestibulum nulla eros",
-        skills:[
-            'reactjs', 'js',
+        "name": "Pellentesque Gravida",
+        "year": 2023,
+        "client": "Gravida Client",
+        "stacks": [
+            "angular", "typescript"
         ],
-        link:"Suspeendiss"
+        "links": {
+            "visit": "https://gravida.net",
+            "github": "https://github.com/gravida"
+        }
     },
     {
-        name:"Quisque suscipit",
-        description:"Suspeendiss vestibulum gravida fermentum. Ut finibus feugiat ex nec vehicula. Sed et leo velit. Suspendisse ac nisl tortor. Donec consectetur aliquam aliquet. Vestibulum nulla eros",
-        skills:[
-            'reactjs', 'js',
+        "name": "Integer Mollis",
+        "year": 2022,
+        "client": "Mollis Client",
+        "stacks": [
+            "reactjs", "python"
         ],
-        link:"Suspeendiss"
+        "links": {
+            "visit": "https://integermollis.org",
+            "github": "https://github.com/integermollis"
+        }
     },
     {
-        name:"Quisque suscipit",
-        description:"Suspeendiss vestibulum gravida fermentum. Ut finibus feugiat ex nec vehicula. Sed et leo velit. Suspendisse ac nisl tortor. Donec consectetur aliquam aliquet. Vestibulum nulla eros",
-        skills:[
-            'reactjs', 'js',
+        "name": "Aenean Consectetur",
+        "year": 2023,
+        "client": "Consectetur Client",
+        "stacks": [
+            "vuejs", "java"
         ],
-        link:"Suspeendiss"
+        "links": {
+            "visit": "https://consectetur.io",
+            "github": "https://github.com/consectetur"
+        }
     },
     {
-        name:"Quisque suscipit",
-        description:"Suspeendiss vestibulum gravida fermentum. Ut finibus feugiat ex nec vehicula. Sed et leo velit. Suspendisse ac nisl tortor. Donec consectetur aliquam aliquet. Vestibulum nulla eros",
-        skills:[
-            'reactjs', 'js',
+        "name": "Fusce Dignissim",
+        "year": 2022,
+        "client": "Dignissim Client",
+        "stacks": [
+            "angular", "ruby"
         ],
-        link:"Suspeendiss"
+        "links": {
+            "visit": "https://fuscedignissim.com",
+            "github": "https://github.com/fuscedignissim"
+        }
     },
+    {
+        "name": "Sed Euismod",
+        "year": 2023,
+        "client": "Euismod Client",
+        "stacks": [
+            "reactjs", "c#"
+        ],
+        "links": {
+            "visit": "https://sedeuismod.net",
+            "github": "https://github.com/sedeuismod"
+        }
+    },
+    {
+        "name": "Lorem Suspendisse",
+        "year": 2022,
+        "client": "Suspendisse Client",
+        "stacks": [
+            "vuejs", "php"
+        ],
+        "links": {
+            "visit": "https://loremsuspendisse.com",
+            "github": "https://github.com/loremsuspendisse"
+        }
+    }
+    
 ]

@@ -77,34 +77,36 @@ nav{
         flex-direction: column;
         justify-content: center;
         align-items: center;
-
-        div{
+        .local-time-wrapper{
             overflow: hidden;
-            display: flex;
-            align-items: center;
-            span{
-                font-size: $size-5;
-                text-transform: uppercase;
-                display: inline-block;
+
+            div{
+                display: flex;
+                align-items: center;
                 transform: translate3d(0, 100%, 0);
-    
-                &:nth-child(1){
-                    margin-right: $margin-6;
-                    @media screen and (max-width: 768px) {
-                        display: none;
+                span{
+                    font-size: $size-5;
+                    text-transform: uppercase;
+                    display: inline-block;
+        
+                    &:nth-child(1){
+                        margin-right: $margin-6;
+                        @media screen and (max-width: 768px) {
+                            display: none;
+                        }
                     }
-                }
-                &:nth-child(3){
-                    margin-left: $margin-6;
-                    @media screen and (max-width: 768px) {
-                        display: none;
+                    &:nth-child(3){
+                        margin-left: $margin-6;
+                        @media screen and (max-width: 768px) {
+                            display: none;
+                        }
                     }
+                    
                 }
                 
+    
+                
             }
-            
-
-            
         }
     }
 

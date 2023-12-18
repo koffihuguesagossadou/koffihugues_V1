@@ -1,8 +1,7 @@
 import { useRef, useEffect, useContext } from "react"
-import { splitWord } from "../funcs/app"
+import { pageAnimation, splitWord } from "../funcs/app"
 import gsap from "gsap"
-import { Link, useLocation } from "react-router-dom"
-import { gsapConfig } from "../config/defaults"
+import { useLocation } from "react-router-dom"
 import { PageTransitionContext, PreloaderContext } from "../App"
 
 export function SocialMedia({name, href}) {
@@ -10,23 +9,12 @@ export function SocialMedia({name, href}) {
     const {showTransition, } = useContext(PageTransitionContext)
     const { preloaderPerformed } = useContext(PreloaderContext)
 
-    const timeline = gsap.timeline()
     const locator = useLocation()
     const noCloneRef = useRef()
     
     useEffect(()=>{
 
-        if((!showTransition && showTransition !== null) || preloaderPerformed){
-
-            timeline.to('.fst-smm',{
-                y: '0%',
-                duration: gsapConfig.duration,
-                ease: gsapConfig.ease,
-                stagger : {
-                    amount: gsapConfig.staggerAmount - .2
-                }
-            })
-        }
+        pageAnimation(showTransition, preloaderPerformed, noCloneRef.current)
 
 
 
@@ -72,22 +60,14 @@ export function MenuLink({name, revealText, link, handleClick, children}){
     const {showTransition, } = useContext(PageTransitionContext)
     const { preloaderPerformed } = useContext(PreloaderContext)
 
-    const timeline = gsap.timeline()
+    const linkWrapperRef = useRef()
+
     const routeLocation = useLocation()
 
     useEffect(()=>{
 
-        if((!showTransition && showTransition !== null) || preloaderPerformed){
-
-            timeline.to('.fst-sm',{
-                y: '0%',
-                duration: gsapConfig.duration,
-                ease: gsapConfig.ease,
-                stagger:{
-                    amount: gsapConfig.staggerAmount - .2
-                }
-            })
-        }
+        
+        pageAnimation(showTransition, preloaderPerformed, linkWrapperRef.current)
 
 
     }, [routeLocation, showTransition, preloaderPerformed])
@@ -97,7 +77,7 @@ export function MenuLink({name, revealText, link, handleClick, children}){
         <li className="menu-link">
             <a onClick={handleClick} href={link}>
                 <div >
-                    <div className="fst-sm">
+                    <div ref={linkWrapperRef} className="fst-sm">
                         {
                             splitWord(name).map((char, i)=>{
                                 return (

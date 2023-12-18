@@ -1,9 +1,9 @@
 import { useEffect,useRef,useContext } from 'react'
 import {developerExperience, skills} from '../data/experience'
-import { gsapConfig } from '../config/defaults'
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import gsap from 'gsap'
 import { PageTransitionContext, PreloaderContext } from '../App';
+import { pageAnimation } from '../funcs/app';
 gsap.registerPlugin(ScrollTrigger)
 
 
@@ -14,31 +14,17 @@ export function About() {
     const {showTransition} = useContext(PageTransitionContext)
     const { preloaderPerformed } = useContext(PreloaderContext)
 
-    const timeline = gsap.timeline()
 
-    const workWithRef = {
-        title: useRef(),
-        wrapper: useRef(),
-        separator: useRef()
-    }
 
     const expsRef = useRef([])
     const skillsRef = useRef([])
 
 
     useEffect(()=>{
-
-        if((!showTransition && showTransition !== null) || preloaderPerformed){
-
-            timeline.to(['.fn-letter', 'p>span','div>h3' ,expsRef.current, skillsRef.current], {
-                y: '0%',
-                duration: gsapConfig.duration,
-                ease: gsapConfig.ease,
-                stagger:{
-                    amount: gsapConfig.staggerAmount
-                }
-            })
-        }
+        
+        const targets = ['.fn-letter', 'p>span','div>h3' ,expsRef.current, skillsRef.current]
+        
+        pageAnimation(showTransition, preloaderPerformed, targets)
 
         
     }, [showTransition, preloaderPerformed])
