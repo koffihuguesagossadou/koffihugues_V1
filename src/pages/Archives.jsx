@@ -1,26 +1,122 @@
-function Archives(params) {
+import { MdOutlineArrowOutward } from "react-icons/md"
+import { LuGithub } from "react-icons/lu";
+import { archivesProject } from "../data/project"
+import { useEffect, useRef, useContext } from "react";
+import { pageAnimation } from "../funcs/app";
+import { PageTransitionContext, PreloaderContext } from "../App";
+
+function ArchiveLine({name, year, client, stacks, links, reference}){
+
+        
+    return(
+        
+        <div  className="ar-dis">
+            <div className="a-g" ref={reference}>
+                <div className="ar-n">
+                    <span className="an">
+                        <span>{name}</span>
+                    </span>
+                </div>
+                <div className="ar-y">
+                    <span className="ay">
+                        <span>{year}</span>
+                    </span>
+                </div>
+                <div className="ar-c">
+                    <span className="ac">
+                        <span>{client}</span>
+                    </span>
+                </div>
+                <div className="ar-s">
+                    <span className="as">
+                        {
+                            stacks.map((stack, num)=>{
+                                return (
+                                    <span key={num} > {stack} </span>
+                                )
+                            })
+                        }
+                    </span>
+                </div>
+                <div className="ar-l">
+                    <span className="al">
+                        
+                        {
+                            links.visit
+                            ? <a  target="_blank" href= {links.visit} > <MdOutlineArrowOutward /> </a>
+                            : null
+                        }
+                        {
+                            links.github
+                            ? <a target="_blank" href={ links.github  }> <LuGithub /> </a>
+                            : null
+                        }
+
+                    </span>
+                </div>
+            </div>
+
+        </div>
+    )
+}
+
+export function Archives() {
+
+    const archivesRef = useRef([])
+    const labelRef = useRef()
+    const arcTitleRef = useRef()
+    const { showTransition } = useContext(PageTransitionContext)
+    const { preloaderPerformed } = useContext(PreloaderContext)
+ 
+    useEffect(()=>{
+        console.log(showTransition, preloaderPerformed)
+
+        
+        pageAnimation(showTransition, preloaderPerformed, [arcTitleRef.current,labelRef.current,...archivesRef.current])
+        
+    }, [showTransition, preloaderPerformed])
+
+
 
     return(
         
         <section className="archives-section">
             <div className="archives-container container">
-
                 <div className="archive-projects-wrapper">
-                    <div className="ap-title">
-                        <h2>archives</h2>
+                    <div className="title-wrapper">
+                        <div className="ar-t">
+                            <span ref={arcTitleRef}>Archives</span>
+                        </div>
                     </div>
-                    <div className="archives-projects-items">
-                        {
-                            archivesProject.map((value, index) => {
-                                return <ArchiveProject
-                                    key={index}
-                                    name={value.name}
-                                    link={value.link}
-                                    description={value.description}
-                                    skills={value.skills}
-                                />
-                            })
-                        }
+                    <div className="archives-display-container">
+                        <div className="arcs-l">
+                            <div ref={labelRef} className="l-g">
+                                <div className="l-n">
+                                    <span>Name</span>
+                                </div>
+                                <div className="l-y">
+                                    <span>year</span>
+                                </div>
+                                <div className="l-c">
+                                    <span>client</span>
+                                </div>
+                                <div className="l-s">
+                                    <span>stacks</span>
+                                </div>
+                                <div className="l-l">
+                                    <span>links</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="arcs-d">
+                            {
+                                archivesProject.map((archive, id)=>{
+                                    return(
+                                        <ArchiveLine key={id} reference = {el=> archivesRef.current[id] = el} {...archive} />
+                                    )
+                                })
+                            }
+                        </div>
                     </div>
                 </div>
             </div>

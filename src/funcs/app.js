@@ -1,4 +1,5 @@
-import { useNavigate } from "react-router-dom";
+import gsap from "gsap";
+import { gsapConfig } from "../config/defaults";
 
 
 export function splitWord(word){
@@ -57,4 +58,25 @@ export const NavigateAsync = (reachRoute,time)=>{
             reachRoute
         }, time)
     
+}
+
+
+export function pageAnimation(isTransitionPage, isPreloader, ...elements){
+
+    const timeline = gsap.timeline()
+
+
+    if( (!isTransitionPage && isTransitionPage !== null ) || isPreloader )
+    {
+        timeline.to(...elements,{
+            y: '0%',
+            ease: gsapConfig.ease,
+            duration: gsapConfig.duration,
+            stagger:{
+                amount: gsapConfig.staggerAmount
+            }
+        })
+    }
+
+
 }

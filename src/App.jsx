@@ -13,6 +13,8 @@ import Lenis from '@studio-freight/lenis';
 const Landing = lazy( ()=> import('./pages/Landing/Landing'))
 const AboutP = lazy( ()=> import('./pages/About/AboutP') )
 const WorkP = lazy(()=> import('./pages/Work/WorkP'))
+const ArchiveP = lazy(()=> import('./pages/Archive/ArchiveP'))
+
 
 
 
@@ -119,6 +121,7 @@ function App() {
                     <Route index element={<Landing/>}/>
                     <Route path="/about" element={<AboutP/>}/>
                     <Route path="/project/:projectName" element={<WorkP />} />
+                    <Route path="/archives" element={ <ArchiveP /> } />
                   </Routes>
                 </Suspense>
               </main>
