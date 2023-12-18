@@ -4,3 +4,5 @@ export const gsapConfig = {
     ease: 'power4.out',
     staggerAmount: .5
 }
+
+export const routes = ['/', '/archives/', '/about']

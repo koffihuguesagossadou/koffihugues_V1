@@ -4,17 +4,18 @@ import gsap from "gsap";
 import {HiOutlineArrowUpRight} from "react-icons/hi2"
 import Preloader from "./components/Preloader";
 import Transition from "./components/Transition";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate, matchRoutes } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Lenis from '@studio-freight/lenis';
+import { useMemo } from "react";
 
 
 const Landing = lazy( ()=> import('./pages/Landing/Landing'))
 const AboutP = lazy( ()=> import('./pages/About/AboutP') )
 const WorkP = lazy(()=> import('./pages/Work/WorkP'))
 const ArchiveP = lazy(()=> import('./pages/Archive/ArchiveP'))
-
+const ErrorP = lazy(()=> import ('./pages/Error/ErrorP') )
 
 
 
@@ -79,10 +80,35 @@ function App() {
   const [cursorOnLink, setCursorOnLink] = useState(null)
   const [showTransition, setShowTransition] = useState(null)
   const [preloaderPerformed, setPreloaderPerformed] = useState(false)
+  const [errorpage, isErrorPage] = useState(true)
   const routeLocation = useLocation()
 
+  const routes = [
+    { 
+      path: '/',
+      label: 'index',
+    }, 
+    {
+      path: '/about',
+      label: 'about page',
+    }, 
+    {
+      path: '/archives',
+      label: 'archives page',
+    }, 
+    {
+      path: '/project/:projectName',
+      label: 'project page',
+    }
+  ]
 
+  const match = useMemo(()=>{
+    return matchRoutes(routes, routeLocation)
+  }, [])
+  
   useEffect(()=>{
+
+
 
     if(routeLocation.pathname !== '/'){
 
@@ -104,28 +130,29 @@ function App() {
       requestAnimationFrame(raf);
     }
 
-  }, [routeLocation])
+  }, [routeLocation, errorpage, match])
 
   return (
     <PreloaderContext.Provider value={{ preloaderPerformed, setPreloaderPerformed }}>
       <PageTransitionContext.Provider value={{showTransition, setShowTransition}}>
         <CursorContext.Provider value={{ cursorOnLink, setCursorOnLink}}>
             <div id='main-wrapper'>
-              <Preloader/>
-              <Transition/>
-              <Navbar/>
+              { match !== null && <Preloader/>}
+              { match !== null &&  <Transition/>}
+              { match !== null && <Navbar/>}
               <main className="main-content">
                 
                 <Suspense fallback={null}>
                   <Routes>
-                    <Route index element={<Landing/>}/>
+                    <Route index path="/" element={<Landing/>}/>
                     <Route path="/about" element={<AboutP/>}/>
                     <Route path="/project/:projectName" element={<WorkP />} />
                     <Route path="/archives" element={ <ArchiveP /> } />
+                    <Route path="*" element={<ErrorP />} />
                   </Routes>
                 </Suspense>
               </main>
-              {routeLocation.pathname !== '/' && <Footer/>}
+              { match !== null &&  routeLocation.pathname !== '/' && <Footer/>}
             </div>
           <Cursor/>
         </CursorContext.Provider>

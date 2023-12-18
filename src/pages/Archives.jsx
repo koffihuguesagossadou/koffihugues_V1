@@ -69,7 +69,6 @@ export function Archives() {
     const { preloaderPerformed } = useContext(PreloaderContext)
  
     useEffect(()=>{
-        console.log(showTransition, preloaderPerformed)
 
         
         pageAnimation(showTransition, preloaderPerformed, [arcTitleRef.current,labelRef.current,...archivesRef.current])
