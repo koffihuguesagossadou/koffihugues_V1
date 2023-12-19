@@ -130,12 +130,12 @@ export function DefaultLink({text, url}) {
     )
 }
 
-export function ProjectLink({text, url, reference}) {
+export function ProjectLink({text, link, reference, handleClick}) {
 
 
     return(
         <div className="project-links-wrapper">
-            <a className="project-link" href={url}>
+            <a onClick={handleClick} className="project-link">
                 <div>
                     <div ref={reference} className="a-p">
                         {

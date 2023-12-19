@@ -25,8 +25,9 @@ function ProjectLabel({labelText, data, reference}) {
 
 export default function Works() {
 
-    const {showTransition} = useContext(PageTransitionContext)
+    const {showTransition, setShowTransition} = useContext(PageTransitionContext)
     const { preloaderPerformed } = useContext(PreloaderContext)
+
     const navigate = useNavigate()
 
     const { projectName } = useParams();
@@ -51,26 +52,25 @@ export default function Works() {
         setCurrentImage(imageId)
     })
 
+
+    const handleCLickNext = useCallback((slug)=>{
+        setShowTransition(true)
+        
+        setTimeout(()=>{
+            navigate(`/project/${slug}`)
+        }, 1500)
+    })
+
     useEffect(()=>{
 
-
+        console.log(nextProjectData)
         if( projectData === null) navigate('*')
 
         pageAnimation(showTransition, preloaderPerformed, 
             [pNumRef.current, pTitleRef.current, descsRef.current, labelRef.current, visitLinkRef.current, nextProjectRef.current]
         )
 
-        // if ((!showTransition && showTransition !== null) || preloaderPerformed) {
-            
-        //     timeline.to([pNumRef.current, pTitleRef.current, descsRef.current, labelRef.current, visitLinkRef.current, nextProjectRef.current],{
-        //         y: '0%',
-        //         duration: gsapConfig.duration,
-        //         ease: gsapConfig.ease,
-        //         stagger:{
-        //             amount: gsapConfig.staggerAmount
-        //         }
-        //     })
-        // }
+        
 
     },[showTransition, preloaderPerformed])
 
@@ -169,7 +169,7 @@ export default function Works() {
                                 </div>
                                 <ProjectLink
                                     text={nextProjectData.name}
-                                    link={nextProjectData.link}
+                                    handleClick={ ()=>handleCLickNext(nextProjectData.slug) }
                                     reference={el => nextProjectRef.current[1] = el}
                                 />
                             </div>
