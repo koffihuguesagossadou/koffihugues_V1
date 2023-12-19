@@ -1,12 +1,11 @@
 import { useState, useEffect, useRef,useCallback,useContext } from "react";
-import gsap from "gsap";
 import { useParams } from "react-router-dom";
 import { projects } from "../data/project";
 import { findObject, pageAnimation } from "../funcs/app";
 import { MdOutlineArrowOutward } from "react-icons/md";
 import { ProjectLink } from "../components/Links";
-import { gsapConfig } from "../config/defaults";
 import { PageTransitionContext, PreloaderContext } from "../App";
+import { useNavigate } from "react-router-dom";
 
 const metaDataTableLenght = 4;
 const tableLabelText = ["client", "role", "year", "skills"]
@@ -26,13 +25,19 @@ function ProjectLabel({labelText, data, reference}) {
 
 export default function Works() {
 
-    const {showTransition} = useContext(PageTransitionContext)
+    const {showTransition, setShowTransition} = useContext(PageTransitionContext)
     const { preloaderPerformed } = useContext(PreloaderContext)
-    
+
+    const navigate = useNavigate()
 
     const { projectName } = useParams();
-    let projectData = findObject(projects, 'slug', projectName);
-    const nextProjectData = findObject(projects, 'id', projectData.id + 1)
+    let projectData = findObject(projects, 'slug', projectName) ?? null;
+
+    if (projectData === null) {
+        return navigate('/')
+    }
+
+    const nextProjectData = findObject(projects, 'id', projectData.id + 1) ?? null;
     const [currentImage, setCurrentImage] = useState(0)
     const pcActiveRef = useRef()
 
@@ -47,23 +52,25 @@ export default function Works() {
         setCurrentImage(imageId)
     })
 
+
+    const handleCLickNext = useCallback((slug)=>{
+        setShowTransition(true)
+        
+        setTimeout(()=>{
+            navigate(`/project/${slug}`)
+        }, 1500)
+    })
+
     useEffect(()=>{
+
+        console.log(nextProjectData)
+        if( projectData === null) navigate('*')
 
         pageAnimation(showTransition, preloaderPerformed, 
             [pNumRef.current, pTitleRef.current, descsRef.current, labelRef.current, visitLinkRef.current, nextProjectRef.current]
         )
 
-        // if ((!showTransition && showTransition !== null) || preloaderPerformed) {
-            
-        //     timeline.to([pNumRef.current, pTitleRef.current, descsRef.current, labelRef.current, visitLinkRef.current, nextProjectRef.current],{
-        //         y: '0%',
-        //         duration: gsapConfig.duration,
-        //         ease: gsapConfig.ease,
-        //         stagger:{
-        //             amount: gsapConfig.staggerAmount
-        //         }
-        //     })
-        // }
+        
 
     },[showTransition, preloaderPerformed])
 
@@ -162,7 +169,7 @@ export default function Works() {
                                 </div>
                                 <ProjectLink
                                     text={nextProjectData.name}
-                                    link={nextProjectData.link}
+                                    handleClick={ ()=>handleCLickNext(nextProjectData.slug) }
                                     reference={el => nextProjectRef.current[1] = el}
                                 />
                             </div>

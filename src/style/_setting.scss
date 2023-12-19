@@ -124,6 +124,14 @@ $cb1: cubic-bezier(.35,1.09,1,.95);
     transition: var(--pointer) var(--duration) ease-in-out;
 }
 
+@mixin pseudoElements{
+    content: '';
+    position: absolute;
+    display: block;
+    left: 0;
+    bottom: 0;
+}
+
 
 // LINKS EFFECTS
 
@@ -332,4 +340,5 @@ $cb1: cubic-bezier(.35,1.09,1,.95);
 @import './about';
 @import './works';
 @import './contact';
-@import './archives'
+@import './archives';
+@import './error';

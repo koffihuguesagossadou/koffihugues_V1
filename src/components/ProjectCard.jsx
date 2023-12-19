@@ -169,7 +169,6 @@ export function ProjectsCards({gap = 0.3, imageW = 2.5, damping=0.3 }) {
         const isVerticalScroll = Math.abs(e.deltaY) > Math.abs(e.deltaX);
          const wheelProgress = isVerticalScroll ? e.deltaY : e.deltaX;
          progress.current = progress.current + wheelProgress * speedWheel;
-        console.log(progress.current)
     }
 
     /*--------------------

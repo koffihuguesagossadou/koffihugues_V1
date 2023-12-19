@@ -80,3 +80,4 @@ export function pageAnimation(isTransitionPage, isPreloader, ...elements){
 
 
 }
+
