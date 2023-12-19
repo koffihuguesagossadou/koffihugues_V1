@@ -5,4 +5,21 @@ export const gsapConfig = {
     staggerAmount: .5
 }
 
-export const routes = ['/', '/archives/', '/about']
+export const routes = [
+    { 
+      path: '/',
+      label: 'index',
+    }, 
+    {
+      path: '/about',
+      label: 'about page',
+    }, 
+    {
+      path: '/archives',
+      label: 'archives page',
+    }, 
+    {
+      path: '/project/:projectName',
+      label: 'project page',
+    }
+  ]

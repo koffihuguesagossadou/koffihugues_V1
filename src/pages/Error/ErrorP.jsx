@@ -1,4 +1,8 @@
 function ErrorP(params) {
+
+
+    
+
     return(
         <div className="error-p">
             <div className="e-w">
