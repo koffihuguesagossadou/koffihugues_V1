@@ -1,7 +1,6 @@
 import { useRef, useMemo, useContext, useCallback, useEffect, useState } from "react"
-import { projects } from "../data/project"
-import { useFrame, useLoader, useThree } from "@react-three/fiber"
-import { TextureLoader, MathUtils } from "three"
+import { useFrame, useThree } from "@react-three/fiber"
+import {  MathUtils } from "three"
 import { Image, Html } from '@react-three/drei';
 import {  PageTransitionContext } from "../App";
 

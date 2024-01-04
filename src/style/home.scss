@@ -72,12 +72,12 @@ nav{
     
     }
 
-    .availability-wrapper{
+    .availability-wrapper,.address-wrapper{
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        .local-time-wrapper{
+        .local-time-wrapper, .local-address-wrapper{
             overflow: hidden;
 
             div{
