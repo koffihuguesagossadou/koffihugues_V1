@@ -103,7 +103,7 @@
 
 
                 display: grid;
-                grid-template-columns: repeat(6, var(--picWidth));
+                grid-template-columns: repeat(7, var(--picWidth));
                 height: var(--picHeight);
                 column-gap: var(--gap);
                 position: relative;
@@ -133,6 +133,7 @@
                         height: 100%;
                         width: 100%;
                         source{
+                            display: block;
                             width: 100%;
                             height: 100%;
                         }
@@ -243,6 +244,8 @@
                 }
                 .project-links-wrapper{
                     .project-link{
+                        cursor: pointer;
+
                         >div{
                             overflow: hidden;
                             .a-p{
@@ -280,6 +283,7 @@
 
     .project-links-wrapper{
         margin-top: $margin-4;
+
         span{
             font-size: $size-1;
             font-family: $special-font

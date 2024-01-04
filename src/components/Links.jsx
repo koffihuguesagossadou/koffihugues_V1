@@ -22,7 +22,7 @@ export function SocialMedia({name, href}) {
 
     return(
         <div className={`smm ${name}`}>
-            <a href={name === 'email' 
+            <a target="_blank" href={name === 'email' 
                 ? `mailto:${href}`
                 : href
             }>
@@ -130,8 +130,9 @@ export function DefaultLink({text, url}) {
     )
 }
 
-export function ProjectLink({text, link, reference, handleClick}) {
+export function ProjectLink({text, reference, handleClick}) {
 
+    
 
     return(
         <div className="project-links-wrapper">
@@ -139,7 +140,7 @@ export function ProjectLink({text, link, reference, handleClick}) {
                 <div>
                     <div ref={reference} className="a-p">
                         {
-                            splitWord(text).map((char, i)=>{
+                            splitWord(text??'').map((char, i)=>{
                                 return (
                                     <span style={{"--index": i}} key={i} className="sm letter">{char === " " ? <pre> </pre> : char}</span>
                                 )
@@ -150,7 +151,7 @@ export function ProjectLink({text, link, reference, handleClick}) {
 
                 <div className="project-link-clone">
                     {
-                        splitWord(text).map((char, i)=>{
+                        splitWord(text??'').map((char, i)=>{
                             return (
                                 <span style={{"--index": i}} key={i} className="sm letter">{char === " " ? <pre> </pre> : char}</span>
                             )

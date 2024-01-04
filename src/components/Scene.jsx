@@ -18,6 +18,7 @@ import { Preload } from '@react-three/drei';
             <Preload />
         </Canvas>
         
+        
     )
 }
 

@@ -1,7 +1,8 @@
+import useDocumentTitle from "../../Hook/useDocumentTitle";
+
 function ErrorP(params) {
 
-
-    
+    useDocumentTitle('Error | 404 not found') 
 
     return(
         <div className="error-p">

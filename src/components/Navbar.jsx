@@ -33,7 +33,7 @@ function Navbar() {
         setShowTransition(true)
         setTimeout(()=>{
             navigate(location)
-        }, 1500)
+        }, 1000)
 
     })
       

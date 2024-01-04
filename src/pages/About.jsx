@@ -1,10 +1,7 @@
-import { useEffect,useRef,useContext } from 'react'
-import {developerExperience, skills} from '../data/experience'
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import gsap from 'gsap'
+import { useEffect,useRef,useContext, useState } from 'react'
+import { dbConfig } from '../config/defaults';
 import { PageTransitionContext, PreloaderContext } from '../App';
-import { pageAnimation } from '../funcs/app';
-gsap.registerPlugin(ScrollTrigger)
+import { pageAnimation, retrieveData } from '../funcs/app';
 
 
 export function About() {
@@ -13,21 +10,39 @@ export function About() {
     // const aboutTitleRef = useRef(null)
     const {showTransition} = useContext(PageTransitionContext)
     const { preloaderPerformed } = useContext(PreloaderContext)
-
+    const [getInfos, setInfos] = useState({})
 
 
     const expsRef = useRef([])
     const skillsRef = useRef([])
 
+    const file = 'me.json'
 
-    useEffect(()=>{
+    
+
+
+    useEffect( ()=>{
         
+        const url = dbConfig.dns+dbConfig.path+file
+
+
+        if(Object.keys(getInfos).length === 0){
+
+            retrieveData(url)
+            .then( response => {
+    
+                if(!response) return
+    
+                setInfos({...response})
+            })
+        }
+
+
         const targets = ['.fn-letter', 'p>span','div>h3' ,expsRef.current, skillsRef.current]
-        
         pageAnimation(showTransition, preloaderPerformed, targets)
 
         
-    }, [showTransition, preloaderPerformed])
+    }, [showTransition, preloaderPerformed, getInfos])
 
     return(
                 
@@ -37,16 +52,21 @@ export function About() {
                 <div className="name-title">
                     <div className="first-name">
                         {
-                            'KOFFI HUGUES'.split('').map((char, i)=>{
+
+                            getInfos.firstname
+                            ?
+                            getInfos.firstname.split('').map((char, i)=>{
                                 return (
-                                    <span key={i} className='fn-letter'>{char}</span>
+                                    
+                                    char === " "?  <span key={i}>&nbsp;</span> :<span key={i} className='fn-letter'>{char}</span>
                                 )
                             })
+                            :null
                         }
                     </div>
                     <div className="last-name">
                         {
-                            'AGOSSADOU'.split('').map((char, i)=>{
+                            getInfos.lastname?.split('').map((char, i)=>{
                                 return (
                                     <span key={i} className='fn-letter'>{char}</span>
                                 )
@@ -58,18 +78,22 @@ export function About() {
                     <div className="description-wrapper">
                         <div className='description-p'>
                             <p className='job-role'>
-                                <span><em>full stack and creative developer</em> from Abidjan (Ivory Coast).</span>
+                                <span><em>{getInfos.job}</em> from {getInfos.location}.</span>
                             </p>
-                            <p>
-                                <span>
-                                    I meet people needs by building interactive and smoothly websites.
-                                </span>
-                            </p>
-                            <p>
-                                <span>
-                                    I'm multi-skilled and stay updated with the newest web trends.
-                                </span>
-                            </p>
+                            {
+                                getInfos.biography
+                                ? 
+                                getInfos.biography.map((line, i)=>{
+                                    return(
+                                        <p key={i}>
+                                            <span>
+                                                {line}
+                                            </span>
+                                        </p>
+                                    )
+                                })
+                                : null
+                            }
                         </div>
                     </div>
 
@@ -79,12 +103,12 @@ export function About() {
                         </div>
                         <div className="a-experiences-wrapper">
                             {
-                                developerExperience.map((experience, i)=>{
+                                getInfos.experience?.map((experience, i)=>{
                                     return(
                                         <div key={i} className="a-experience">
                                             <div className='ae' ref={el => expsRef.current[i] = el}>
-                                                <span className='a-company'>{experience.company} -</span>
-                                                <span className='a-date'> {experience.startDate} </span>
+                                                <span className='a-company'>{experience.name} -- &#160; </span>
+                                                <span className='a-date'> {experience.year} </span>
                                             </div>
                                         </div>
                                     )
@@ -99,7 +123,7 @@ export function About() {
                         </div>
                         <div className="a-skills-wrapper">
                             {
-                                skills.map((skill, i)=>{
+                                getInfos.skills?.map((skill, i)=>{
                                     return(
                                         <div  key={i} className="a-skill">
                                             <div ref={el => skillsRef.current[i] = el}>

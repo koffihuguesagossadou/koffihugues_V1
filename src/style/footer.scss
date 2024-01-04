@@ -1,0 +1,91 @@
+.footer-container{
+    min-height: 70px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0 $margin-4;
+    padding-bottom: $padding-6;
+    
+    @media screen and (max-width: 768px) {
+        margin: 0 $margin-6;
+        margin-bottom: $margin-6;
+
+    }
+    .footer-text-wrapper{
+        display: flex;
+        flex-direction: column;
+        justify-content: end;
+        p{
+            display: flex;
+            padding: calc($padding-6 - 0.5em) 0;
+            font-size: $size-5;
+            overflow: hidden;
+            >span{
+                display: inline-block;
+                transform: translate3d(0, 100%, 0);
+            }
+            a{
+                color: $base-font-color;
+                overflow: hidden;
+                margin-left: calc($padding-6 - 0.25em);
+                transition: all .2s ease-in-out;
+                position: relative;
+
+                &:hover{
+                    &::after{
+                        width: 100%;
+                        transition: all .2s ease-in-out;
+
+                    }
+                }
+    
+                &::after{
+                    content: '';
+                    position: absolute;
+                    width: 0%;
+                    height: 2px;
+                    bottom: 0%;
+                    left: 0%;
+                    background-color: $base-font-color;
+                    display: block;
+                    transition: all .2s ease-in-out;
+
+                }
+            }
+        }   
+        
+    }
+
+    .social-media{
+        display: flex;
+        position: relative;
+
+        @media screen and (max-width: 768px) {
+            flex-direction: column;
+
+        }
+        
+        .smm {
+            margin-top: 0;
+            margin-bottom: 0;
+
+            a{
+                .fst-smm{
+                    transform: translate3d(0, 100%, 0);
+                }
+                div{
+                    span{
+                        font-weight: 400;
+                        font-size: $size-5;
+                        text-transform: uppercase;
+                    
+                        @media screen and (max-width: 768px) {
+                            font-size: $size-5;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}

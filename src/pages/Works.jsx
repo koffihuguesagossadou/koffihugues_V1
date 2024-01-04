@@ -1,21 +1,28 @@
 import { useState, useEffect, useRef,useCallback,useContext } from "react";
 import { useParams } from "react-router-dom";
-import { projects } from "../data/project";
-import { findObject, pageAnimation } from "../funcs/app";
+import { findObject, pageAnimation, retrieveData } from "../funcs/app";
 import { MdOutlineArrowOutward } from "react-icons/md";
 import { ProjectLink } from "../components/Links";
 import { PageTransitionContext, PreloaderContext } from "../App";
 import { useNavigate } from "react-router-dom";
+import useDocumentTitle from "../Hook/useDocumentTitle";
+import { dbConfig } from "../config/defaults";
 
 const metaDataTableLenght = 4;
-const tableLabelText = ["client", "role", "year", "skills"]
+const tableLabelText = ["client", "role", "year", "stacks"]
 
 function ProjectLabel({labelText, data, reference}) {
+
+
     return(
         <div className="p-l-d">
             <div ref={reference}>
                 <span className="p-l">{ labelText }</span>
-                <span className="p-d"> { data } </span>
+                {
+                    typeof data === 'object'
+                    ? <span className="p-d"> { data.join('-') } </span>
+                    : <span className="p-d"> { data } </span>
+                }
             </div>
         </div>
     )
@@ -24,23 +31,30 @@ function ProjectLabel({labelText, data, reference}) {
 
 
 export default function Works() {
+    
+    // url parameters
+    const { projectName } = useParams();
 
+    // page title
+    useDocumentTitle(`Koffi Hugues | ${projectName}`) 
+
+    const file = 'projects.json'
+    const imgs= [1,2,3,4,5,6,7]
+    
     const {showTransition, setShowTransition} = useContext(PageTransitionContext)
     const { preloaderPerformed } = useContext(PreloaderContext)
-
     const navigate = useNavigate()
 
-    const { projectName } = useParams();
-    let projectData = findObject(projects, 'slug', projectName) ?? null;
+    // state for data
+    const [getProjects, setProjects] = useState({})
+    const [getNextProject, setNextProject] = useState({})
+    
+    
 
-    if (projectData === null) {
-        return navigate('/')
-    }
-
-    const nextProjectData = findObject(projects, 'id', projectData.id + 1) ?? null;
     const [currentImage, setCurrentImage] = useState(0)
-    const pcActiveRef = useRef()
 
+    
+    const pcActiveRef = useRef()
     const pNumRef = useRef()
     const pTitleRef = useRef()
     const descsRef = useRef([])
@@ -56,24 +70,64 @@ export default function Works() {
     const handleCLickNext = useCallback((slug)=>{
         setShowTransition(true)
         
+
         setTimeout(()=>{
             navigate(`/project/${slug}`)
         }, 1500)
     })
-
+    
+    
     useEffect(()=>{
 
-        console.log(nextProjectData)
-        if( projectData === null) navigate('*')
 
-        pageAnimation(showTransition, preloaderPerformed, 
-            [pNumRef.current, pTitleRef.current, descsRef.current, labelRef.current, visitLinkRef.current, nextProjectRef.current]
-        )
+        const url = dbConfig.dns+dbConfig.path+file
+
+    
+        if(Object.values(getProjects).length === 0 || projectName !== getProjects.slug){
+            
+            retrieveData(url)
+            .then((response) =>  {
+                
+                
+                // Retrieve data where slug is equal to "folio-v2"
+                const filteredData = response.filter(item => item.slug === projectName);
+                if(!filteredData[0]) return
+                const nextData = response.filter(item => item.id === filteredData[0].id + 1)
+                
+                setProjects({...filteredData[0]})
+                setNextProject({...nextData[0]})
+
+
+            } );
+        }
+
+        // console.log(projectName, getProjects, getNextProject)
 
         
+        const targets = [pNumRef.current, pTitleRef.current, descsRef.current, labelRef.current, visitLinkRef.current, nextProjectRef.current]
+        if(targets === null || !targets) return
+        pageAnimation(showTransition, preloaderPerformed, targets)    
 
-    },[showTransition, preloaderPerformed])
+    },[showTransition, preloaderPerformed,getProjects, projectName])
 
+
+    // useEffect(() => {
+        
+    //     // console.log(Object.keys(getProjects).length === 0)
+
+    //     // This effect runs when getProjects is updated
+    //     if (getProjects && getProjects.id) {
+    //         findObject(projects, 'id', getProjects.id + 1).then(response => {
+    //           setNextProject({ ...response });
+    //         });
+    //     }
+
+
+    // }, [getProjects]); 
+
+    
+
+    
     return(
         <section className="project-section">
             <div className="container">
@@ -81,8 +135,7 @@ export default function Works() {
                     <div className="p-pics">
                         <div className="main-pic-dis">
                             <picture>
-                                <source src="" type="image/webp" />
-                                <img loading="lazy" src={projectData.imgs[currentImage]} alt={projectData.name} srcSet="" />
+                                <img loading="lazy" src={getProjects.src ? '/images'+ getProjects.src+'/'+ (currentImage + 1) +'.webp' : null} alt={getProjects?.name} srcSet="" />
                             </picture>
                         </div>
                         <div className="carousel-pics"> 
@@ -90,27 +143,27 @@ export default function Works() {
                                 <div className="p-num">
                                     <span ref={pNumRef}> 
                                         {
-                                            projectData.id >= 10 
-                                            ? `0${projectData.id}`
-                                            : `00${projectData.id}`
+                                            getProjects.id >= 10 
+                                            ? `0${getProjects?.id}`
+                                            : `00${getProjects?.id}`
                                         } 
                                     </span>
                                 </div>
                                 <div className="p-title"> 
-                                    <span ref={pTitleRef}> { projectData.name } </span>
+                                    <span ref={pTitleRef}> { getProjects?.name } </span>
                                 </div>
                             </div>
                             <div className="c-pics">
                                 <div style={{"--index": currentImage}} ref={pcActiveRef} className="p-c-active"></div>
                                 {
-                                    projectData.imgs.map((pic, i)=>{
+                                    
+                                    imgs?.map((pic, i)=>{
                                         return(
                                             <div
                                                 onClick={()=>handleClickImage(i)}
                                                 key={i} className="c-pic">
                                                 <picture>
-                                                    <source src="" type="image/webp" />
-                                                    <img loading="lazy" src={pic} alt="" srcSet="" />
+                                                    <img loading="lazy" src={ getProjects.src ? '/images'+ getProjects.src+'/'+ (i+1) +'.webp' : null} alt="" />
                                                 </picture>
                                             </div>
                                         )
@@ -126,7 +179,7 @@ export default function Works() {
                     <div className="p-meta">
                         <div className="p-desc">
                             { 
-                                projectData.description.map((line, i)=>{
+                                getProjects.description?.map((line, i)=>{
                                     return(
                                         <p key={i}>
                                             <span ref={el=> descsRef.current[i] = el}>{line}</span>
@@ -144,7 +197,7 @@ export default function Works() {
                                             <ProjectLabel
                                                 reference = {el => labelRef.current[i] = el}
                                                 key={i}
-                                                data={ projectData[label] }
+                                                data={ getProjects[label] }
                                                 labelText={label}
                                             />
                                         ) 
@@ -155,7 +208,7 @@ export default function Works() {
                         </div>
                         <div className="p-visit">
                             <div className="p-v-wrapper">
-                                <a  href={projectData.link}>
+                                <a  href={getProjects?.link}>
                                     <span ref={visitLinkRef}>
                                         <span>visit site</span>
                                         <MdOutlineArrowOutward />
@@ -168,23 +221,14 @@ export default function Works() {
                                     <span ref={el=> nextProjectRef.current[0] = el} >next project</span>
                                 </div>
                                 <ProjectLink
-                                    text={nextProjectData.name}
-                                    handleClick={ ()=>handleCLickNext(nextProjectData.slug) }
+                                    text={getNextProject ? getNextProject?.name : null}
+                                    handleClick={getNextProject ? ()=>handleCLickNext(getNextProject.slug) : null}
                                     reference={el => nextProjectRef.current[1] = el}
                                 />
                             </div>
                         </div>
                     </div>
                 </div>
-                {/* <div className="p-next-xlh">
-                    <div className="n-label">
-                        <span>next project</span>
-                    </div>
-                    <ProjectLink
-                        text='next one'
-                        link=''
-                    />
-                </div> */}
             </div>
         </section>
     )

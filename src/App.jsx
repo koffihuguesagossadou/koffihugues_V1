@@ -6,11 +6,12 @@ import Preloader from "./components/Preloader";
 import Transition from "./components/Transition";
 import { useLocation, matchRoutes } from "react-router-dom";
 import Lenis from '@studio-freight/lenis';
-import { routes } from "./config/defaults";
+import { dbConfig } from "./config/defaults";
 
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import { retrieveData } from "./funcs/app";
 
 
 const Landing = lazy( ()=> import('./pages/Landing/Landing'))
@@ -82,13 +83,31 @@ function App() {
   const [cursorOnLink, setCursorOnLink] = useState(null)
   const [showTransition, setShowTransition] = useState(null)
   const [preloaderPerformed, setPreloaderPerformed] = useState(false)
+  const [getRoutes, setRoutes] = useState({})
   const routeLocation = useLocation()
-
   
 
+  
   const match = useMemo(()=>{
-    return matchRoutes(routes, routeLocation)
-  }, [])
+
+
+    const url = dbConfig.dns+dbConfig.path+'routes.json'
+    if(Object.values(getRoutes).length === 0)
+    {
+
+      retrieveData(url)
+      .then(response=>{
+
+        setRoutes({...response})
+      })
+      
+    }
+
+    const routesArray = Object.values(getRoutes)
+    
+    return matchRoutes(routesArray, routeLocation)
+  }, [getRoutes, routeLocation])
+
   
   useEffect(()=>{
 
@@ -114,6 +133,8 @@ function App() {
       requestAnimationFrame(raf);
     }
 
+    
+
   }, [routeLocation, match])
 
   return (
@@ -130,9 +151,9 @@ function App() {
                   <Routes>
                     <Route index path="/" element={<Landing/>}/>
                     <Route path="/about" element={<AboutP/>}/>
-                    <Route 
+                    { match !== null && <Route 
                       errorElement= {<ErrorP/>}
-                      path="/project/:projectName" element={<WorkP />} />
+                      path="/project/:projectName" element={<WorkP />} />}
                     <Route path="/archives" element={ <ArchiveP /> } />
                     <Route path="*" element={<ErrorP />} />
                   </Routes>
