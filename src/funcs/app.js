@@ -11,7 +11,7 @@ export function splitWord(word){
 export const closestEdge = (x,y,w,h) => {
     const topEdgeDist = distMetric(x,y,w/2,0);
     const bottomEdgeDist = distMetric(x,y,w/2,h);
-    console.log(topEdgeDist, bottomEdgeDist)
+
     const min = Math.min(topEdgeDist,bottomEdgeDist);
     return min === topEdgeDist ? 'top' : 'bottom';
 }

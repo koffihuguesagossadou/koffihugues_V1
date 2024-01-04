@@ -43,7 +43,7 @@ function Navbar() {
         const target = [localAddressRef.current, localTimeRef.current]
         const isExist = (currentValue => typeof currentValue !== 'undefined')
 
-        if(target.every(isExist) === true) {
+        if(localAddressRef.current, localTimeRef.current) {
 
             pageAnimation(showTransition, preloaderPerformed, target)
         }

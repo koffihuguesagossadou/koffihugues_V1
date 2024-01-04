@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef,useCallback,useContext } from "react";
 import { useParams } from "react-router-dom";
-import { findObject, pageAnimation, retrieveData } from "../funcs/app";
+import { pageAnimation, retrieveData } from "../funcs/app";
 import { MdOutlineArrowOutward } from "react-icons/md";
 import { ProjectLink } from "../components/Links";
 import { PageTransitionContext, PreloaderContext } from "../App";
@@ -110,20 +110,6 @@ export default function Works() {
 
     },[showTransition, preloaderPerformed,getProjects, projectName])
 
-
-    // useEffect(() => {
-        
-    //     // console.log(Object.keys(getProjects).length === 0)
-
-    //     // This effect runs when getProjects is updated
-    //     if (getProjects && getProjects.id) {
-    //         findObject(projects, 'id', getProjects.id + 1).then(response => {
-    //           setNextProject({ ...response });
-    //         });
-    //     }
-
-
-    // }, [getProjects]); 
 
     
 

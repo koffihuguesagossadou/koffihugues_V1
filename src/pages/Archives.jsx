@@ -1,6 +1,5 @@
 import { MdOutlineArrowOutward } from "react-icons/md"
 import { LuGithub } from "react-icons/lu";
-import { archivesProject } from "../data/project"
 import { useEffect, useRef, useContext, useState } from "react";
 import { pageAnimation, retrieveData } from "../funcs/app";
 import { PageTransitionContext, PreloaderContext } from "../App";
