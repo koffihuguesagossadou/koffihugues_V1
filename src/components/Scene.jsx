@@ -13,7 +13,11 @@ import { Preload } from '@react-three/drei';
 
     return(
         
-        <Canvas className='card-container' style={{position:'fixed', width: "100%", height: `100vh`}}>
+        <Canvas 
+            className='card-container' 
+            style={{position:'fixed', width: "100%", height: `100vh`}}
+        >
+            <ambientLight intensity={Math.PI} />
             <ProjectsCards />
             <Preload />
         </Canvas>

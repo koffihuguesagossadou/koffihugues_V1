@@ -291,6 +291,23 @@
     }
 }
 
+.work-label{
+    font-family: $special-font;
+    text-transform: uppercase;
+    overflow: hidden;
+    white-space: nowrap;
+    display: flex;
+    justify-content: center;
+    span{
+        display: inline-block;
+        transform: translate3d(0, 100%, 0) rotateX(90deg);
+
+        @media screen and (max-width: 768px) {
+            transform: translate3d(0,0,0) !important;
+        }
+    }
+}
+
 @keyframes marquee {
 	100% {
 		transform: translate3d(-50%, 0, 0);

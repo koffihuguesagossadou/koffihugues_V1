@@ -144,15 +144,3 @@
 
 
 
-.work-label{
-    font-family: $special-font;
-    text-transform: uppercase;
-    overflow: hidden;
-    white-space: nowrap;
-    display: flex;
-    justify-content: center;
-    span{
-        display: inline-block;
-        transform: translate3d(0, 100%, 0) rotateX(90deg);
-    }
-}

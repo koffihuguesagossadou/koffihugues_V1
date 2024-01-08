@@ -7,13 +7,10 @@ import Transition from "./components/Transition";
 import { useLocation, matchRoutes } from "react-router-dom";
 import Lenis from '@studio-freight/lenis';
 import { dbConfig } from "./config/defaults";
-
-
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
 import { retrieveData } from "./funcs/app";
 
-
+const Navbar = lazy( ()=> import('./components/Navbar'))
+const Footer = lazy( ()=> import('./components/Footer'))
 const Landing = lazy( ()=> import('./pages/Landing/Landing'))
 const AboutP = lazy( ()=> import('./pages/About/AboutP') )
 const WorkP = lazy(()=> import('./pages/Work/WorkP'))
@@ -144,7 +141,7 @@ function App() {
             <div id='main-wrapper'>
               { match !== null && <Preloader/>}
               { match !== null &&  <Transition/>}
-              { match !== null && <Navbar/>}
+              { match !== null && <Suspense fallback={null}><Navbar/></Suspense>}
               <main className="main-content">
                 
                 <Suspense fallback={null}>
@@ -159,7 +156,7 @@ function App() {
                   </Routes>
                 </Suspense>
               </main>
-              { match !== null &&  routeLocation.pathname !== '/' && <Footer/>}
+              { match !== null &&  routeLocation.pathname !== '/' && <Suspense fallback={null}><Footer/></Suspense>}
             </div>
           <Cursor/>
         </CursorContext.Provider>

@@ -1,9 +1,9 @@
 import { useRef, useMemo, useContext, useCallback, useEffect, useState } from "react"
 import { useFrame, useThree } from "@react-three/fiber"
 import {  MathUtils } from "three"
-import { Image, Html } from '@react-three/drei';
+import { Image, Html, MeshDistortMaterial, useTexture } from '@react-three/drei';
 import {  PageTransitionContext } from "../App";
-
+import { easing } from 'maath'
 import { useNavigate } from "react-router-dom"; 
 import gsap from 'gsap';
 import { retrieveData } from "../funcs/app";
@@ -19,7 +19,7 @@ export function ProjectCard({name, src, index,slug}) {
     const textRef = useRef();
     const lettersRef = useRef([])
 
-
+    const texture = useTexture('images'+src+'/main.webp')
 
     const { showTransition, setShowTransition } = useContext(PageTransitionContext)
     const [hovered, setHovered] = useState(false)
@@ -56,7 +56,7 @@ export function ProjectCard({name, src, index,slug}) {
     }, [index]);
 
 
-    useFrame((state) => {
+    useFrame((state, delta) => {
 
         gsap.to(lettersRef.current,{
             y: hovered ? 0 : '100%',
@@ -65,22 +65,25 @@ export function ProjectCard({name, src, index,slug}) {
                 amount: 0.2
             }
         })
-        imageRef.current.material.grayscale = hovered ? MathUtils.lerp(imageRef.current.material.grayscale, 0, 0.1) :  MathUtils.lerp(imageRef.current.material.grayscale, 0.9, 0.1)
-        imageRef.current.material.zoom = hovered ? MathUtils.lerp(imageRef.current.material.zoom, 1.4, 0.1) : MathUtils.lerp(imageRef.current.material.zoom, 1.2, 0.1)
+        easing.damp(imageRef.current.material, 'distort', hovered ?0.2: 0, 0.25, delta)
+        easing.damp(imageRef.current.material, 'speed', hovered ? 4 : 0, 0.25, delta)
+        easing.damp(imageRef.current.material, 'grayscale', hovered ? 0 : 0.8, 0.25, delta)
+        easing.damp(imageRef.current.material, 'zoom', hovered ? 1.4 : 1.2, 0.25, delta)
     
     });
 
+
     
     return(
+        
         <group>
         
 
 
             <Image 
                 ref={imageRef}
-                url={'images'+src+'/main.webp'} 
                 zoom={1.4}
-                 
+                texture={texture}
                 scale={[photo.width, photo.height, 1]} 
                 onPointerOver={ handleMeshOnPointerEnter }
                 onPointerOut={ handleMeshOnPointerLeave }
@@ -96,6 +99,7 @@ export function ProjectCard({name, src, index,slug}) {
             >
                 <div 
                     className="work-label"
+                    
                 >
                     {
                         name.split('').map((char, i)=>{
