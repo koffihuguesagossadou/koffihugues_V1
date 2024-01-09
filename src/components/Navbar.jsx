@@ -20,6 +20,7 @@ function Navbar() {
     const [currentSecond, setCurrentSecond] = useState(0)
 
     const localTimeRef = useRef()
+    const localAddressRef = useRef()
 
     const routeLocation = useLocation()
     const navigate = useNavigate()
@@ -33,14 +34,21 @@ function Navbar() {
         setShowTransition(true)
         setTimeout(()=>{
             navigate(location)
-        }, 1500)
+        }, 1000)
 
     })
       
     useEffect(()=>{
 
-        const target = localTimeRef.current
-        pageAnimation(showTransition, preloaderPerformed, target)
+        const target = [localAddressRef.current, localTimeRef.current]
+        const isExist = (currentValue => typeof currentValue !== 'undefined')
+
+        if(localAddressRef.current, localTimeRef.current) {
+
+            pageAnimation(showTransition, preloaderPerformed, target)
+        }
+
+
 
         // Function to update the current time components
         const updateCurrentTime = () => {
@@ -76,8 +84,7 @@ function Navbar() {
                             </a>
                         </div>
 
-                    :
-                    <>
+                    :<>
                     
                         <div className="brand-wrapper">
                             <a href="/"
@@ -85,16 +92,28 @@ function Navbar() {
                                 AGOSSADOU
                             </a>
                         </div>
+
+                        <div className="address-wrapper"> 
+                            <div className="local-address-wrapper">
+                                <div ref={localAddressRef}>
+                                    <span className="al-text">
+                                        5° 23′ 40″ 
+                                    </span>
+                                    <span className="al-text">
+                                        4° 03′ 07″
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
                         <div className="availability-wrapper">
+                            
                             <div className="local-time-wrapper">
                                 <div ref={localTimeRef}>
-                                    <span className="al-text">abidjan</span>
                                     <span className="al-text">
                                         {currentHour.toString().length === 2 ? currentHour : '0'+currentHour}
                                         :{currentMinute.toString().length === 2 ? currentMinute : '0'+currentMinute}
-                                        :{ currentSecond.toString().length === 2? currentSecond : '0'+ currentSecond}
                                     </span>
-                                    <span className="al-text">GMT</span>
                                 </div>
                             </div>
                         </div>

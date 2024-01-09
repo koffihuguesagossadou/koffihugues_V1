@@ -1,9 +1,9 @@
 import { MdOutlineArrowOutward } from "react-icons/md"
 import { LuGithub } from "react-icons/lu";
-import { archivesProject } from "../data/project"
-import { useEffect, useRef, useContext } from "react";
-import { pageAnimation } from "../funcs/app";
+import { useEffect, useRef, useContext, useState } from "react";
+import { pageAnimation, retrieveData } from "../funcs/app";
 import { PageTransitionContext, PreloaderContext } from "../App";
+import { dbConfig } from "../config/defaults";
 
 function ArchiveLine({name, year, client, stacks, links, reference}){
 
@@ -30,7 +30,7 @@ function ArchiveLine({name, year, client, stacks, links, reference}){
                 <div className="ar-s">
                     <span className="as">
                         {
-                            stacks.map((stack, num)=>{
+                            stacks?.map((stack, num)=>{
                                 return (
                                     <span key={num} > {stack} </span>
                                 )
@@ -42,12 +42,12 @@ function ArchiveLine({name, year, client, stacks, links, reference}){
                     <span className="al">
                         
                         {
-                            links.visit
+                            links?.visit
                             ? <a  target="_blank" href= {links.visit} > <MdOutlineArrowOutward /> </a>
                             : null
                         }
                         {
-                            links.github
+                            links?.github
                             ? <a target="_blank" href={ links.github  }> <LuGithub /> </a>
                             : null
                         }
@@ -67,13 +67,27 @@ export function Archives() {
     const arcTitleRef = useRef()
     const { showTransition } = useContext(PageTransitionContext)
     const { preloaderPerformed } = useContext(PreloaderContext)
- 
-    useEffect(()=>{
+    const [getArchives, setArchives] = useState([])
 
+
+    const file = 'archives.json'
+    const url = dbConfig.dns+dbConfig.path+file
+ 
+    useEffect( ()=>{
+
+        if( Object.values(getArchives).length === 0)
+        {
+
+            retrieveData(url).then(response=>{
+                if(!response) return
+    
+                setArchives({...response})
+            })
+        }
         
         pageAnimation(showTransition, preloaderPerformed, [arcTitleRef.current,labelRef.current,...archivesRef.current])
         
-    }, [showTransition, preloaderPerformed])
+    }, [showTransition, preloaderPerformed, getArchives])
 
 
 
@@ -109,7 +123,7 @@ export function Archives() {
                         </div>
                         <div className="arcs-d">
                             {
-                                archivesProject.map((archive, id)=>{
+                                Object.values(getArchives).map((archive, id)=>{
                                     return(
                                         <ArchiveLine key={id} reference = {el=> archivesRef.current[id] = el} {...archive} />
                                     )

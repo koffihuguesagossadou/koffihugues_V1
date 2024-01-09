@@ -98,7 +98,7 @@
     
                             .as{
                                 display: grid;
-                                grid-template-columns: repeat(4, 1fr);
+                                grid-template-columns: repeat(3, fit-content(200px));
                                 column-gap: 5px;
                             }
     

@@ -1,22 +1,39 @@
-import React, {useRef, useEffect, useContext} from 'react'
+import React, {useEffect, useContext, useState} from 'react'
 import { SocialMedia } from './Links'
 import gsap from 'gsap';
 import { PageTransitionContext, PreloaderContext } from '../App';
-import { pageAnimation } from '../funcs/app';
+import { pageAnimation, retrieveData } from '../funcs/app';
+import { dbConfig, dbFiles } from '../config/defaults';
 
 export default function Hero() {
 
     const {showTransition} = useContext(PageTransitionContext)
     const { preloaderPerformed } = useContext(PreloaderContext)
+    const [getContacts, setContacts] = useState({})
     
     useEffect(()=>{
+
+        const url = dbConfig.dns + dbConfig.path + dbFiles.me
+
+        if(Object.values(getContacts).length === 0)
+        {
+            
+            retrieveData(url)
+            .then(response=>{
+
+                if(!response) return
+
+                setContacts({...response.contact})
+            })
+        }
+
 
 
         const target = '.hero-role-text'
         pageAnimation(showTransition, preloaderPerformed, target)
 
 
-    }, [showTransition, preloaderPerformed])
+    }, [showTransition, preloaderPerformed, getContacts])
 
     return (
         <div className='hero-bottom'>
@@ -37,15 +54,19 @@ export default function Hero() {
             <div className="hero-contact-wrapper">
                 <SocialMedia
                     name={'email'}
-                    href='koffi.agossadou@gmail.com'
+                    href={getContacts.email}
+                />
+                <SocialMedia
+                    name={'github'}
+                    href={getContacts.github}
                 />
                 <SocialMedia
                     name={'linkedin'}
-                    href=''
+                    href={getContacts.linkedin}
                 />
                 <SocialMedia
                     name={'instagram'}
-                    href=''
+                    href={getContacts.instagram}
                 />
             </div>
         </div>

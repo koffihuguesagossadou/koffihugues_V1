@@ -1,32 +1,38 @@
 import { SocialMedia } from "./Links";
-import { useEffect, useContext } from "react";
-import gsap from 'gsap'
+import { useEffect, useContext, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { gsapConfig } from "../config/defaults";
+import { dbConfig, dbFiles } from "../config/defaults";
 import { PageTransitionContext, PreloaderContext } from "../App";
+import { pageAnimation, retrieveData } from "../funcs/app";
 
 export default function Footer() {
 
     const {showTransition} = useContext(PageTransitionContext)
     const { preloaderPerformed } = useContext(PreloaderContext)
 
-    const timeline = gsap.timeline()
+    const [getContacts, setContacts] = useState({})
+
     const locator = useLocation()
 
     useEffect(()=>{
-        if((!showTransition && showTransition !== null) || preloaderPerformed)
-        {
-            timeline.to('.f-cp>span',{
-                y: '0%',
-                ease: gsapConfig.ease,
-                duration: gsapConfig.duration,
-                stagger:{
-                    amount: gsapConfig.staggerAmount
-                }
-            })
+        
+        const url = dbConfig.dns + dbConfig.path + dbFiles.me
 
+        if(Object.values(getContacts).length === 0)
+        {
+            
+            retrieveData(url)
+            .then(response=>{
+
+                if(!response) return
+
+                setContacts({...response.contact})
+            })
         }
-    }, [showTransition, preloaderPerformed])
+
+        pageAnimation(showTransition, preloaderPerformed, '.f-cp>span')
+
+    }, [showTransition, preloaderPerformed, getContacts])
     
     return(
         <footer>
@@ -37,7 +43,7 @@ export default function Footer() {
                     </p>
                     <p className="f-cp">
                         <span>
-                            <span>Designed & built by </span> <a href="/" className="koffiHugues">AGOSSADOU.</a> 
+                            <span>Designed & built by </span> <a href="/" className="koffiHugues">koffihugues.</a> 
                         </span>
                     </p>
                 </div>
@@ -47,19 +53,19 @@ export default function Footer() {
                 <div className="social-media">
                     <SocialMedia
                         name={'email'}
-                        href='koffi.agossadou@gmail.com'
+                        href={getContacts.email}
                     />
                     <SocialMedia
                         name={'github'}
-                        href='https://github.com/koffihuguesagossadou'
+                        href={getContacts.github}
                     />
                     <SocialMedia
                         name={'linkedin'}
-                        href='www.linkedin.com/in/koffi-hugues-agossadou-2220051b7'
+                        href={getContacts.linkedin}
                     />
                     <SocialMedia
                         name={'instagram'}
-                        href='https://www.instagram.com/_thisishugo/'
+                        href={getContacts.instagram}
                     />
                         
                 </div>

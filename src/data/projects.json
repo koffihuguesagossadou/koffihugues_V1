@@ -1,0 +1,159 @@
+[
+    {
+        "id": 1,
+        "name": "tna collection",
+        "slug": "tna-collection",
+        "description": [
+            "This project is a web app that introduce tna collection gift boxes.",
+            "tna collection is a ivorian company focused on the sale of gift boxes",
+            "Features implemented are smooth scrolling, interactive animations..."
+        ],
+        "awards": [],
+        "link": "https://www.tnacollection.ci",
+        "year": null,
+        "src": "/tna",
+        "imgs": [],
+        "client": "tna collection",
+        "role": "frontend dev & motion",
+        "stacks": ["webflow", "javascript"]
+        
+    },
+    
+    {
+        "id": 2,
+        "name": "ligne bis",
+        "slug": "lignebis",
+        "description": [
+            "LigneBis, a website directed by even media allowing users to get virtual french number.",
+            "very pratical to separate your private life from your professional life",
+            "The LigneBis virtual phone number is available without registration, commitment or subscription."
+        ],
+        "awards": [],
+        "link": "https://www.lignebis.fr/",
+        "year": 2023,
+        "image": "",
+        "src": "/lignebis",
+        "imgs": [],
+        "client": "even media",
+        "role": "fullstack dev",
+        "stacks": ["php", "laravel"]
+        
+    },
+
+    {
+        "id": 3,
+        "name": "folio v2",
+        "slug": "folio-v2",
+        "description": [
+            "Second version of my portfolio made only by me."
+        ],
+        "awards": [],
+        "link": "https://www.koffihugues.com",
+        "year": 2023,
+        "src": "/folio-v2",
+        "image": "",
+        "imgs": [],
+        "client": "self",
+        "role": "frontend dev & motion",
+        "stacks": ["react", "gsap", "threejs", "json", "lenis"]
+        
+    },
+
+    {
+        "id": 4,
+        "name": "vms sms",
+        "slug": "vms-sms",
+        "description": [
+            "website directed by even media offering a direct marketing solution in just a few clicks.",
+            "No subscription - No commitment."
+        ],
+        "awards": [],
+        "link": "https://www.vms-sms.fr",
+        "year": 2023,
+        "image": "",
+        "src": "/vms-sms",
+        "imgs": [],
+        "client": "even media",
+        "role": "fullstack dev",
+        "stacks": ["php", "javascript", "laravel", "git"]
+        
+    },
+    {
+        "id": 5,
+        "name": "mbci",
+        "slug": "mbci",
+        "description": [
+            "single page application made by koffi hugues promoting côte d'ivoire",
+            "its various tourist attractions, restaurants, hotels, things to do"
+        ],
+        "awards": [],
+        "link": null,
+        "year": 2024,
+        "image": "",
+        "src": "/mbci",
+        "imgs": [],
+        "client": "self",
+        "role": "fullstack dev & motion",
+        "stacks": ["react", "typescript","gsap"]
+        
+    },
+    {
+        "id": 6,
+        "name": "mon tchat voyance",
+        "slug": "mon-tchat-voyance",
+        "description": [
+            "An online chat-based psychic or clairvoyant readings platform provides users with a convenient and accessible way to connect with psychics.",
+            "Through a digital chat interface, users can seek personalized insights, guidance, and answers to their questions from professional psychics or clairvoyants.",
+            "The chat format allows for real-time interaction, fostering a direct and intimate connection between the user and the psychic."
+        ],
+        "awards": [],
+        "link": "https://www.mon-tchat-voyance.fr",
+        "year": 2023,
+        "src": "/mtv",
+        "image": "",
+        "imgs": [],
+        "client": "even media",
+        "role": "fullstack dev",
+        "stacks": ["php", "javascript", "symfony", "jira", "bitbucket"]
+        
+    },
+
+    {
+        "id": 7,
+        "name": "folio v1",
+        "slug": "folio-v1",
+        "description": [
+            "First version of my portfolio."
+        ],
+        "awards": [],
+        "link": "https://hugueskoffi.vercel.app",
+        "year": 2022,
+        "src": "/folio-v1",
+        "image": "",
+        "imgs": [],
+        "client": "self",
+        "role": "frontend dev & motion",
+        "stacks": ["react", "js", "vercel"]
+        
+    },
+
+    {
+        "id": 8,
+        "name": "yoomi bakus",
+        "slug": "yoomi-bakus",
+        "description": [
+            "Experience seamless digital solutions with this user-friendly website.",
+            "Engage with interactive features that enhance accessibility and functionality"
+        ],
+        "awards": [],
+        "link": null,
+        "year": null,
+        "src": "/yb",
+        "image": "",
+        "imgs": [],
+        "client": "yoomi bakus",
+        "role": "fullstack dev & motion",
+        "stacks": []
+        
+    }
+]
