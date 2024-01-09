@@ -100,6 +100,8 @@ export default function Works() {
 
         const url = dbConfig.dns+dbConfig.path+file
 
+
+        if (import.meta.env.DEV) console.log(import.meta.env.BASE_URL, window.location.protocol)
     
         if(Object.values(getProjects).length === 0 || projectName !== getProjects.slug){
             

@@ -111,7 +111,7 @@ function App() {
   
   useEffect(()=>{
 
-    console.log(match)
+     if(import.meta.env.DEV) console.log(match)
 
     if(routeLocation.pathname !== '/'){
 
