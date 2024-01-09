@@ -19,7 +19,8 @@ export function ProjectCard({name, src, index,slug}) {
     const textRef = useRef();
     const lettersRef = useRef([])
 
-    const texture = useTexture('images'+src+'/main.webp')
+
+    // const texture = useTexture('https://dlfsookdovlgl.cloudfront.net'+src+'/main.webp')
 
     const { showTransition, setShowTransition } = useContext(PageTransitionContext)
     const [hovered, setHovered] = useState(false)
@@ -83,7 +84,7 @@ export function ProjectCard({name, src, index,slug}) {
             <Image 
                 ref={imageRef}
                 zoom={1.4}
-                texture={texture}
+                url={'images'+src+'/main.webp'}
                 scale={[photo.width, photo.height, 1]} 
                 onPointerOver={ handleMeshOnPointerEnter }
                 onPointerOut={ handleMeshOnPointerLeave }

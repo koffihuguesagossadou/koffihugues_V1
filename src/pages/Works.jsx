@@ -48,6 +48,8 @@ export default function Works() {
     // state for data
     const [getProjects, setProjects] = useState({})
     const [getNextProject, setNextProject] = useState({})
+    const [imgLoaded, setImageLoaded] = useState(false)
+    const [carouselImgLoaded, setCarouselImgLoaded] = useState(false)
     
     
 
@@ -75,6 +77,22 @@ export default function Works() {
             navigate(`/project/${slug}`)
         }, 1500)
     })
+
+
+    const handleLoadImg = useCallback(()=>{
+        if(!imgLoaded)
+        {
+            setImageLoaded(true)
+        }
+    }, [])
+
+
+    const handleCarouselImg = useCallback(()=>{
+        if(!carouselImgLoaded)
+        {
+            setCarouselImgLoaded(true)
+        }
+    }, [])
     
     
     useEffect(()=>{
@@ -108,7 +126,7 @@ export default function Works() {
         if(targets === null || !targets) return
         pageAnimation(showTransition, preloaderPerformed, targets)    
 
-    },[showTransition, preloaderPerformed,getProjects, projectName])
+    },[showTransition, preloaderPerformed,getProjects, getNextProject, projectName])
 
 
     
@@ -121,7 +139,8 @@ export default function Works() {
                     <div className="p-pics">
                         <div className="main-pic-dis">
                             <picture>
-                                <img loading="lazy" src={getProjects.src ? '/images'+ getProjects.src+'/'+ (currentImage + 1) +'.webp' : null} alt={getProjects?.name} srcSet="" />
+                                <div style={ imgLoaded ? { opacity: 0 } : {display: 1 } } className="onload-img"></div>
+                                <img onLoad={handleLoadImg} loading="lazy" src={getProjects.src ? '/images'+ getProjects.src+'/'+ (currentImage + 1) +'.webp' : null} alt={getProjects?.name} srcSet="" />
                             </picture>
                         </div>
                         <div className="carousel-pics"> 
@@ -129,14 +148,14 @@ export default function Works() {
                                 <div className="p-num">
                                     <span ref={pNumRef}> 
                                         {
-                                            getProjects.id >= 10 
+                                            getProjects && getProjects.id >= 10 
                                             ? `0${getProjects?.id}`
                                             : `00${getProjects?.id}`
                                         } 
                                     </span>
                                 </div>
                                 <div className="p-title"> 
-                                    <span ref={pTitleRef}> { getProjects?.name } </span>
+                                    <span ref={pTitleRef}> { getProjects ? getProjects.name : null } </span>
                                 </div>
                             </div>
                             <div className="c-pics">
@@ -149,7 +168,8 @@ export default function Works() {
                                                 onClick={()=>handleClickImage(i)}
                                                 key={i} className="c-pic">
                                                 <picture>
-                                                    <img loading="lazy" src={ getProjects.src ? '/images'+ getProjects.src+'/'+ (i+1) +'.webp' : null} alt="" />
+                                                    <div style={ carouselImgLoaded ? { opacity: 0 } : {opacity: 1} } className="onload-img"></div>
+                                                    <img onLoad={handleCarouselImg} loading="lazy" src={ getProjects.src ? '/images'+ getProjects.src+'/'+ (i+1) +'.webp' : null} alt="" />
                                                 </picture>
                                             </div>
                                         )

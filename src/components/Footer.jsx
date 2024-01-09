@@ -43,7 +43,7 @@ export default function Footer() {
                     </p>
                     <p className="f-cp">
                         <span>
-                            <span>Designed & built by </span> <a href="/" className="koffiHugues">AGOSSADOU.</a> 
+                            <span>Designed & built by </span> <a href="/" className="koffiHugues">koffihugues.</a> 
                         </span>
                     </p>
                 </div>

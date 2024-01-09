@@ -82,13 +82,13 @@ function App() {
   const [preloaderPerformed, setPreloaderPerformed] = useState(false)
   const [getRoutes, setRoutes] = useState({})
   const routeLocation = useLocation()
+  const url = dbConfig.dns+dbConfig.path+'routes.json'
   
 
   
   const match = useMemo(()=>{
 
 
-    const url = dbConfig.dns+dbConfig.path+'routes.json'
     if(Object.values(getRoutes).length === 0)
     {
 
