@@ -20,7 +20,7 @@ function ProjectLabel({labelText, data, reference}) {
                 <span className="p-l">{ labelText }</span>
                 {
                     typeof data === 'object'
-                    ? <span className="p-d"> { data.join('-') } </span>
+                    ? <span className="p-d"> { data.join(' ') } </span>
                     : <span className="p-d"> { data } </span>
                 }
             </div>
@@ -100,6 +100,8 @@ export default function Works() {
 
         const url = dbConfig.dns+dbConfig.path+file
 
+
+        if (import.meta.env.DEV) console.log(import.meta.env.BASE_URL, window.location.protocol)
     
         if(Object.values(getProjects).length === 0 || projectName !== getProjects.slug){
             
@@ -119,7 +121,6 @@ export default function Works() {
             } );
         }
 
-        // console.log(projectName, getProjects, getNextProject)
 
         
         const targets = [pNumRef.current, pTitleRef.current, descsRef.current, labelRef.current, visitLinkRef.current, nextProjectRef.current]
@@ -223,14 +224,24 @@ export default function Works() {
                                 </a>
                             </div>
                             <div className="p-next-lgh">
-                                <div className="n-label">
-                                    <span ref={el=> nextProjectRef.current[0] = el} >next project</span>
-                                </div>
-                                <ProjectLink
-                                    text={getNextProject ? getNextProject?.name : null}
-                                    handleClick={getNextProject ? ()=>handleCLickNext(getNextProject.slug) : null}
-                                    reference={el => nextProjectRef.current[1] = el}
-                                />
+                                {
+                                    
+                                    Object.values(getNextProject).length !== 0
+                                    ?
+                                    <>
+                                    
+                                        <div className="n-label">
+                                            <span ref={el=> nextProjectRef.current[0] = el} >next project</span>
+                                        </div>
+                                        <ProjectLink
+                                            text={getNextProject ? getNextProject?.name : null}
+                                            handleClick={getNextProject ? ()=>handleCLickNext(getNextProject.slug) : null}
+                                            reference={el => nextProjectRef.current[1] = el}
+                                        />
+                                    </>
+
+                                    : null
+                                }
                             </div>
                         </div>
                     </div>

@@ -164,11 +164,12 @@
     .p-meta{
         display: flex;
         flex-direction: row;
+        column-gap: 2%;
         justify-content: space-between;
         font-size: $size-5;
         text-transform: uppercase;
         margin-top: $margin-3;
-
+        width: 100%;
 
         @media screen and (width < 1024px) {
             flex-direction: column;
@@ -178,13 +179,16 @@
             }
         }
 
-        .p-desc p{
-            overflow: hidden;
-            span{
-                display: inline-block;
-                transform: translate3d(0, 100%, 0);
+        .p-desc{
+            // max-width: 60%;
+            p{
+                overflow: hidden;
+                span{
+                    display: inline-block;
+                    transform: translate3d(0, 100%, 0);
+                }
             }
-        }
+        }    
 
         @media screen and (width > 1280px) {
             margin-top: 15vh;
@@ -198,7 +202,6 @@
 
                     display: grid;
                     grid-template-columns: repeat(2, 1fr);
-                    row-gap: 5px;
                     transform: translate3d(0, 100%, 0);
                 }
             }

@@ -18,7 +18,7 @@ export const dbFiles = {
 
 export const dbConfig = {
   path: "src/data/",
-  dns: import.meta.env.MODE === 'development' ? import.meta.env.VITE_URL : import.meta.env.VITE_PROD_URL
+  dns: window.location.protocol+'//'+window.location.host+'/' 
 }
   
 

@@ -8,6 +8,7 @@ export default function Preloader({display}) {
     const bottomItemRef = useRef()
     const bandsRefs = useRef([])
     const preloaderRef = useRef()
+    const loaderTextWrapperRef = useRef()
     const { preloaderPerformed, setPreloaderPerformed } = useContext(PreloaderContext)
 
 
@@ -57,7 +58,7 @@ export default function Preloader({display}) {
                     ></div>
                 })
             }
-            <div className="loader-content-texts">
+            <div ref={loaderTextWrapperRef} className="loader-content-texts">
                 <span className='text-item'>
                     Agossadou <i>Koffi Hugues</i>
                 </span>

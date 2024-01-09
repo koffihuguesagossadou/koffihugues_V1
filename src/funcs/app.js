@@ -68,7 +68,7 @@ export function pageAnimation(isTransitionPage, isPreloader, ...elements){
     const timeline = gsap.timeline()
 
 
-    if( (!isTransitionPage && isTransitionPage !== null ) || isPreloader )
+    if( ((!isTransitionPage && isTransitionPage !== null ) || isPreloader) && elements )
     {
         timeline.to(...elements,{
             y: '0%',
