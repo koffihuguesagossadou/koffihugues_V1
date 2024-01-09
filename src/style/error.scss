@@ -1,0 +1,89 @@
+.error-p{
+    width: 100vw;
+    height: 100vh;
+
+    .e-w{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        text-transform: uppercase;
+        font-size: $size-5;
+
+        .e-n{
+            position: relative;
+            div{
+                position: relative;
+                font-size: $size-0;
+                font-family: $special-font;
+
+                &::before,&::after {
+                    @include pseudoElements;
+                    content: attr(data-text);
+                    width: 100%;
+                    height: 100%;
+                    background: $secondary-color;
+                    overflow: hidden;
+                }
+
+                &::before{
+                    left: 3px;
+                    text-shadow: -2px 0 $base-font-color;
+                    animation-name: glitch-animation-1;
+                    animation-duration: 4s;
+                    animation-timing-function: linear;
+                    animation-delay: 0s;
+                    animation-iteration-count: infinite;
+                    animation-direction: reverse-alternate;
+                }
+
+                &::after{
+                    left: -3px;
+                    text-shadow: -2px 0 $secondary-color;
+                    animation-name: glitch-animation-2;
+                    animation-duration: 4s;
+                    animation-timing-function: linear;
+                    animation-delay: 0s;
+                    animation-iteration-count: infinite;
+                    animation-direction: reverse-alternate;
+                }
+                
+            }
+        }
+
+        .e-b{
+            margin-top: $margin-3;
+            span{
+                a{
+                    position: relative;
+                    &::after{
+                        @include pseudoElements;
+                        background-color: $base-font-color;
+                        width: 100%;
+                        height: 2px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+@keyframes glitch-animation-1 {
+    $steps: 20;
+    @for $i from 0 through $steps {
+      #{percentage($i * calc(1 / $steps))} {
+        clip: rect(random(((140))) + px, 1280px, random(140) + px, 0px);
+      }
+    }
+  }
+  
+  @keyframes glitch-animation-2 {
+    $steps: 20;
+    @for $i from 0 through $steps {
+      #{percentage($i * calc(1 / $steps))} {
+        clip: rect(random(140) + px, 1280px, random(140) + px, 0px);
+      }
+    }
+  }

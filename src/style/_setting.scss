@@ -1,0 +1,344 @@
+// import scss files
+
+// Import fonts
+
+
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap');
+
+@font-face {
+    font-family: 'analogue';
+    src: url('/font/analogue-italic-webfont.woff2') format('woff2'),
+         url('/font/analogue-italic-webfont.woff') format('woff'),
+         url('/font/analogue-italic-webfont.ttf') format('truetype'),
+         url('/font/analogue-italic-webfont.svg#analogueitalic') format('svg');
+    font-weight: normal;
+    font-style: italic;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'analogue';
+    src: url('/font/analogue-webfont.woff2') format('woff2'),
+         url('/font/analogue-webfont.woff') format('woff'),
+         url('/font/analogue-webfont.ttf') format('truetype'),
+         url('/font/analogue-webfont.svg#analogueregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+// COLORS
+$primary-color : #F2D0A7;
+$secondary-color: #0D0D0D;
+$base-font-color: #ababab;
+$white : #ccc;
+$black: rgb(1, 13, 31);
+
+// FONTS
+$base-font: 'Manrope', sans-serif;
+$special-font: 'analogue', serif;
+
+/*----------FONT SIZES --------------*/
+
+// body fonts
+$body-1: 1.125em;
+
+
+//vw fonts
+$responsive-size-1: 11vw;
+
+// basique title fonts
+$big-size: 13em;
+$size-0: 8em;
+$size-1: 5em;
+$size-2: 3em; 
+$size-3: 2em;
+$size-4: 1em;
+$size-5: 0.75em;
+
+// mobile fonts
+// $mobile-0: calc($size-0 - );
+
+// RADIUS
+$radius-0: $size-0;
+$radius-1: $size-1;
+$radius-2: $size-2;
+$radius-3: $size-3;
+$radius-4: $size-4;
+$radius-5: $size-5;
+
+
+// SHADOWS
+
+
+// PADDINGS
+$padding-1: $size-0;
+$padding-2: $size-1;
+$padding-3: $size-2;
+$padding-4: $size-3;
+$padding-5: $size-4;
+$padding-6: $size-5;
+
+
+//MARGINS
+$margin-1: $size-0;
+$margin-2: $size-1;
+$margin-3: $size-2;
+$margin-4: $size-3;
+$margin-5: $size-4;
+$margin-6: $size-5;
+
+
+// titles
+
+$h1: $size-2;
+$h2: $size-3;
+$h3: $size-4;
+
+
+//cubic bezier
+$cb1: cubic-bezier(.35,1.09,1,.95);
+
+
+@mixin flexRow {
+    display: flex;
+    flex-direction: row;
+}
+
+@mixin flexColumn {
+    display: flex;
+    flex-direction: column;
+}
+
+@mixin flexCenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin transitionAll{
+    transition: var(--pointer) var(--duration) ease-in-out;
+}
+
+@mixin pseudoElements{
+    content: '';
+    position: absolute;
+    display: block;
+    left: 0;
+    bottom: 0;
+}
+
+
+// LINKS EFFECTS
+
+@mixin divsProperties{
+    perspective: 1000px;
+    transform-style: preserve-3d;
+    overflow: hidden;
+}
+
+@mixin notCloneProperties(){
+    will-change: transform;
+    transform-style: preserve-3d;
+    transition: 0.5s ease-in-out;
+    transition-delay: calc(0.03s * var(--index));
+    transform-origin: bottom;
+    display: inline-block;
+}
+
+@mixin cloneProperties(){
+    will-change: transform;
+    transform-style: preserve-3d;
+    transition: 0.5s ease-in-out;
+    transition-delay: calc(0.03s * var(--index));
+    transform-origin: top;
+    display: inline-block;
+    transform: translate3d(0, 100%, 0) rotateX(90deg);
+}
+  
+
+.container{
+    margin: 0 $margin-3;
+    @media screen and (max-width: 768px) {
+        margin: 0 $margin-4;
+        margin-bottom: $margin-1;
+    }
+}
+
+.btn-primary{
+    background-color: $primary-color;
+    line-height: 2em;
+    padding: 15px 25px;
+    border-radius: $radius-4;
+    font-weight: 400
+}
+
+.section-title{
+    position: static;
+    position: relative;
+    margin: $margin-2 0;
+
+    @media screen and (max-width: 768px) {
+        margin: $margin-4 0;
+    }
+    h1{
+        
+       
+        font-family: $special-font;
+        
+        font-weight: 700;
+        text-transform: uppercase;
+
+        .title-word{
+            overflow: hidden;
+
+            &:nth-child(2){
+                display: flex;
+                flex-direction: row;
+                justify-content: end;
+
+                .title-letter{
+                    font-style: italic;
+                }
+            }
+        }
+
+        .title-letter{
+            font-size: $size-0;
+            display: inline-block;
+            white-space: nowrap;
+            font-weight: 700;
+            transform: translate3d(0, 100%, 0);
+            @media screen and (max-width: 768px) {
+                font-size: $size-3;
+            }
+            @media screen and (min-width: 1281px) {
+                font-size: $big-size;
+            }
+        }
+        /* position: absolute; */         
+        // left: -7%;
+        // transform: rotate(-90deg);
+    }
+}
+
+// .a-section-title{
+//     margin-top: $margin-2;
+//     max-width: 500px;
+//     margin-left: 11vw;
+
+//     @media screen and (max-width: 768px) {
+//         margin-left: 0;
+//     }
+//     @media screen and (min-width: 1281px) {
+//         max-width: 700px;
+//     }
+
+//     h1{
+//         font-family: $special-font;
+//         font-size: $size-1;
+//         opacity: 0;
+//         transform: translate3d(0, 50%, 0);
+//         @media screen and (max-width: 768px) {
+//             font-size: $size-3;
+//         }
+//         @media screen and (min-width: 1281px) {
+//             font-size: $size-0;
+//         }
+//     }
+// }
+
+
+.section-subtitle{
+
+        margin-bottom:  $margin-4;
+        
+    }
+
+.addIndex{
+    z-index: -1;
+}
+
+
+// socila media 
+
+.smm, .project-links-wrapper{
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    margin-right: $margin-6;
+    a{
+        position: relative;
+        overflow: hidden;
+        display: inline-block;
+        display: flex;
+
+        &:hover{
+            div{
+
+                &:nth-child(1) span{
+                    transform: translate3d(0, -100%, 0) rotateX(-90deg);
+                }
+
+                &:nth-child(2) span{
+                    transform: translate3d(0, 0%, 0) rotateX(0deg);
+                }
+
+
+            }
+        }
+        
+
+        div{
+            @include divsProperties;
+
+
+            &:nth-child(1) span{
+                @include notCloneProperties;
+            }
+
+            &:nth-child(2) span{
+                @include cloneProperties;
+                color: $primary-color;     
+            }
+        }
+
+        .sm-clone,.project-link-clone{
+            position: absolute;
+            left: 0;
+            top: 0;                    
+        }
+
+        
+    }
+
+}
+
+
+
+// .section-title{
+//     overflow: hidden;
+//     h1{
+//         @media screen and (max-width: 768px) {
+//             font-size: $size-4;
+//         }
+//         font-size: $size-4;
+//         text-transform: capitalize;
+//         position: absolute;
+//         left: -7%;
+//         top: 0;
+//         transform: rotate(-90deg);
+//     }
+// }
+
+@import './home';
+@import './about';
+@import './works';
+@import './archives';
+@import './error';
+@import './footer';

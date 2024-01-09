@@ -1,0 +1,35 @@
+@import './app.scss';
+
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    font-family: $base-font;
+    font-weight: 400;
+    background-color: $secondary-color;
+    color: $base-font-color;
+    font-size: $body-1;
+    overflow: hidden;
+}
+
+section{
+    margin-top: 100px;
+}
+
+li{
+    list-style-type: none;
+}
+
+a{
+    text-decoration: none;
+    color: $base-font-color;
+}
+
+h1,h2,h3,h4,h5,h6{
+    font-family: $base-font;
+}
+
+
