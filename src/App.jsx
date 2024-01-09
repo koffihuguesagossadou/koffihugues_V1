@@ -142,8 +142,8 @@ function App() {
       <PageTransitionContext.Provider value={{showTransition, setShowTransition}}>
         <CursorContext.Provider value={{ cursorOnLink, setCursorOnLink}}>
             <div id='main-wrapper'>
-              { match !== null && <Preloader/>}
-              { match !== null &&  <Transition/>}
+              { match !== null && <Suspense fallback={null}><Preloader/></Suspense>}
+              { match !== null &&  <Suspense fallback={null}><Transition/></Suspense>}
               { match !== null && <Suspense fallback={null}><Navbar/></Suspense>}
               <main className="main-content">
                 
@@ -151,11 +151,15 @@ function App() {
                   <Routes>
                     <Route index path="/" element={<Landing/>}/>
                     <Route path="/about" element={<AboutP/>}/>
-                    { (match !== null || preloaderPerformed) && <Route 
-                      errorElement= {<ErrorP/>}
-                      path="/project/:projectName" element={<WorkP />} />}
                     <Route path="/archives" element={ <ArchiveP /> } />
+                    { match !== null  &&                     
+                      <Route 
+                        errorElement= {<ErrorP/>}
+                        path="/project/:projectName" element={<WorkP />} />
+                    }
+                    
                     <Route path="*" element={<ErrorP />} />
+                    
                   </Routes>
                 </Suspense>
               </main>

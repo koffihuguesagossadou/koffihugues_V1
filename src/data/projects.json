@@ -10,7 +10,7 @@
         ],
         "awards": [],
         "link": "https://www.tnacollection.ci",
-        "year": null,
+        "year": 2024,
         "src": "/tna",
         "imgs": [],
         "client": "tna collection",
@@ -78,25 +78,7 @@
         "stacks": ["php", "javascript", "laravel", "git"]
         
     },
-    {
-        "id": 5,
-        "name": "mbci",
-        "slug": "mbci",
-        "description": [
-            "single page application made by koffi hugues promoting côte d'ivoire",
-            "its various tourist attractions, restaurants, hotels, things to do"
-        ],
-        "awards": [],
-        "link": null,
-        "year": 2024,
-        "image": "",
-        "src": "/mbci",
-        "imgs": [],
-        "client": "self",
-        "role": "fullstack dev & motion",
-        "stacks": ["react", "typescript","gsap"]
-        
-    },
+    
     {
         "id": 6,
         "name": "mon tchat voyance",
@@ -135,25 +117,6 @@
         "role": "frontend dev & motion",
         "stacks": ["react", "js", "vercel"]
         
-    },
-
-    {
-        "id": 8,
-        "name": "yoomi bakus",
-        "slug": "yoomi-bakus",
-        "description": [
-            "Experience seamless digital solutions with this user-friendly website.",
-            "Engage with interactive features that enhance accessibility and functionality"
-        ],
-        "awards": [],
-        "link": null,
-        "year": null,
-        "src": "/yb",
-        "image": "",
-        "imgs": [],
-        "client": "yoomi bakus",
-        "role": "fullstack dev & motion",
-        "stacks": []
-        
     }
+    
 ]

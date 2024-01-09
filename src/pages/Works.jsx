@@ -119,7 +119,6 @@ export default function Works() {
             } );
         }
 
-        // console.log(projectName, getProjects, getNextProject)
 
         
         const targets = [pNumRef.current, pTitleRef.current, descsRef.current, labelRef.current, visitLinkRef.current, nextProjectRef.current]
@@ -223,14 +222,24 @@ export default function Works() {
                                 </a>
                             </div>
                             <div className="p-next-lgh">
-                                <div className="n-label">
-                                    <span ref={el=> nextProjectRef.current[0] = el} >next project</span>
-                                </div>
-                                <ProjectLink
-                                    text={getNextProject ? getNextProject?.name : null}
-                                    handleClick={getNextProject ? ()=>handleCLickNext(getNextProject.slug) : null}
-                                    reference={el => nextProjectRef.current[1] = el}
-                                />
+                                {
+                                    
+                                    Object.values(getNextProject).length !== 0
+                                    ?
+                                    <>
+                                    
+                                        <div className="n-label">
+                                            <span ref={el=> nextProjectRef.current[0] = el} >next project</span>
+                                        </div>
+                                        <ProjectLink
+                                            text={getNextProject ? getNextProject?.name : null}
+                                            handleClick={getNextProject ? ()=>handleCLickNext(getNextProject.slug) : null}
+                                            reference={el => nextProjectRef.current[1] = el}
+                                        />
+                                    </>
+
+                                    : null
+                                }
                             </div>
                         </div>
                     </div>
