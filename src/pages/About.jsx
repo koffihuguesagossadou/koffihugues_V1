@@ -39,6 +39,7 @@ export function About() {
 
 
         const targets = ['.fn-letter', 'p>span','div>h3' ,expsRef.current, skillsRef.current]
+        if(targets === null || !targets) return
         pageAnimation(showTransition, preloaderPerformed, targets)
 
         

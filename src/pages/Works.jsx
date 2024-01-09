@@ -20,7 +20,7 @@ function ProjectLabel({labelText, data, reference}) {
                 <span className="p-l">{ labelText }</span>
                 {
                     typeof data === 'object'
-                    ? <span className="p-d"> { data.join('-') } </span>
+                    ? <span className="p-d"> { data.join(' ') } </span>
                     : <span className="p-d"> { data } </span>
                 }
             </div>

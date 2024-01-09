@@ -66,13 +66,11 @@ export function ProjectCard({name, src, index,slug}) {
                 amount: 0.2
             }
         })
-        easing.damp(imageRef.current.material, 'distort', hovered ?0.2: 0, 0.25, delta)
-        easing.damp(imageRef.current.material, 'speed', hovered ? 4 : 0, 0.25, delta)
+        
         easing.damp(imageRef.current.material, 'grayscale', hovered ? 0 : 0.8, 0.25, delta)
         easing.damp(imageRef.current.material, 'zoom', hovered ? 1.4 : 1.2, 0.25, delta)
     
     });
-
 
     
     return(
@@ -143,13 +141,17 @@ export function ProjectsCards({gap = 0.3, imageW = 2.5 }) {
     // display idem on scroll
     const displayItems = (item, index, active) => {
 
+        if(item.position)
+        {
 
-        gsap.to(item.position, {
-            x: (index - active) * xW,
-            y: 0,
-            duration: 3,
-            ease: "power3.out",
-        });
+            gsap.to(item.position, {
+                x: (index - active) * xW,
+                y: 0,
+                duration: 3,
+                ease: "power3.out",
+            });
+        }
+
     };
 
     //handle on wheel

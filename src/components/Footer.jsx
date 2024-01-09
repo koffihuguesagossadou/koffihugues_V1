@@ -30,6 +30,8 @@ export default function Footer() {
             })
         }
 
+
+        
         pageAnimation(showTransition, preloaderPerformed, '.f-cp>span')
 
     }, [showTransition, preloaderPerformed, getContacts])

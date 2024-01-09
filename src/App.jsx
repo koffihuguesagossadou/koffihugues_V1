@@ -39,12 +39,15 @@ function Cursor() {
 
   useEffect(()=>{
       function updateMousePosition(eX, eY) {
+        if(cursorRef.current)
+        {
+          gsap.to(cursorRef.current,{
+            x: eX,
+            y: eY,
+          })
 
+        }
 
-        gsap.to(cursorRef.current,{
-          x: eX,
-          y: eY,
-        })
         
       }
 
@@ -103,12 +106,12 @@ function App() {
     const routesArray = Object.values(getRoutes)
     
     return matchRoutes(routesArray, routeLocation)
-  }, [getRoutes, routeLocation])
+  }, [getRoutes])
 
   
   useEffect(()=>{
 
-
+    console.log(match)
 
     if(routeLocation.pathname !== '/'){
 
@@ -132,7 +135,7 @@ function App() {
 
     
 
-  }, [routeLocation, match])
+  }, [routeLocation])
 
   return (
     <PreloaderContext.Provider value={{ preloaderPerformed, setPreloaderPerformed }}>
@@ -148,7 +151,7 @@ function App() {
                   <Routes>
                     <Route index path="/" element={<Landing/>}/>
                     <Route path="/about" element={<AboutP/>}/>
-                    { match !== null && <Route 
+                    { (match !== null || preloaderPerformed) && <Route 
                       errorElement= {<ErrorP/>}
                       path="/project/:projectName" element={<WorkP />} />}
                     <Route path="/archives" element={ <ArchiveP /> } />
