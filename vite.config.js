@@ -6,4 +6,6 @@ export default defineConfig({
   plugins: [
       react()
     ],
+    assetsInclude: ['**/*.json'],
+    assetsInlineLimit: 0,
 })
