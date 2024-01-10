@@ -11,7 +11,8 @@ export const gsapConfig = {
 export const dbFiles = {
   me: 'me.json',
   archives: 'archives.json',
-  projects: 'projects.json'
+  projects: 'projects.json',
+  routes: 'routes.json'
 }
 
 

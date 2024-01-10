@@ -7,7 +7,7 @@ import { easing } from 'maath'
 import { useNavigate } from "react-router-dom"; 
 import gsap from 'gsap';
 import { retrieveData } from "../funcs/app";
-import { dbConfig } from "../config/defaults";
+import { dbConfig, dbFiles } from "../config/defaults";
 
 
 
@@ -121,7 +121,6 @@ export function ProjectsCards({gap = 0.3, imageW = 2.5 }) {
 
     const speedWheel = 0.03;
     const speedDrag = -0.1;
-    const file = 'projects.json'
 
     const [$root, setRoot] = useState();
     const [getWorks, setWorks] = useState({});
@@ -197,12 +196,11 @@ export function ProjectsCards({gap = 0.3, imageW = 2.5 }) {
 
 
     useEffect(()=>{
-        const url = dbConfig.dns+dbConfig.path+file
 
         if(Object.values(getWorks).length === 0)
         {
 
-            retrieveData(url)
+            retrieveData('./'+dbConfig.path+dbFiles.projects)
             .then(response=>{
                 setWorks({...response})
             })
