@@ -16,12 +16,11 @@ export default function Footer() {
 
     useEffect(()=>{
         
-        const url = dbConfig.dns + dbConfig.path + dbFiles.me
 
         if(Object.values(getContacts).length === 0)
         {
             
-            retrieveData(url)
+            retrieveData(process.env.JSON_URL+dbConfig.path+dbFiles.me)
             .then(response=>{
 
                 if(!response) return

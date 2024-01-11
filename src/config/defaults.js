@@ -11,13 +11,14 @@ export const gsapConfig = {
 export const dbFiles = {
   me: 'me.json',
   archives: 'archives.json',
-  projects: 'projects.json'
+  projects: 'projects.json',
+  routes: 'routes.json'
 }
 
 
 
 export const dbConfig = {
-  path: "src/data/",
+  path: "data/",
   dns: window.location.protocol+'//'+window.location.host+'/' 
 }
   
