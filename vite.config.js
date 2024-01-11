@@ -1,4 +1,4 @@
-import { defineConfig, loadEnv } from 'vite'
+import { defineConfig, loadEnv, splitVendorChunkPlugin  } from 'vite'
 import react from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/
@@ -8,7 +8,7 @@ export default defineConfig(({ mode }) => {
     define: {
       'process.env.JSON_URL': JSON.stringify(env.JSON_URL)
     },
-    plugins: [react()],
+    plugins: [react(), splitVendorChunkPlugin()],
     build: { chunkSizeWarningLimit: 1600, }
   }
 })
