@@ -9,5 +9,6 @@ export default defineConfig(({ mode }) => {
       'process.env.JSON_URL': JSON.stringify(env.JSON_URL)
     },
     plugins: [react()],
+    build: { chunkSizeWarningLimit: 1600, }
   }
 })
