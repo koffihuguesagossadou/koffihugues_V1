@@ -6,7 +6,7 @@ import Preloader from "./components/Preloader";
 import Transition from "./components/Transition";
 import { useLocation, matchRoutes } from "react-router-dom";
 import Lenis from '@studio-freight/lenis';
-import { dbConfig } from "./config/defaults";
+import { dbConfig, dbFiles } from "./config/defaults";
 import { retrieveData } from "./funcs/app";
 
 const Navbar = lazy( ()=> import('./components/Navbar'))
@@ -22,12 +22,6 @@ const ErrorP = lazy(()=> import ('./pages/Error/ErrorP') )
 export const PageTransitionContext = createContext();
 export const CursorContext = createContext();
 export const PreloaderContext = createContext();
-
-function LazyLoading() {
-  return (
-    <div className="lazy-loading"></div>
-  )
-}
 
 
 
@@ -85,7 +79,6 @@ function App() {
   const [preloaderPerformed, setPreloaderPerformed] = useState(false)
   const [getRoutes, setRoutes] = useState({})
   const routeLocation = useLocation()
-  const url = dbConfig.dns+dbConfig.path+'routes.json'
   
 
   
@@ -95,7 +88,7 @@ function App() {
     if(Object.values(getRoutes).length === 0)
     {
 
-      retrieveData(url)
+      retrieveData(process.env.JSON_URL+dbConfig.path+dbFiles.routes)
       .then(response=>{
 
         setRoutes({...response})

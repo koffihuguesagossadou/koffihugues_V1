@@ -1,5 +1,5 @@
 import { useEffect,useRef,useContext, useState } from 'react'
-import { dbConfig } from '../config/defaults';
+import { dbConfig, dbFiles } from '../config/defaults';
 import { PageTransitionContext, PreloaderContext } from '../App';
 import { pageAnimation, retrieveData } from '../funcs/app';
 
@@ -16,19 +16,13 @@ export function About() {
     const expsRef = useRef([])
     const skillsRef = useRef([])
 
-    const file = 'me.json'
-
-    
-
 
     useEffect( ()=>{
         
-        const url = dbConfig.dns+dbConfig.path+file
-
 
         if(Object.keys(getInfos).length === 0){
 
-            retrieveData(url)
+            retrieveData(process.env.JSON_URL+dbConfig.path+dbFiles.me)
             .then( response => {
     
                 if(!response) return

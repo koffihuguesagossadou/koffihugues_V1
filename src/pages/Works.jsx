@@ -6,7 +6,7 @@ import { ProjectLink } from "../components/Links";
 import { PageTransitionContext, PreloaderContext } from "../App";
 import { useNavigate } from "react-router-dom";
 import useDocumentTitle from "../Hook/useDocumentTitle";
-import { dbConfig } from "../config/defaults";
+import { dbConfig, dbFiles } from "../config/defaults";
 
 const metaDataTableLenght = 4;
 const tableLabelText = ["client", "role", "year", "stacks"]
@@ -38,7 +38,6 @@ export default function Works() {
     // page title
     useDocumentTitle(`Koffi Hugues | ${projectName}`) 
 
-    const file = 'projects.json'
     const imgs= [1,2,3,4,5,6,7]
     
     const {showTransition, setShowTransition} = useContext(PageTransitionContext)
@@ -98,14 +97,11 @@ export default function Works() {
     useEffect(()=>{
 
 
-        const url = dbConfig.dns+dbConfig.path+file
-
-
         if (import.meta.env.DEV) console.log(import.meta.env.BASE_URL, window.location.protocol)
     
         if(Object.values(getProjects).length === 0 || projectName !== getProjects.slug){
             
-            retrieveData(url)
+            retrieveData(process.env.JSON_URL+dbConfig.path+dbFiles.projects)
             .then((response) =>  {
                 
                 

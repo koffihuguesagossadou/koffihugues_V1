@@ -3,7 +3,7 @@ import { LuGithub } from "react-icons/lu";
 import { useEffect, useRef, useContext, useState } from "react";
 import { pageAnimation, retrieveData } from "../funcs/app";
 import { PageTransitionContext, PreloaderContext } from "../App";
-import { dbConfig } from "../config/defaults";
+import { dbConfig, dbFiles } from "../config/defaults";
 
 function ArchiveLine({name, year, client, stacks, links, reference}){
 
@@ -69,16 +69,14 @@ export function Archives() {
     const { preloaderPerformed } = useContext(PreloaderContext)
     const [getArchives, setArchives] = useState([])
 
-
-    const file = 'archives.json'
-    const url = dbConfig.dns+dbConfig.path+file
  
     useEffect( ()=>{
 
         if( Object.values(getArchives).length === 0)
         {
 
-            retrieveData(url).then(response=>{
+            retrieveData(process.env.JSON_URL+dbConfig.path+dbFiles.archives)
+            .then(response=>{
                 if(!response) return
     
                 setArchives({...response})
