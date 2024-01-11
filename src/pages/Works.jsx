@@ -101,7 +101,7 @@ export default function Works() {
     
         if(Object.values(getProjects).length === 0 || projectName !== getProjects.slug){
             
-            retrieveData('./'+dbConfig.path+dbFiles.projects)
+            retrieveData(process.env.JSON_URL+dbConfig.path+dbFiles.projects)
             .then((response) =>  {
                 
                 

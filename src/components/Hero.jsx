@@ -17,7 +17,7 @@ export default function Hero() {
         if(Object.values(getContacts).length === 0)
         {
             
-            retrieveData('./'+dbConfig.path+dbFiles.me)
+            retrieveData(process.env.JSON_URL+dbConfig.path+dbFiles.me)
             .then(response=>{
 
                 if(!response) return

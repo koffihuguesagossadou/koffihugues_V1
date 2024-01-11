@@ -88,7 +88,7 @@ function App() {
     if(Object.values(getRoutes).length === 0)
     {
 
-      retrieveData('./'+dbConfig.path+dbFiles.routes)
+      retrieveData(process.env.JSON_URL+dbConfig.path+dbFiles.routes)
       .then(response=>{
 
         setRoutes({...response})

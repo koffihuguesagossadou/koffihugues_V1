@@ -75,7 +75,7 @@ export function Archives() {
         if( Object.values(getArchives).length === 0)
         {
 
-            retrieveData('./'+dbConfig.path+dbFiles.archives)
+            retrieveData(process.env.JSON_URL+dbConfig.path+dbFiles.archives)
             .then(response=>{
                 if(!response) return
     

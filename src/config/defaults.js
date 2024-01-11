@@ -18,7 +18,7 @@ export const dbFiles = {
 
 
 export const dbConfig = {
-  path: "src/data/",
+  path: "data/",
   dns: window.location.protocol+'//'+window.location.host+'/' 
 }
   

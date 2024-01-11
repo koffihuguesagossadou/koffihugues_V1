@@ -200,7 +200,7 @@ export function ProjectsCards({gap = 0.3, imageW = 2.5 }) {
         if(Object.values(getWorks).length === 0)
         {
 
-            retrieveData('./'+dbConfig.path+dbFiles.projects)
+            retrieveData(process.env.JSON_URL+dbConfig.path+dbFiles.projects)
             .then(response=>{
                 setWorks({...response})
             })
