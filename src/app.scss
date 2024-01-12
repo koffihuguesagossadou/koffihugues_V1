@@ -238,8 +238,12 @@
   25% {
     opacity: 1;
   }
-  75% {
+  50% {
     opacity: 1;
+  }
+
+  75% {
+    opacity: 0;
   }
   100% {
     opacity: 0;
