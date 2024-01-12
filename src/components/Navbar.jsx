@@ -7,6 +7,8 @@ import { GoArrowLeft } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
 import { pageAnimation } from "../funcs/app";
 
+import BrandSvg from "../svgs/Brand";
+
 
 function Navbar() {
 
@@ -87,9 +89,8 @@ function Navbar() {
                     :<>
                     
                         <div className="brand-wrapper">
-                            <a href="/"
-                                className="typo-brand">
-                                AGOSSADOU
+                            <a href="/" className="typo-brand">
+                                <BrandSvg />
                             </a>
                         </div>
 
