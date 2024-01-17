@@ -45,6 +45,14 @@ export default function Preloader({display}) {
             }
 
 
+            if (loaderTextWrapperRef.current) {
+                gsap.to(loaderTextWrapperRef.current, {
+                    opacity: 0,
+                    delay: 2.4
+                })
+            }
+
+
 
     }, [])
 

@@ -37,11 +37,20 @@ export function ProjectCard({name, src, index,slug}) {
     })
 
     const handleOnCLick = useCallback(()=>{
-        setShowTransition(true)
-        
-        setTimeout(()=>{
-            navigate(`/project/${slug}`)
-        }, 1500)
+
+        if(slug === 'folio-v2') 
+        {
+            window.location.href = '/'
+        }
+        else{
+            
+            setShowTransition(true)
+            
+            setTimeout(()=>{
+                navigate(`/project/${slug}`)
+            }, 1500)
+        }
+
     })
 
     
@@ -82,7 +91,7 @@ export function ProjectCard({name, src, index,slug}) {
             <Image 
                 ref={imageRef}
                 zoom={1.4}
-                url={'images'+src+'/main.webp'}
+                url={'https://dlfsookdovlgl.cloudfront.net'+src+'/main.webp'}
                 scale={[photo.width, photo.height, 1]} 
                 onPointerOver={ handleMeshOnPointerEnter }
                 onPointerOut={ handleMeshOnPointerLeave }
@@ -205,7 +214,6 @@ export function ProjectsCards({gap = 0.3, imageW = 2.5 }) {
                 setWorks({...response})
             })
         }
-
 
 
     }, [getWorks])

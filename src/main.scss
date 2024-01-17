@@ -9,14 +9,22 @@
 body{
     font-family: $base-font;
     font-weight: 400;
-    background-color: $secondary-color;
+    background-color: $primary-color;
     color: $base-font-color;
     font-size: $body-1;
     overflow: hidden;
 }
 
+#root, nav{
+    background-color: $secondary-color;
+}
+
+#root{
+    position: relative;
+}
+
 section{
-    margin-top: 100px;
+    padding-top: 100px;
 }
 
 li{

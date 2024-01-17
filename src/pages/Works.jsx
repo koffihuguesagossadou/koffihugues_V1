@@ -211,7 +211,7 @@ export default function Works() {
                         </div>
                         <div className="p-visit">
                             <div className="p-v-wrapper">
-                                <a  href={getProjects?.link}>
+                                <a target="_blank"  href={getProjects?.link}>
                                     <span ref={visitLinkRef}>
                                         <span>visit site</span>
                                         <MdOutlineArrowOutward />
