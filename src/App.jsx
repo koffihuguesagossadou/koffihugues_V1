@@ -125,7 +125,6 @@ function App() {
       
       requestAnimationFrame(raf);
     }
-
     
 
   }, [routeLocation])

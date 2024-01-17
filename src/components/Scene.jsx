@@ -19,7 +19,6 @@ import { Preload } from '@react-three/drei';
         >
             <ambientLight intensity={Math.PI} />
             <ProjectsCards />
-            <Preload />
         </Canvas>
         
         
