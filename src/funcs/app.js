@@ -96,3 +96,5 @@ export async function retrieveData(url) {
 
     return dataFiltered
 }
+
+

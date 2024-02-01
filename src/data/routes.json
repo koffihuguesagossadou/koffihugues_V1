@@ -28,6 +28,10 @@
       "label": "folio v2"
     },
     {
+      "path": "/project/folio-v1",
+      "label": "folio v1"
+    },
+    {
       "path": "/project/vms-sms",
       "label": "vms sms"
     },

@@ -1,26 +1,8 @@
 [
-    {
-        "id": 1,
-        "name": "tna collection",
-        "slug": "tna-collection",
-        "description": [
-            "This project is a web app that introduce tna collection gift boxes.",
-            "tna collection is a ivorian company focused on the sale of gift boxes",
-            "Features implemented are smooth scrolling, interactive animations..."
-        ],
-        "awards": [],
-        "link": "https://www.tnacollection.ci",
-        "year": 2024,
-        "src": "/tna",
-        "imgs": [],
-        "client": "tna collection",
-        "role": "frontend dev & motion",
-        "stacks": ["webflow", "javascript"]
-        
-    },
+    
     
     {
-        "id": 2,
+        "id": 1,
         "name": "ligne bis",
         "slug": "lignebis",
         "description": [
@@ -41,7 +23,7 @@
     },
 
     {
-        "id": 3,
+        "id": 2,
         "name": "folio v2",
         "slug": "folio-v2",
         "description": [
@@ -57,6 +39,25 @@
         "role": "frontend dev & motion",
         "stacks": ["react", "gsap", "threejs", "json", "lenis"]
         
+    },
+
+    {
+        "id": 3,
+        "name": "cookin'cipe",
+        "slug": "cookincipe",
+        "description": [
+            "App listing many african and caribbean food and drinks.",
+            "For food-lovers and eaters, you can learn you favorite dish in few minutes."
+        ],
+        "awards": [],
+        "link": "https://www.figma.com/proto/kcl0MPttDcI9nGq3lsflSa?node-id=0-1&mode=design&t=1dxlM8nSVt39xVek-6",
+        "year": 2023,
+        "src": "/cookincipe",
+        "image": "",
+        "imgs": [],
+        "client": "self",
+        "role": "ui design",
+        "stacks": [ "figma"]
     },
 
     {
@@ -80,7 +81,7 @@
     },
     
     {
-        "id": 6,
+        "id": 5,
         "name": "mon tchat voyance",
         "slug": "mon-tchat-voyance",
         "description": [
@@ -101,7 +102,7 @@
     },
 
     {
-        "id": 7,
+        "id": 6,
         "name": "folio v1",
         "slug": "folio-v1",
         "description": [

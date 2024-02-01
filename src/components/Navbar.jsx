@@ -5,9 +5,10 @@ import { PageTransitionContext, PreloaderContext } from "../App";
 import { useLocation, Link } from "react-router-dom";
 import { GoArrowLeft } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
-import { pageAnimation } from "../funcs/app";
+import gsap from "gsap";
 
 import BrandSvg from "../svgs/Brand";
+import { gsapConfig } from "../config/defaults";
 
 
 function Navbar() {
@@ -43,11 +44,15 @@ function Navbar() {
     useEffect(()=>{
 
         const target = [localAddressRef.current, localTimeRef.current]
-        const isExist = (currentValue => typeof currentValue !== 'undefined')
 
-        if(localAddressRef.current, localTimeRef.current) {
+        if( ((!showTransition && showTransition !== null ) || preloaderPerformed) && (localAddressRef.current && localTimeRef.current)) {
 
-            pageAnimation(showTransition, preloaderPerformed, target)
+            gsap.to(target,{
+                y: '0%',
+                ease: gsapConfig.ease,
+                duration: gsapConfig.duration
+                
+            })
         }
 
 
@@ -71,7 +76,7 @@ function Navbar() {
 
 
     return(
-        <nav className='navbar'>
+        <nav style={ routeLocation.pathname !== '/'  ? {mixBlendMode: 'difference'} : null } className='navbar'>
             <div className="menu-wrapper">
                 
                 {
@@ -82,7 +87,7 @@ function Navbar() {
                                 href="/"
                                 onClick={(e)=>asyncHandleClickedLink(e, '/')} 
                             >
-                                <GoArrowLeft />
+                                <span>Back</span>
                             </a>
                         </div>
 
@@ -121,7 +126,9 @@ function Navbar() {
                     </>
                      
                 }
-                <div className="menu-links-container">
+                {
+                    (routeLocation.pathname === '/' || routeLocation.pathname === '/about' || routeLocation.pathname === '/archives')
+                    ?<div className="menu-links-container">
                     <ul className="menu-lists">
                         <MenuLink
                             name='about'
@@ -139,6 +146,8 @@ function Navbar() {
                         
                     </ul>
                 </div>
+                : null
+                }
             </div>
         </nav>
 

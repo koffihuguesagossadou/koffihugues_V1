@@ -7,6 +7,12 @@ import { PageTransitionContext, PreloaderContext } from "../App";
 import { useNavigate } from "react-router-dom";
 import useDocumentTitle from "../Hook/useDocumentTitle";
 import { dbConfig, dbFiles } from "../config/defaults";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { nanoid } from 'nanoid'
+import { ScrollTrigger } from "gsap/all";
+import gsap from 'gsap'
+gsap.registerPlugin(ScrollTrigger)
+
 
 const metaDataTableLenght = 4;
 const tableLabelText = ["client", "role", "year", "stacks"]
@@ -20,7 +26,23 @@ function ProjectLabel({labelText, data, reference}) {
                 <span className="p-l">{ labelText }</span>
                 {
                     typeof data === 'object'
-                    ? <span className="p-d"> { data.join(' ') } </span>
+                    ? 
+                    
+                    <div className="m-data">
+                        {
+                            data.map((el, _i)=>{
+                                return (
+                                    <div key={nanoid()}>
+
+                                        <span className="p-d"> { el }   </span>
+                                        <span> &#160; </span>
+
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+                    
                     : <span className="p-d"> { data } </span>
                 }
             </div>
@@ -39,6 +61,7 @@ export default function Works() {
     useDocumentTitle(`Koffi Hugues | ${projectName}`) 
 
     const imgs= [1,2,3,4,5,6,7]
+    const timeline = gsap.timeline()
     
     const {showTransition, setShowTransition} = useContext(PageTransitionContext)
     const { preloaderPerformed } = useContext(PreloaderContext)
@@ -48,57 +71,79 @@ export default function Works() {
     const [getProjects, setProjects] = useState({})
     const [getNextProject, setNextProject] = useState({})
     const [imgLoaded, setImageLoaded] = useState(false)
-    const [carouselImgLoaded, setCarouselImgLoaded] = useState(false)
+    const [NImgLoaded, setNImgLoad] = useState(false)
     
     
 
-    const [currentImage, setCurrentImage] = useState(0)
 
     
-    const pcActiveRef = useRef()
-    const pNumRef = useRef()
+    const imgsRef = useRef([])
+    const loadImgsRef = useRef([])
+    const scrollRef = useRef()
     const pTitleRef = useRef()
     const descsRef = useRef([])
     const labelRef = useRef([])
     const visitLinkRef = useRef()
     const nextProjectRef = useRef([])
+    const lineScroll = useRef()
 
-    const handleClickImage = useCallback((imageId)=>{
-        setCurrentImage(imageId)
-    })
+    
 
 
+    // go to next project
     const handleCLickNext = useCallback((slug)=>{
+
+
         setShowTransition(true)
-        
+
+        // when we go to next project scroll to top
+        if(window.scrollY > 0){
+            setTimeout(()=>{
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                
+            }, 1000)
+        }
 
         setTimeout(()=>{
             navigate(`/project/${slug}`)
         }, 1500)
-    })
-
-
-    const handleLoadImg = useCallback(()=>{
-        if(!imgLoaded)
-        {
-            setImageLoaded(true)
-        }
+        
+        
     }, [])
 
 
-    const handleCarouselImg = useCallback(()=>{
-        if(!carouselImgLoaded)
-        {
-            setCarouselImgLoaded(true)
-        }
-    }, [])
+    // const handleLoadImg = useCallback(()=>{
+    //     if(!imgLoaded)
+    //     {
+    //         setImageLoaded(true)
+    //     }
+    // }, [])
+
+
+
+
+    function scrollLine(e) {
+        const y = Math.round(window.scrollY)  
+        const pageSize  = document.body.clientHeight - window.innerHeight
+
+
+        timeline.to(lineScroll.current, {
+            height: y * (100/(pageSize)) + '%',
+            duration: 0,
+        })
+    }
+
+    
     
     
     useEffect(()=>{
 
 
-        if (import.meta.env.DEV) console.log(import.meta.env.BASE_URL, window.location.protocol)
+        // scroll line feature 
+        window.addEventListener('scroll', scrollLine)
+
     
+        // get project informations
         if(Object.values(getProjects).length === 0 || projectName !== getProjects.slug){
             
             retrieveData(process.env.JSON_URL+dbConfig.path+dbFiles.projects)
@@ -118,12 +163,48 @@ export default function Works() {
         }
 
 
-        
-        const targets = [pNumRef.current, pTitleRef.current, descsRef.current, labelRef.current, visitLinkRef.current, nextProjectRef.current]
+        //  animations targets
+        const targets = [pTitleRef.current, descsRef.current, labelRef.current, visitLinkRef.current, nextProjectRef.current, scrollRef.current]
         if(targets === null || !targets) return
-        pageAnimation(showTransition, preloaderPerformed, targets)    
+        pageAnimation(showTransition, preloaderPerformed, targets)  
+        
+        
 
-    },[showTransition, preloaderPerformed,getProjects, getNextProject, projectName])
+        // load imgs
+
+        if(loadImgsRef.current && imgLoaded)
+        {
+
+            loadImgsRef.current.forEach((element, i)=>{
+                gsap.to(element,{
+                    opacity: 0,
+                    duration:.5,
+                    ease: "power1.out",
+                    scrollTrigger:{
+                        trigger: imgsRef.current[i],
+                        start: 'center bottom',
+                    },
+    
+                    
+                })
+            })
+
+        }
+
+        return ()=>{
+            removeEventListener('scroll', scrollLine)
+        }
+
+        
+
+    },[
+        showTransition, 
+        preloaderPerformed,
+        getProjects, 
+        getNextProject, 
+        projectName, 
+        imgLoaded
+    ])
 
 
     
@@ -131,67 +212,43 @@ export default function Works() {
     
     return(
         <section className="project-section">
-            <div className="container">
-                <div className="p-carousel-wrapper">
-                    <div className="p-pics">
-                        <div className="main-pic-dis">
-                            <picture>
-                                <div style={ imgLoaded ? { opacity: 0 } : {display: 1 } } className="onload-img"></div>
-                                <img onLoad={handleLoadImg} loading="lazy" src={getProjects.src ? '/images'+ getProjects.src+'/'+ (currentImage + 1) +'.webp' : null} alt={getProjects?.name} srcSet="" />
-                            </picture>
-                        </div>
-                        <div className="carousel-pics"> 
-                            <div className="p-name">
-                                <div className="p-num">
-                                    <span ref={pNumRef}> 
-                                        {
-                                            getProjects && getProjects.id >= 10 
-                                            ? `0${getProjects?.id}`
-                                            : `00${getProjects?.id}`
-                                        } 
-                                    </span>
-                                </div>
-                                <div className="p-title"> 
-                                    <span ref={pTitleRef}> { getProjects ? getProjects.name : null } </span>
-                                </div>
-                            </div>
-                            <div className="c-pics">
-                                <div style={{"--index": currentImage}} ref={pcActiveRef} className="p-c-active"></div>
-                                {
-                                    
-                                    imgs?.map((pic, i)=>{
-                                        return(
-                                            <div
-                                                onClick={()=>handleClickImage(i)}
-                                                key={i} className="c-pic">
-                                                <picture>
-                                                    <div style={ carouselImgLoaded ? { opacity: 0 } : {opacity: 1} } className="onload-img"></div>
-                                                    <img onLoad={handleCarouselImg} loading="lazy" src={ getProjects.src ? '/images'+ getProjects.src+'/'+ (i+1) +'.webp' : null} alt="" />
-                                                </picture>
-                                            </div>
-                                        )
-                                    })
-                                }
-                            </div>
-                            
+            <div className="p-wrapper">
+                <div ref={lineScroll} className="l-scrollable"></div>
+                <div className="p-banner">
+                    <div className="p-bg">
+                        <div className="p-vail"></div>
+                        {/* <img loading="lazy" src={ getProjects.src ? "/images"+getProjects.src+'/main.webp' : null} alt={getProjects.name} /> */}
+                        <LazyLoadImage
+                            src={ getProjects.src ? "/images"+getProjects.src+'/main.webp': null} 
+                            alt={getProjects.name}
+                            height={'100vh'}
+                            width={'100vw'}
+                            effect="blur"
+                        />
+                        <div className="mobile-banner">
+                            <h1 className="mb-title">
+                                <span>{getProjects.name}</span>
+                            </h1>
+                            <span className="mb-scroll">
+                                <span>(scroll)</span>
+                            </span>
                         </div>
                     </div>
-                </div>
-                <div className="p-infos">
-                    
-                    <div className="p-meta">
+                    <div className="p-infos">
+                        <div className="p-title"> 
+                            <span ref={pTitleRef}> { getProjects ? getProjects.name : null } </span>
+                        </div>
                         <div className="p-desc">
                             { 
                                 getProjects.description?.map((line, i)=>{
                                     return(
-                                        <p key={i}>
+                                        <p key={nanoid()}>
                                             <span ref={el=> descsRef.current[i] = el}>{line}</span>
                                         </p>
                                     )
                                 })
                             }
                         </div>
-                        
                         <div className="p-more-i">
                             <div className="p-label">
                                 {
@@ -199,7 +256,7 @@ export default function Works() {
                                         return (
                                             <ProjectLabel
                                                 reference = {el => labelRef.current[i] = el}
-                                                key={i}
+                                                key={nanoid()}
                                                 data={ getProjects[label] }
                                                 labelText={label}
                                             />
@@ -209,39 +266,95 @@ export default function Works() {
                                 
                             </div>
                         </div>
-                        <div className="p-visit">
-                            <div className="p-v-wrapper">
-                                <a  href={getProjects?.link}>
-                                    <span ref={visitLinkRef}>
-                                        <span>visit site</span>
-                                        <MdOutlineArrowOutward />
-                                    </span>
-                                    
-                                </a>
-                            </div>
-                            <div className="p-next-lgh">
-                                {
-                                    
-                                    Object.values(getNextProject).length !== 0
-                                    ?
-                                    <>
-                                    
-                                        <div className="n-label">
-                                            <span ref={el=> nextProjectRef.current[0] = el} >next project</span>
-                                        </div>
-                                        <ProjectLink
-                                            text={getNextProject ? getNextProject?.name : null}
-                                            handleClick={getNextProject ? ()=>handleCLickNext(getNextProject.slug) : null}
-                                            reference={el => nextProjectRef.current[1] = el}
-                                        />
-                                    </>
+                        <div className="p-v-wrapper">
+                            <a target="_blank"  href={getProjects?.link}>
+                                <span ref={visitLinkRef}>
+                                    <span>visit project</span>
+                                    <MdOutlineArrowOutward />
+                                </span>
+                                
+                            </a>
+                        </div>
 
-                                    : null
-                                }
-                            </div>
+                        <div className="p-scroll">
+                            <span ref={scrollRef}> (Scroll) </span>
                         </div>
                     </div>
                 </div>
+                <div className="p-folio">
+                    {
+                                
+                        imgs?.map((pic, i)=>{
+                            return(
+                                <div
+                                    
+                                    key={nanoid()} className="c-pic">
+                                    <div ref={el=> loadImgsRef.current[i] = el} className="onload-img"></div>
+                                    <img 
+                                        onLoad={()=>{setImageLoaded(true)}}
+                                        ref={el=> imgsRef.current[i] = el} 
+                                        loading="lazy" 
+                                        src={ getProjects.src ? '/images'+ getProjects.src+'/'+ (i+1) +'.webp' : null} 
+                                        alt={ 'image-'+i+1} />
+                                </div>
+                            )
+                        })
+                    }
+
+                    {/* <div className="p-folio-map">
+                        <div  style={ {"--index": currentImage}  } className="p-folio-pos"></div>
+                        {
+                                    
+                            imgs?.map((_pic, i)=>{
+                                return(
+                                    <div
+                                        onClick={()=>handleClickImage(i)}
+                                        key={nanoid()} className="c-pic-map">
+                                        <div style={ carouselImgLoaded ? { opacity: 0 } : {opacity: 1} } className="onload-img"></div>
+                                        <img onLoad={handleCarouselImg} loading="lazy" src={ getProjects.src ? '/images'+ getProjects.src+'/'+ (i+1) +'.webp' : null} alt={ 'image-'+i+1} />
+                                    </div>
+                                )
+                            })
+                        }
+                    </div> */}
+                </div>
+
+                {
+                    Object.values(getNextProject).length !== 0
+                     
+                    ?<div className="np-wrapper">
+                        <div className="np-bg">
+                            
+                            <LazyLoadImage
+                                src={getNextProject.src ? "/images"+getNextProject.src+'/main.webp' : null} 
+                                alt={getNextProject.name}
+                                height={'50vh'}
+                                width={'15vw'}
+                                effect="blur"
+                            />
+                        </div>
+                        {
+                                    
+                            Object.values(getNextProject).length !== 0
+                            ?
+                            <div className="np-name">
+                            
+                                <div className="n-label">
+                                    <span ref={el=> nextProjectRef.current[0] = el} >next project</span>
+                                </div>
+                                <ProjectLink
+                                    text={getNextProject ? getNextProject?.name : null}
+                                    handleClick={getNextProject ? ()=>handleCLickNext(getNextProject.slug) : null}
+                                    reference={el => nextProjectRef.current[1] = el}
+                                />
+                            </div>
+
+                            : null
+                        }
+                    </div>
+
+                    : null
+                }
             </div>
         </section>
     )
