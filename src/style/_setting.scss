@@ -158,6 +158,12 @@ $cb1: cubic-bezier(.35,1.09,1,.95);
     transition-delay: calc(0.03s * var(--index));
     transform-origin: bottom;
     display: inline-block;
+    
+    @media screen and (max-width: 768px) {
+        transition: none;
+    }
+    
+    
 }
 
 @mixin cloneProperties(){
@@ -168,6 +174,12 @@ $cb1: cubic-bezier(.35,1.09,1,.95);
     transform-origin: top;
     display: inline-block;
     transform: translate3d(0, 100%, 0) rotateX(90deg);
+
+    
+    @media screen and (max-width: 768px) {
+        transition: none;
+    }
+    
 }
   
 

@@ -7,6 +7,8 @@
 
 
 nav{
+
+    
     pointer-events: none;
     padding: 0 $padding-4;
     height: 100px;
@@ -71,6 +73,7 @@ nav{
 
             @media screen and (max-width: 768px) {
                 font-size: $size-4;
+                transition: none;
             }
 
             &:hover{
@@ -155,10 +158,16 @@ nav{
             
                             &:nth-child(1) span{
                                 transform: translate3d(0, -100%, 0) rotateX(-90deg);
+                                @media screen and (max-width: 768px) {
+                                    transition: none;
+                                }
                             }
             
                             &:nth-child(2) span{
                                 transform: translate3d(0, 0%, 0) rotateX(0deg);
+                                @media screen and (max-width: 768px) {
+                                    transition: none;
+                                }
                             }
             
             
