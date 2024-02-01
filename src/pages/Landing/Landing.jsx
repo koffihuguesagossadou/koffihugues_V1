@@ -3,7 +3,7 @@ import useDocumentTitle from "../../Hook/useDocumentTitle";
 
 function Landing() {
 
-    useDocumentTitle('Koffi Hugues | Home') 
+    useDocumentTitle('Koffi Hugues | Full stack & creative developer') 
 
     return (
         <main className="landing">
