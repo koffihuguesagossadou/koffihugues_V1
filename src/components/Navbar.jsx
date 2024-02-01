@@ -76,7 +76,7 @@ function Navbar() {
 
 
     return(
-        <nav className='navbar'>
+        <nav style={ routeLocation.pathname !== '/'  ? {mixBlendMode: 'difference'} : null } className='navbar'>
             <div className="menu-wrapper">
                 
                 {
@@ -87,7 +87,7 @@ function Navbar() {
                                 href="/"
                                 onClick={(e)=>asyncHandleClickedLink(e, '/')} 
                             >
-                                <GoArrowLeft />
+                                <span>Back</span>
                             </a>
                         </div>
 
@@ -126,7 +126,9 @@ function Navbar() {
                     </>
                      
                 }
-                <div className="menu-links-container">
+                {
+                    (routeLocation.pathname === '/' || routeLocation.pathname === '/about' || routeLocation.pathname === '/archives')
+                    ?<div className="menu-links-container">
                     <ul className="menu-lists">
                         <MenuLink
                             name='about'
@@ -144,6 +146,8 @@ function Navbar() {
                         
                     </ul>
                 </div>
+                : null
+                }
             </div>
         </nav>
 

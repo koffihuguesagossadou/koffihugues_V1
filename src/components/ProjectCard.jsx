@@ -1,6 +1,6 @@
 import { useRef, useMemo, useContext, useCallback, useEffect, useState } from "react"
-import { useFrame, useThree } from "@react-three/fiber"
-import {  MathUtils } from "three"
+import { useFrame, useThree, useLoader } from "@react-three/fiber"
+import {  MathUtils, TextureLoader } from "three"
 import { Image, Html, MeshDistortMaterial, useTexture } from '@react-three/drei';
 import {  PageTransitionContext } from "../App";
 import { easing } from 'maath'
@@ -18,7 +18,9 @@ export function ProjectCard({name, src, index,slug}) {
     const imageRef = useRef();
     const textRef = useRef();
     const lettersRef = useRef([])
-
+    const texture = useMemo(()=>{
+        return useLoader(TextureLoader, 'https://dlfsookdovlgl.cloudfront.net'+src+'/main.webp')
+    })
 
     // const texture = useTexture('https://dlfsookdovlgl.cloudfront.net'+src+'/main.webp')
 
@@ -38,18 +40,14 @@ export function ProjectCard({name, src, index,slug}) {
 
     const handleOnCLick = useCallback(()=>{
 
-        if(slug === 'folio-v2') 
-        {
-            window.location.href = '/'
-        }
-        else{
+        
             
             setShowTransition(true)
             
             setTimeout(()=>{
                 navigate(`/project/${slug}`)
             }, 1500)
-        }
+        
 
     })
 
@@ -91,7 +89,7 @@ export function ProjectCard({name, src, index,slug}) {
             <Image 
                 ref={imageRef}
                 zoom={1.4}
-                url={'https://dlfsookdovlgl.cloudfront.net'+src+'/main.webp'}
+                texture={texture}
                 scale={[photo.width, photo.height, 1]} 
                 onPointerOver={ handleMeshOnPointerEnter }
                 onPointerOut={ handleMeshOnPointerLeave }

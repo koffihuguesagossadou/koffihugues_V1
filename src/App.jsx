@@ -155,7 +155,7 @@ function App() {
                   </Routes>
                 </Suspense>
               </main>
-              { match !== null &&  routeLocation.pathname !== '/' && <Suspense fallback={null}><Footer/></Suspense>}
+              { match !== null &&  (routeLocation.pathname === '/about' || routeLocation.pathname === '/archives') && <Suspense fallback={null}><Footer/></Suspense>}
             </div>
           <Cursor/>
         </CursorContext.Provider>

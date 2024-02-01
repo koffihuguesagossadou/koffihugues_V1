@@ -9,19 +9,16 @@
 body{
     font-family: $base-font;
     font-weight: 400;
-    background-color: $primary-color;
+    background-color: $secondary-color;
     color: $base-font-color;
     font-size: $body-1;
     overflow: hidden;
 }
 
-#root, nav{
-    background-color: $secondary-color;
-}
 
-#root{
-    position: relative;
-}
+// #root{
+//     position: fixed;
+// }
 
 section{
     padding-top: 100px;

@@ -1,6 +1,6 @@
 .archives-section{
     
-    min-height: calc(100vh -  70px);
+    min-height: calc(100vh -  (70px + 100px));
     font-size: $size-5;
     text-transform: uppercase;
 

@@ -5,14 +5,16 @@
 .cls-2{fill:#aaa;}
 .cls-3{fill:#a3a2a2;}
 
+
 nav{
     pointer-events: none;
     padding: 0 $padding-4;
     height: 100px;
-    position: absolute;
+    position: fixed;
     top: 0;
     width: 100%;
     z-index: 10;
+    text-transform: uppercase;
 
     @media screen and (max-width: 768px) {
         padding: 0.1em;
@@ -30,19 +32,21 @@ nav{
     width: 100%;
     justify-content: space-between;
     height: 100%;
+    
     @include flexRow;
 
     .go-back-wrapper{
         display: flex;
         flex-direction: column;
         justify-content: center;
+        
         @media screen and (max-width: 768px) {
             padding: 0 1em;
         }
         a{
             pointer-events: all;
-            svg{
-                transform: scale(2);
+            span{
+                font-size: $size-5;
             }
         }
     }
