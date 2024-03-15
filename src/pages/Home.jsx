@@ -11,8 +11,8 @@ export function Home() {
             <section className="home-section">
                 <Suspense fallback={null}>
                     <Scene/>
+                    <Hero/>
                 </Suspense>
-                <Hero/>
             </section>
         </>
     )

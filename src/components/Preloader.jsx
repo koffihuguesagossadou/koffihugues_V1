@@ -9,7 +9,7 @@ export default function Preloader({display}) {
     const bandsRefs = useRef([])
     const preloaderRef = useRef()
     const loaderTextWrapperRef = useRef()
-    const { preloaderPerformed, setPreloaderPerformed } = useContext(PreloaderContext)
+    const {setPreloaderPerformed } = useContext(PreloaderContext)
 
 
 
