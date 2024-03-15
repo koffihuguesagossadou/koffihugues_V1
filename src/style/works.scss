@@ -70,10 +70,10 @@
 
 
             img{
-                object-position: center top;
+                object-position: top;
                 object-fit: cover !important;
-                height: 100vh !important;
-                width: 100vw !important;
+                height: 100% ;
+                width: 100% ;
             }
         }
         
@@ -112,7 +112,7 @@
                     transform: translate3d(0, 100%, 0);
 
                     @media screen and (min-width: 1281px) {
-                    font-size: $size-0;
+                        font-size: $size-0;
                     }
                 }
             }
@@ -124,7 +124,7 @@
                     margin-top: $margin-2;
                 }
                 @media screen and (max-width: 768px) {
-                    padding-left: $padding-6;
+                    padding-left: $padding-5;
                 }
 
                 p{
@@ -146,7 +146,7 @@
                 }
 
                 @media screen and (max-width: 768px) {
-                    padding-left: $padding-6;
+                    padding-left: $padding-5;
                 }
                 .p-l-d{
                     overflow: hidden;
@@ -182,7 +182,7 @@
                 margin-top: $margin-3;
 
                 @media screen and (max-width: 768px) {
-                    padding-left: $padding-6;
+                    padding-left: $padding-5;
                 }
 
                 a{
@@ -236,8 +236,8 @@
         @include flexColumn;
         .c-pic{
             aspect-ratio: 1118/678;
-            width: 48vw;
-            height: 57vh;
+            width: 60vw;
+            height: auto;
             margin-left: auto;
             margin-right: auto;
             margin-top: $margin-2;

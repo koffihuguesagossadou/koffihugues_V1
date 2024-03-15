@@ -8,6 +8,7 @@ import { useLocation, matchRoutes } from "react-router-dom";
 import Lenis from '@studio-freight/lenis';
 import { dbConfig, dbFiles } from "./config/defaults";
 import { retrieveData } from "./funcs/app";
+import { QueryClient, QueryClientProvider } from "react-query"
 
 const Navbar = lazy( ()=> import('./components/Navbar'))
 const Footer = lazy( ()=> import('./components/Footer'))
@@ -17,6 +18,8 @@ const WorkP = lazy(()=> import('./pages/Work/WorkP'))
 const ArchiveP = lazy(()=> import('./pages/Archive/ArchiveP'))
 const ErrorP = lazy(()=> import ('./pages/Error/ErrorP') )
 
+
+const client = new QueryClient()
 
 
 export const PageTransitionContext = createContext();
@@ -130,37 +133,40 @@ function App() {
   }, [routeLocation])
 
   return (
-    <PreloaderContext.Provider value={{ preloaderPerformed, setPreloaderPerformed }}>
-      <PageTransitionContext.Provider value={{showTransition, setShowTransition}}>
-        <CursorContext.Provider value={{ cursorOnLink, setCursorOnLink}}>
-            <div id='main-wrapper'>
-              { match !== null && <Suspense fallback={null}><Preloader/></Suspense>}
-              { match !== null &&  <Suspense fallback={null}><Transition/></Suspense>}
-              { match !== null && <Suspense fallback={null}><Navbar/></Suspense>}
-              <main className="main-content">
-                
-                <Suspense fallback={null}>
-                  <Routes>
-                    <Route index path="/" element={<Landing/>}/>
-                    <Route path="/about" element={<AboutP/>}/>
-                    <Route path="/archives" element={ <ArchiveP /> } />
-                    { match !== null  &&                     
-                      <Route 
-                        errorElement= {<ErrorP/>}
-                        path="/project/:projectName" element={<WorkP />} />
-                    }
-                    
-                    <Route path="*" element={<ErrorP />} />
-                    
-                  </Routes>
-                </Suspense>
-              </main>
-              { match !== null &&  (routeLocation.pathname === '/about' || routeLocation.pathname === '/archives') && <Suspense fallback={null}><Footer/></Suspense>}
-            </div>
-          <Cursor/>
-        </CursorContext.Provider>
-      </PageTransitionContext.Provider>
-    </PreloaderContext.Provider>
+    <QueryClientProvider client={client}>
+
+      <PreloaderContext.Provider value={{ preloaderPerformed, setPreloaderPerformed }}>
+        <PageTransitionContext.Provider value={{showTransition, setShowTransition}}>
+          <CursorContext.Provider value={{ cursorOnLink, setCursorOnLink}}>
+              <div id='main-wrapper'>
+                { match !== null && <Suspense fallback={null}><Preloader/></Suspense>}
+                { match !== null &&  <Suspense fallback={null}><Transition/></Suspense>}
+                { match !== null && <Suspense fallback={null}><Navbar/></Suspense>}
+                <main className="main-content">
+                  
+                  <Suspense fallback={null}>
+                    <Routes>
+                      <Route index path="/" element={<Landing/>}/>
+                      <Route path="/about" element={<AboutP/>}/>
+                      <Route path="/archives" element={ <ArchiveP /> } />
+                      { match !== null  &&                     
+                        <Route 
+                          errorElement= {<ErrorP/>}
+                          path="/project/:projectName" element={<WorkP />} />
+                      }
+                      
+                      <Route path="*" element={<ErrorP />} />
+                      
+                    </Routes>
+                  </Suspense>
+                </main>
+                { match !== null &&  (routeLocation.pathname === '/about' || routeLocation.pathname === '/archives') && <Suspense fallback={null}><Footer/></Suspense>}
+              </div>
+            <Cursor/>
+          </CursorContext.Provider>
+        </PageTransitionContext.Provider>
+      </PreloaderContext.Provider>
+    </QueryClientProvider>
   )
 }
 

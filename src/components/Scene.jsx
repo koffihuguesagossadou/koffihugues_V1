@@ -1,6 +1,8 @@
 import {Canvas} from '@react-three/fiber'
 import { ProjectsCards } from './ProjectCard';
 import { Preload } from '@react-three/drei';
+import { Suspense } from 'react';
+
 
  function Scene() {
 
@@ -18,7 +20,10 @@ import { Preload } from '@react-three/drei';
             style={{position:'fixed', width: "100%", height: `100vh`}}
         >
             <ambientLight intensity={Math.PI} />
-            <ProjectsCards />
+            <Suspense>
+                <ProjectsCards />
+            </Suspense>
+            <Preload/>
         </Canvas>
         
         
