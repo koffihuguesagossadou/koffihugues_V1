@@ -18,8 +18,11 @@ export function ProjectCard({name, src, index,slug}) {
     const imageRef = useRef();
     const textRef = useRef();
     const lettersRef = useRef([])
+    const imageSrc = import.meta.env.DEV ? 'images/'  : 'https://dlfsookdovlgl.cloudfront.net'
+
+
     const texture = useMemo(()=>{
-        return useLoader(TextureLoader, 'https://dlfsookdovlgl.cloudfront.net'+src+'/main.webp')
+        return useLoader(TextureLoader,  imageSrc+src+'/main.webp')
     })
 
     // const texture = useTexture('https://dlfsookdovlgl.cloudfront.net'+src+'/main.webp')
@@ -146,6 +149,7 @@ export function ProjectsCards({gap = 0.3, imageW = 2.5 }) {
 
     // display idem on scroll
     const displayItems = (item, index, active) => {
+
 
         if(item.position)
         {

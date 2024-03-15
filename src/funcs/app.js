@@ -97,4 +97,21 @@ export async function retrieveData(url) {
     return dataFiltered
 }
 
+export async function fetchData(url) {
+
+    if (typeof url !== "string") return
+
+    let response = await fetch(url)
+    
+
+    if (!response.ok) {
+        throw new Error('Something wrong happened, please try again.')  
+
+    }
+
+    return response.json()
+}
+
+
+
 
