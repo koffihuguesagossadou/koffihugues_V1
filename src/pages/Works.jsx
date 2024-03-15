@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef,useCallback,useContext } from "react";
 import { useParams } from "react-router-dom";
-import { fetchData, pageAnimation, retrieveData } from "../funcs/app";
+import { pageAnimation, retrieveData } from "../funcs/app";
 import { MdOutlineArrowOutward } from "react-icons/md";
 import { ProjectLink } from "../components/Links";
 import { PageTransitionContext, PreloaderContext } from "../App";
@@ -11,7 +11,6 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { nanoid } from 'nanoid'
 import { ScrollTrigger } from "gsap/all";
 import gsap from 'gsap'
-import { useQuery } from "react-query";
 gsap.registerPlugin(ScrollTrigger)
 
 
@@ -20,7 +19,7 @@ const tableLabelText = ["client", "role", "year", "stacks"]
 
 function ProjectLabel({labelText, data, reference}) {
 
-    
+
     return(
         <div className="p-l-d">
             <div ref={reference}>
@@ -65,8 +64,7 @@ export default function Works() {
     const timeline = gsap.timeline()
     
     const {showTransition, setShowTransition} = useContext(PageTransitionContext)
-    const { setPreloaderPerformed,preloaderPerformed } = useContext(PreloaderContext)
-    
+    const { preloaderPerformed } = useContext(PreloaderContext)
     const navigate = useNavigate()
 
     // state for data
@@ -74,8 +72,11 @@ export default function Works() {
     const [getNextProject, setNextProject] = useState({})
     const [imgLoaded, setImageLoaded] = useState(false)
     const [NImgLoaded, setNImgLoad] = useState(false)
+    
+    
 
-    // refs
+
+    
     const imgsRef = useRef([])
     const loadImgsRef = useRef([])
     const scrollRef = useRef()
@@ -86,15 +87,14 @@ export default function Works() {
     const nextProjectRef = useRef([])
     const lineScroll = useRef()
 
-
-    //  animations targets
-    const targets = [pTitleRef.current, descsRef.current, labelRef.current, visitLinkRef.current, nextProjectRef.current, scrollRef.current]
     
 
 
     // go to next project
     const handleCLickNext = useCallback((slug)=>{
 
+
+        setShowTransition(true)
 
         // when we go to next project scroll to top
         if(window.scrollY > 0){
@@ -104,13 +104,6 @@ export default function Works() {
             }, 1000)
         }
 
-
-        setShowTransition(true)
-
-
-
-        
-
         setTimeout(()=>{
             navigate(`/project/${slug}`)
         }, 1500)
@@ -119,49 +112,17 @@ export default function Works() {
     }, [])
 
 
-    
-    // fetch data
-    const {data : project, isError, error} = useQuery({
-        queryKey: ['projects'],
-        queryFn: async () => {
-
-            const data = await fetchData('http://localhost:5173/src/data/projects.json')
-            return data
-        },
-        cacheTime: 1000 * 60 * 60 * 24, // saved for 1 hour
-        refetchInterval: 1000 * 60 * 60, // refreshes every 5 mins
-    })
-
-    if(isError) {
-        return(
-            <span> {error.message} </span>
-        )
-    }
-
-    // get project informations
-    if(project && (Object.values(getProjects).length === 0 || projectName !== getProjects.slug)){
-                
-                
-                    
-        // Retrieve data where slug is equal to "folio-v2"
-        const filteredData = project.filter(item => item.slug === projectName);
-        if(!filteredData[0]) return
-        const nextData = project.filter(item => item.id === filteredData[0].id + 1)
-        
-        setProjects({...filteredData[0]})
-        setNextProject({...nextData[0]})
-
-
-    }
-
-
-    
+    // const handleLoadImg = useCallback(()=>{
+    //     if(!imgLoaded)
+    //     {
+    //         setImageLoaded(true)
+    //     }
+    // }, [])
 
 
 
-    // Scroll line 
-    const scrollLine = useCallback((e)=>{
-        
+
+    function scrollLine(e) {
         const y = Math.round(window.scrollY)  
         const pageSize  = document.body.clientHeight - window.innerHeight
 
@@ -170,7 +131,7 @@ export default function Works() {
             height: y * (100/(pageSize)) + '%',
             duration: 0,
         })
-    })
+    }
 
     
     
@@ -178,17 +139,39 @@ export default function Works() {
     useEffect(()=>{
 
 
-
         // scroll line feature 
         window.addEventListener('scroll', scrollLine)
 
-        
-        
+    
+        // get project informations
+        if(Object.values(getProjects).length === 0 || projectName !== getProjects.slug){
+            
+            retrieveData(process.env.JSON_URL+dbConfig.path+dbFiles.projects)
+            .then((response) =>  {
+                
+                
+                // Retrieve data where slug is equal to "folio-v2"
+                const filteredData = response.filter(item => item.slug === projectName);
+                if(!filteredData[0]) return
+                const nextData = response.filter(item => item.id === filteredData[0].id + 1)
+                
+                setProjects({...filteredData[0]})
+                setNextProject({...nextData[0]})
+
+
+            } );
+        }
+
+
+        //  animations targets
+        const targets = [pTitleRef.current, descsRef.current, labelRef.current, visitLinkRef.current, nextProjectRef.current, scrollRef.current]
+        if(targets === null || !targets) return
         pageAnimation(showTransition, preloaderPerformed, targets)  
         
         
 
         // load imgs
+
         if(loadImgsRef.current && imgLoaded)
         {
 
@@ -209,7 +192,7 @@ export default function Works() {
         }
 
         return ()=>{
-            removeEventListener('scroll', scrollLine);
+            removeEventListener('scroll', scrollLine)
         }
 
         
@@ -217,8 +200,10 @@ export default function Works() {
     },[
         showTransition, 
         preloaderPerformed,
-        targets,
-        imgLoaded,
+        getProjects, 
+        getNextProject, 
+        projectName, 
+        imgLoaded
     ])
 
 
@@ -251,9 +236,8 @@ export default function Works() {
                     </div>
                     <div className="p-infos">
                         <div className="p-title"> 
-                            <span ref={pTitleRef}> { getProjects?.name  } </span>
+                            <span ref={pTitleRef}> { getProjects ? getProjects.name : null } </span>
                         </div>
-                        
                         <div className="p-desc">
                             { 
                                 getProjects.description?.map((line, i)=>{
