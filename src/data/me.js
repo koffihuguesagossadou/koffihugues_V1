@@ -1,5 +1,5 @@
 
-{
+export const me = {
     "firstname": "koffi hugues",
     "lastname": "agossadou",
     "location": "Abidjan (Ivory Coast)",

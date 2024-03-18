@@ -6,9 +6,7 @@ import Preloader from "./components/Preloader";
 import Transition from "./components/Transition";
 import { useLocation, matchRoutes } from "react-router-dom";
 import Lenis from '@studio-freight/lenis';
-import { dbConfig, dbFiles } from "./config/defaults";
-import { retrieveData } from "./funcs/app";
-import { QueryClient, QueryClientProvider } from "react-query"
+import {routes} from './data/routes'
 
 const Navbar = lazy( ()=> import('./components/Navbar'))
 const Footer = lazy( ()=> import('./components/Footer'))
@@ -19,7 +17,6 @@ const ArchiveP = lazy(()=> import('./pages/Archive/ArchiveP'))
 const ErrorP = lazy(()=> import ('./pages/Error/ErrorP') )
 
 
-const client = new QueryClient()
 
 
 export const PageTransitionContext = createContext();
@@ -91,11 +88,7 @@ function App() {
     if(Object.values(getRoutes).length === 0)
     {
 
-      retrieveData(process.env.JSON_URL+dbConfig.path+dbFiles.routes)
-      .then(response=>{
-
-        setRoutes({...response})
-      })
+        setRoutes({...routes})
       
     }
 
@@ -133,8 +126,6 @@ function App() {
   }, [routeLocation])
 
   return (
-    <QueryClientProvider client={client}>
-
       <PreloaderContext.Provider value={{ preloaderPerformed, setPreloaderPerformed }}>
         <PageTransitionContext.Provider value={{showTransition, setShowTransition}}>
           <CursorContext.Provider value={{ cursorOnLink, setCursorOnLink}}>
@@ -166,7 +157,6 @@ function App() {
           </CursorContext.Provider>
         </PageTransitionContext.Provider>
       </PreloaderContext.Provider>
-    </QueryClientProvider>
   )
 }
 
