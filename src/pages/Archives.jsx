@@ -1,9 +1,9 @@
 import { MdOutlineArrowOutward } from "react-icons/md"
 import { LuGithub } from "react-icons/lu";
 import { useEffect, useRef, useContext, useState } from "react";
-import { pageAnimation, retrieveData } from "../funcs/app";
+import { pageAnimation } from "../funcs/app";
 import { PageTransitionContext, PreloaderContext } from "../App";
-import { dbConfig, dbFiles } from "../config/defaults";
+import { archives } from "../data/archives";
 
 function ArchiveLine({name, year, client, stacks, links, reference}){
 
@@ -75,12 +75,8 @@ export function Archives() {
         if( Object.values(getArchives).length === 0)
         {
 
-            retrieveData(process.env.JSON_URL+dbConfig.path+dbFiles.archives)
-            .then(response=>{
-                if(!response) return
-    
-                setArchives({...response})
-            })
+            setArchives({...archives})
+
         }
         
         pageAnimation(showTransition, preloaderPerformed, [arcTitleRef.current,labelRef.current,...archivesRef.current])

@@ -12,8 +12,6 @@ import { Suspense } from 'react';
 ReactDOM.createRoot(document.getElementById('root')).render(
 
   <BrowserRouter>
-      <Suspense>
-        <App/>
-      </Suspense>
+      <App/>
   </BrowserRouter>,
 )

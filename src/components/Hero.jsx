@@ -2,8 +2,8 @@ import React, {useEffect, useContext, useState} from 'react'
 import { SocialMedia } from './Links'
 import gsap from 'gsap';
 import { PageTransitionContext, PreloaderContext } from '../App';
-import { pageAnimation, retrieveData } from '../funcs/app';
-import { dbConfig, dbFiles } from '../config/defaults';
+import { pageAnimation } from '../funcs/app';
+import { me } from '../data/me'
 
 export default function Hero() {
 
@@ -16,14 +16,8 @@ export default function Hero() {
 
         if(Object.values(getContacts).length === 0)
         {
-            
-            retrieveData(process.env.JSON_URL+dbConfig.path+dbFiles.me)
-            .then(response=>{
 
-                if(!response) return
-
-                setContacts({...response.contact})
-            })
+            setContacts({...me.contact})
         }
 
 

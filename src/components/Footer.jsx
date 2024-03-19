@@ -1,9 +1,9 @@
 import { SocialMedia } from "./Links";
 import { useEffect, useContext, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { dbConfig, dbFiles } from "../config/defaults";
 import { PageTransitionContext, PreloaderContext } from "../App";
-import { pageAnimation, retrieveData } from "../funcs/app";
+import { pageAnimation } from "../funcs/app";
+import { me } from "../data/me";
 
 export default function Footer() {
 
@@ -20,13 +20,9 @@ export default function Footer() {
         if(Object.values(getContacts).length === 0)
         {
             
-            retrieveData(process.env.JSON_URL+dbConfig.path+dbFiles.me)
-            .then(response=>{
+            
 
-                if(!response) return
-
-                setContacts({...response.contact})
-            })
+                setContacts({...me.contact})
         }
 
 
