@@ -1,15 +1,15 @@
 import { useState, useEffect, useRef,useCallback,useContext } from "react";
 import { useParams } from "react-router-dom";
-import { pageAnimation, retrieveData } from "../funcs/app";
+import { pageAnimation } from "../funcs/app";
 import { MdOutlineArrowOutward } from "react-icons/md";
 import { ProjectLink } from "../components/Links";
 import { PageTransitionContext, PreloaderContext } from "../App";
 import { useNavigate } from "react-router-dom";
 import useDocumentTitle from "../Hook/useDocumentTitle";
-import { dbConfig, dbFiles } from "../config/defaults";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { nanoid } from 'nanoid'
 import { ScrollTrigger } from "gsap/all";
+import { projects } from "../data/projects";
 import gsap from 'gsap'
 gsap.registerPlugin(ScrollTrigger)
 
@@ -71,11 +71,6 @@ export default function Works() {
     const [getProjects, setProjects] = useState({})
     const [getNextProject, setNextProject] = useState({})
     const [imgLoaded, setImageLoaded] = useState(false)
-    const [NImgLoaded, setNImgLoad] = useState(false)
-    
-    
-
-
     
     const imgsRef = useRef([])
     const loadImgsRef = useRef([])
@@ -86,9 +81,6 @@ export default function Works() {
     const visitLinkRef = useRef()
     const nextProjectRef = useRef([])
     const lineScroll = useRef()
-
-    
-
 
     // go to next project
     const handleCLickNext = useCallback((slug)=>{
@@ -145,21 +137,16 @@ export default function Works() {
     
         // get project informations
         if(Object.values(getProjects).length === 0 || projectName !== getProjects.slug){
+
+            // Retrieve data where slug is equal to "folio-v2"
+            const filteredData = projects.filter(item => item.slug === projectName);
+            if(!filteredData[0]) return
+            const nextData = projects.filter(item => item.id === filteredData[0].id + 1)
             
-            retrieveData(process.env.JSON_URL+dbConfig.path+dbFiles.projects)
-            .then((response) =>  {
-                
-                
-                // Retrieve data where slug is equal to "folio-v2"
-                const filteredData = response.filter(item => item.slug === projectName);
-                if(!filteredData[0]) return
-                const nextData = response.filter(item => item.id === filteredData[0].id + 1)
-                
-                setProjects({...filteredData[0]})
-                setNextProject({...nextData[0]})
+            setProjects({...filteredData[0]})
+            setNextProject({...nextData[0]})
 
 
-            } );
         }
 
 

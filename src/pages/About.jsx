@@ -1,7 +1,7 @@
 import { useEffect,useRef,useContext, useState } from 'react'
-import { dbConfig, dbFiles } from '../config/defaults';
 import { PageTransitionContext, PreloaderContext } from '../App';
-import { pageAnimation, retrieveData } from '../funcs/app';
+import { pageAnimation } from '../funcs/app';
+import { me } from '../data/me';
 
 
 export function About() {
@@ -21,14 +21,7 @@ export function About() {
         
 
         if(Object.keys(getInfos).length === 0){
-
-            retrieveData(process.env.JSON_URL+dbConfig.path+dbFiles.me)
-            .then( response => {
-    
-                if(!response) return
-    
-                setInfos({...response})
-            })
+            setInfos({...me})
         }
 
 

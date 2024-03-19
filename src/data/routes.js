@@ -1,4 +1,4 @@
-[
+export const routes = [
     { 
       "path": "/",
       "label": "index"

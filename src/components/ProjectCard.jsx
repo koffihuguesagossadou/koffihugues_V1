@@ -1,17 +1,14 @@
 import { useRef, useMemo, useContext, useCallback, useEffect, useState } from "react"
 import { useFrame, useThree, useLoader } from "@react-three/fiber"
-import {  MathUtils, TextureLoader } from "three"
-import { Image, Html, MeshDistortMaterial, useTexture } from '@react-three/drei';
+import { TextureLoader } from "three"
+import { Image, Html } from '@react-three/drei';
 import {  PageTransitionContext } from "../App";
 import { easing } from 'maath'
 import { useNavigate } from "react-router-dom"; 
 import gsap from 'gsap';
-import { retrieveData } from "../funcs/app";
-import { dbConfig, dbFiles } from "../config/defaults";
-import vertexShader from '../glsl/vertexShader.glsl';
-import fragmentShader from '../glsl/fragmentShader.glsl';
-import vertexWaveShader from '../glsl/vertexWaveShader.glsl';
-import fragmentWaveShader from '../glsl/fragmentWaveShader.glsl';
+import { projects } from "../data/projects";
+
+
 
 export function ProjectCard({name, src, index,slug}) {
     
@@ -284,10 +281,7 @@ export function ProjectsCards({gap = 0.3, imageW = 2.5 }) {
         if(Object.values(getWorks).length === 0)
         {
 
-            retrieveData(process.env.JSON_URL+dbConfig.path+dbFiles.projects)
-            .then(response=>{
-                setWorks({...response})
-            })
+            setWorks({...projects})
         }
 
 

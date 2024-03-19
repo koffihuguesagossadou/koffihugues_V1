@@ -6,8 +6,7 @@ import Preloader from "./components/Preloader";
 import Transition from "./components/Transition";
 import { useLocation, matchRoutes } from "react-router-dom";
 import Lenis from '@studio-freight/lenis';
-import { dbConfig, dbFiles } from "./config/defaults";
-import { retrieveData } from "./funcs/app";
+import {routes} from './data/routes'
 
 const Navbar = lazy( ()=> import('./components/Navbar'))
 const Footer = lazy( ()=> import('./components/Footer'))
@@ -16,6 +15,8 @@ const AboutP = lazy( ()=> import('./pages/About/AboutP') )
 const WorkP = lazy(()=> import('./pages/Work/WorkP'))
 const ArchiveP = lazy(()=> import('./pages/Archive/ArchiveP'))
 const ErrorP = lazy(()=> import ('./pages/Error/ErrorP') )
+
+
 
 
 export const PageTransitionContext = createContext();
@@ -87,11 +88,7 @@ function App() {
     if(Object.values(getRoutes).length === 0)
     {
 
-      retrieveData(process.env.JSON_URL+dbConfig.path+dbFiles.routes)
-      .then(response=>{
-
-        setRoutes({...response})
-      })
+        setRoutes({...routes})
       
     }
 
