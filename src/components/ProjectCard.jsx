@@ -6,6 +6,10 @@ import {  PageTransitionContext } from "../App";
 import { easing } from 'maath'
 import { useNavigate } from "react-router-dom"; 
 import gsap from 'gsap';
+import vertexShader from '../glsl/vertexShader.glsl';
+import fragmentShader from '../glsl/fragmentShader.glsl';
+import vertexWaveShader from '../glsl/vertexWaveShader.glsl';
+import fragmentWaveShader from '../glsl/fragmentWaveShader.glsl';
 import { projects } from "../data/projects";
 
 
