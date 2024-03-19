@@ -76,7 +76,7 @@ function Navbar() {
 
 
     return(
-        <nav style={ routeLocation.pathname !== '/'  ? {mixBlendMode: 'difference'} : null } className='navbar'>
+        <nav className='navbar'>
             <div className="menu-wrapper">
                 
                 {
@@ -127,8 +127,7 @@ function Navbar() {
                      
                 }
                 {
-                    (routeLocation.pathname === '/' || routeLocation.pathname === '/about' || routeLocation.pathname === '/archives')
-                    ?<div className="menu-links-container">
+                    <div className="menu-links-container">
                     <ul className="menu-lists">
                         <MenuLink
                             name='about'
@@ -146,7 +145,6 @@ function Navbar() {
                         
                     </ul>
                 </div>
-                : null
                 }
             </div>
         </nav>

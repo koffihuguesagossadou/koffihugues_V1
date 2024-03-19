@@ -24,14 +24,13 @@
     .p-banner{
         min-height: 100vh;
         width: 100vw;
-        position: relative;
 
         span{
             color: $white;
         }
         .p-vail{
             position:absolute;
-            background: linear-gradient(to right, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, .6));            width: 100%;
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, .7));            width: 100%;
             height: 100vh;
             opacity: .9;
         }
@@ -70,7 +69,7 @@
 
 
             img{
-                object-position: top;
+                object-position: center;
                 object-fit: cover !important;
                 height: 100% ;
                 width: 100% ;
@@ -82,7 +81,7 @@
             display: flex;
             flex-direction: column;
             max-width: 30%;
-            padding-top:  20px;            ;
+            padding-top:  80px;            ;
             margin-left: calc(100% - 40%);
             height: 100vh;
 
@@ -236,7 +235,7 @@
         @include flexColumn;
         .c-pic{
             aspect-ratio: 1118/678;
-            width: 60vw;
+            width: 70vw;
             height: auto;
             margin-left: auto;
             margin-right: auto;

@@ -219,7 +219,7 @@ export default function Works() {
                         <div className="p-vail"></div>
                         {/* <img loading="lazy" src={ getProjects.src ? "/images"+getProjects.src+'/main.webp' : null} alt={getProjects.name} /> */}
                         <LazyLoadImage
-                            src={ getProjects.src ? "/images"+getProjects.src+'/main.webp': null} 
+                            src={ getProjects.src ? "/images"+getProjects.src+'/0.webp': null} 
                             alt={getProjects.name}
                             height={'100vh'}
                             width={'100vw'}

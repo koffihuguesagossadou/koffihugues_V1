@@ -10,6 +10,8 @@ import { retrieveData } from "../funcs/app";
 import { dbConfig, dbFiles } from "../config/defaults";
 import vertexShader from '../glsl/vertexShader.glsl';
 import fragmentShader from '../glsl/fragmentShader.glsl';
+import vertexWaveShader from '../glsl/vertexWaveShader.glsl';
+import fragmentWaveShader from '../glsl/fragmentWaveShader.glsl';
 
 export function ProjectCard({name, src, index,slug}) {
     
@@ -69,6 +71,7 @@ export function ProjectCard({name, src, index,slug}) {
     const uniforms = useMemo(()=>({
         
         uTexture: {value:texture},
+        uHover: {value: 1.0},
         uIndex: {
             value: parseFloat(index) / 100
         },
@@ -100,6 +103,7 @@ export function ProjectCard({name, src, index,slug}) {
         // imageRef.current.material.uniforms.uScroll.value = MathUtils.lerp(imageRef.current.material.uniforms.uScroll.value, 1.0, 0.1)
 
         
+        easing.damp(imageRef.current.material.uniforms.uHover, 'value', hovered ? 0 : 1.0, 0.25, delta)
         easing.damp(imageRef.current.material, 'grayscale', hovered ? 0 : 0.8, 0.25, delta)
         easing.damp(imageRef.current.material, 'zoom', hovered ? 1.4 : 1.2, 0.25, delta)
     });
@@ -134,8 +138,8 @@ export function ProjectCard({name, src, index,slug}) {
                 <planeGeometry  args={[photo.width, photo.height, 128, 128]}/>
                 <shaderMaterial 
                     uniforms={uniforms}
-                    fragmentShader={fragmentShader}
-                    vertexShader={vertexShader}
+                    fragmentShader={fragmentWaveShader}
+                    vertexShader={vertexWaveShader}
                 />
             </mesh>
 
@@ -288,7 +292,6 @@ export function ProjectsCards({gap = 0.3, imageW = 2.5 }) {
 
 
     }, [getWorks])
-    console.log($items)
 
 
     return(        
