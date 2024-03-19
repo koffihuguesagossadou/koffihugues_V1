@@ -126,8 +126,8 @@ function Navbar() {
                     </>
                      
                 }
-                {
-                    <div className="menu-links-container">
+                
+                <div className="menu-links-container">
                     <ul className="menu-lists">
                         <MenuLink
                             name='about'
@@ -145,7 +145,7 @@ function Navbar() {
                         
                     </ul>
                 </div>
-                }
+                
             </div>
         </nav>
 

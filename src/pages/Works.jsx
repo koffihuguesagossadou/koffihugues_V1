@@ -82,18 +82,23 @@ export default function Works() {
     const nextProjectRef = useRef([])
     const lineScroll = useRef()
 
+
+    // scroll to top
+    const toTop = setTimeout(()=>{
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        
+    }, 1000)
+
     // go to next project
     const handleCLickNext = useCallback((slug)=>{
 
-
+        clearTimeout(toTop)
         setShowTransition(true)
 
         // when we go to next project scroll to top
+        
         if(window.scrollY > 0){
-            setTimeout(()=>{
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                
-            }, 1000)
+            toTop
         }
 
         setTimeout(()=>{

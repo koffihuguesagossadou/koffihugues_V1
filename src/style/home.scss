@@ -8,7 +8,7 @@
 
 nav{
 
-    
+    mix-blend-mode: difference;
     pointer-events: none;
     padding: 0 $padding-4;
     height: 100px;
@@ -129,7 +129,6 @@ nav{
 
 
     .menu-links-container{
-
         .menu-lists{
             display: flex;
             flex-direction: row;
