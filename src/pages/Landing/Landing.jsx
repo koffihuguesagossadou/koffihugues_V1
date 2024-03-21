@@ -6,12 +6,8 @@ function Landing() {
     useDocumentTitle('Koffi Hugues | Full stack & creative developer') 
 
     return (
-        <main className="landing">
             <Home/>
-            {/* <BriefAbout/>
-            <Works/>
-            <Contact/> */}
-        </main>
+            
     )
 }
 

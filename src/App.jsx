@@ -7,6 +7,7 @@ import Transition from "./components/Transition";
 import { useLocation, matchRoutes } from "react-router-dom";
 import Lenis from '@studio-freight/lenis';
 import {routes} from './data/routes'
+import { useMediaQuery } from "usehooks-ts";
 
 const Navbar = lazy( ()=> import('./components/Navbar'))
 const Footer = lazy( ()=> import('./components/Footer'))
@@ -79,6 +80,7 @@ function App() {
   const [preloaderPerformed, setPreloaderPerformed] = useState(false)
   const [getRoutes, setRoutes] = useState({})
   const routeLocation = useLocation()
+  const mobile = useMediaQuery('(max-width:768px)')
   
 
   
@@ -102,7 +104,7 @@ function App() {
 
      if(import.meta.env.DEV) console.log(match)
 
-    if(routeLocation.pathname !== '/'){
+    if(routeLocation.pathname !== '/' && !mobile){
 
         const lenis = new Lenis({
         duration: 3,
@@ -123,7 +125,7 @@ function App() {
     }
     
 
-  }, [routeLocation])
+  }, [routeLocation, mobile])
 
   return (
       <PreloaderContext.Provider value={{ preloaderPerformed, setPreloaderPerformed }}>

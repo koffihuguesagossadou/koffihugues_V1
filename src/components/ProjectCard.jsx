@@ -1,28 +1,26 @@
 import { useRef, useMemo, useContext, useCallback, useEffect, useState } from "react"
 import { useFrame, useThree, useLoader } from "@react-three/fiber"
 import { TextureLoader } from "three"
-import { Image, Html } from '@react-three/drei';
+import { Image, Html, useTexture } from '@react-three/drei';
 import {  PageTransitionContext } from "../App";
 import { easing } from 'maath'
 import { useNavigate } from "react-router-dom"; 
 import gsap from 'gsap';
+import vertexShader from '../glsl/vertexShader.glsl';
+import fragmentShader from '../glsl/fragmentShader.glsl';
+import vertexWaveShader from '../glsl/vertexWaveShader.glsl';
+import fragmentWaveShader from '../glsl/fragmentWaveShader.glsl';
 import { projects } from "../data/projects";
 
 
 
-export function ProjectCard({name, src, index,slug}) {
+export function ProjectCard({name, texture, index,slug}) {
     
 
 
     const imageRef = useRef();
     const textRef = useRef();
     const lettersRef = useRef([])
-    const imageSrc = import.meta.env.DEV ? 'images/'  : 'https://dlfsookdovlgl.cloudfront.net'
-
-
-    const texture = useMemo(()=>{
-        return useLoader(TextureLoader,  imageSrc+src+'/main.webp')
-    })
 
     // const texture = useTexture('https://dlfsookdovlgl.cloudfront.net'+src+'/main.webp')
 
@@ -60,10 +58,28 @@ export function ProjectCard({name, src, index,slug}) {
           width: 2.5,
           height: 3,
           gap: 0.3,
-          x: (2.5 + 0.3) * index ,
+          x: 0 * index ,
           y: 0,
         };
     }, [index]);
+
+    const uniforms = useMemo(()=>({
+        
+        uTexture: {value:texture},
+        uHover: {value: 1.0},
+        uIndex: {
+            value: parseFloat(index) / 100
+        },
+        uTime: {
+            value: 0.0
+        },
+        uRes: { value: { x: 1, y: 1 } },
+        uImageRes: {
+          value: { x: texture.source.data.width, y: texture.source.data.height }
+        },
+        uScroll : {value:0.0}
+        
+    }), [index])
 
 
     useFrame((state, delta) => {
@@ -75,11 +91,18 @@ export function ProjectCard({name, src, index,slug}) {
                 amount: 0.2
             }
         })
+
         
+        const { clock } = state;
+        imageRef.current.material.uniforms.uTime.value = clock.getElapsedTime();
+        // imageRef.current.material.uniforms.uScroll.value = MathUtils.lerp(imageRef.current.material.uniforms.uScroll.value, 1.0, 0.1)
+
+        
+        easing.damp(imageRef.current.material.uniforms.uHover, 'value', hovered ? 0 : 1.0, 0.25, delta)
         easing.damp(imageRef.current.material, 'grayscale', hovered ? 0 : 0.8, 0.25, delta)
         easing.damp(imageRef.current.material, 'zoom', hovered ? 1.4 : 1.2, 0.25, delta)
-    
     });
+
 
     
     return(
@@ -88,7 +111,7 @@ export function ProjectCard({name, src, index,slug}) {
         
 
 
-            <Image 
+            {/* <Image 
                 ref={imageRef}
                 zoom={1.4}
                 texture={texture}
@@ -97,7 +120,23 @@ export function ProjectCard({name, src, index,slug}) {
                 onPointerOut={ handleMeshOnPointerLeave }
                 onClick={ handleOnCLick }
                 
-            />
+            /> */}
+
+            <mesh
+                ref={imageRef}
+                position={[0, 0, 0]}
+                scale={1.0}
+                onPointerOver={ handleMeshOnPointerEnter }
+                onPointerOut={ handleMeshOnPointerLeave }
+                onClick={ handleOnCLick }
+            >
+                <planeGeometry  args={[photo.width, photo.height, 128, 128]}/>
+                <shaderMaterial 
+                    uniforms={uniforms}
+                    fragmentShader={fragmentWaveShader}
+                    vertexShader={vertexWaveShader}
+                />
+            </mesh>
 
             <Html
                 ref={textRef}
@@ -128,11 +167,12 @@ export function ProjectCard({name, src, index,slug}) {
 
 export function ProjectsCards({gap = 0.3, imageW = 2.5 }) {
 
-    const speedWheel = 0.03;
+    const speedWheel = 0.05;
     const speedDrag = -0.1;
 
     const [$root, setRoot] = useState();
     const [getWorks, setWorks] = useState({});
+    const [wheelSatus, setWheelStatus] = useState(false)
 
     const { viewport } = useThree();
     const xW = imageW + gap
@@ -144,6 +184,10 @@ export function ProjectsCards({gap = 0.3, imageW = 2.5 }) {
     const $items = useMemo(() => {
         if ($root) return $root.children;
     }, [$root]);
+
+
+    const imageSrc = import.meta.env.DEV ? 'images/'  : 'https://dlfsookdovlgl.cloudfront.net'
+    const textures = useTexture(projects.map((p)=> p.cover ))
 
 
     // display idem on scroll
@@ -163,11 +207,35 @@ export function ProjectsCards({gap = 0.3, imageW = 2.5 }) {
 
     };
 
+
+    const wheelDistortionEffect = ($items, scrollState) => {
+        if($items){
+            $items.forEach((item, _index)=>{
+
+                gsap.to(item.children[0].material.uniforms.uScroll,{
+                    value: scrollState > 0 ? 1.0 : -1.0,
+                })
+
+
+            })
+        }
+    }
+
+
+    // on scroll curve items
+    // const curveItems = (item, wheelProgress) =>{
+    //     if (item.material.) {
+            
+    //     }
+    // }
+
     //handle on wheel
     const handleWheel = (e)=>{
         const isVerticalScroll = Math.abs(e.deltaY) > Math.abs(e.deltaX);
          const wheelProgress = isVerticalScroll ? e.deltaY : e.deltaX;
          progress.current = progress.current + wheelProgress * speedWheel;
+         wheelDistortionEffect($items, wheelProgress)
+
     }
 
     /*--------------------
@@ -178,6 +246,7 @@ export function ProjectsCards({gap = 0.3, imageW = 2.5 }) {
         const x = e.clientX || (e.touches && e.touches[0].clientX) || 0;
         const mouseProgress = (x - startX.current) * speedDrag;
         progress.current = progress.current + mouseProgress;
+        
         startX.current = x;
     }
 
@@ -188,7 +257,7 @@ export function ProjectsCards({gap = 0.3, imageW = 2.5 }) {
     };
     
     
-    // handle on pointerDown
+    // handle on pointerUp
     const handleUp = (e) => {
         isDown.current = false;
     };
@@ -202,11 +271,15 @@ export function ProjectsCards({gap = 0.3, imageW = 2.5 }) {
 
         const delay = progress.current === 0 ? 1.3 : 0
         $items.forEach((item, index) => displayItems(item, index, active));
+        // $items.forEach((item, index)=>{
+        //     item.children[0].material.uniforms.uScroll.value = MathUtils.lerp(item.children[0].material.uniforms.uScroll.value, (progress.current * 0.01), 0.1)
+        // })
     })
 
 
     useEffect(()=>{
 
+        
         if(Object.values(getWorks).length === 0)
         {
 
@@ -215,7 +288,7 @@ export function ProjectsCards({gap = 0.3, imageW = 2.5 }) {
 
 
     }, [getWorks])
-    
+
 
     return(        
         <>
@@ -242,7 +315,7 @@ export function ProjectsCards({gap = 0.3, imageW = 2.5 }) {
                             <ProjectCard
                                 key={i}
                                 index = {i}
-                                src = {project.src}
+                                texture={textures[i]}
                                 name = { project.name}
                                 slug = { project.slug }
                             />

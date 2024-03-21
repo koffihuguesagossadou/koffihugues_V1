@@ -11,6 +11,8 @@ import { nanoid } from 'nanoid'
 import { ScrollTrigger } from "gsap/all";
 import { projects } from "../data/projects";
 import gsap from 'gsap'
+import { FolioItems } from "../components/FolioPosition";
+import { useMediaQuery } from "usehooks-ts";
 gsap.registerPlugin(ScrollTrigger)
 
 
@@ -60,6 +62,10 @@ export default function Works() {
     // page title
     useDocumentTitle(`Koffi Hugues | ${projectName}`) 
 
+    // mobile screen
+    const mobile = useMediaQuery('(max-width:768px)')
+
+
     const imgs= [1,2,3,4,5,6,7]
     const timeline = gsap.timeline()
     
@@ -82,18 +88,23 @@ export default function Works() {
     const nextProjectRef = useRef([])
     const lineScroll = useRef()
 
+
+    // scroll to top
+    const toTop = setTimeout(()=>{
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        
+    }, 1200)
+
     // go to next project
     const handleCLickNext = useCallback((slug)=>{
 
-
+        clearTimeout(toTop)
         setShowTransition(true)
 
         // when we go to next project scroll to top
+        
         if(window.scrollY > 0){
-            setTimeout(()=>{
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                
-            }, 1000)
+            toTop
         }
 
         setTimeout(()=>{
@@ -131,8 +142,9 @@ export default function Works() {
     useEffect(()=>{
 
 
-        // scroll line feature 
-        window.addEventListener('scroll', scrollLine)
+        // display scroll line feature when it's on desktop
+        
+        if (!mobile) window.addEventListener('scroll', scrollLine)
 
     
         // get project informations
@@ -180,6 +192,7 @@ export default function Works() {
 
         return ()=>{
             removeEventListener('scroll', scrollLine)
+            clearTimeout(toTop)
         }
 
         
@@ -206,7 +219,7 @@ export default function Works() {
                         <div className="p-vail"></div>
                         {/* <img loading="lazy" src={ getProjects.src ? "/images"+getProjects.src+'/main.webp' : null} alt={getProjects.name} /> */}
                         <LazyLoadImage
-                            src={ getProjects.src ? "/images"+getProjects.src+'/main.webp': null} 
+                            src={ getProjects.src ? "/images"+getProjects.src+'/0.jpg': null} 
                             alt={getProjects.name}
                             height={'100vh'}
                             width={'100vw'}
@@ -223,7 +236,7 @@ export default function Works() {
                     </div>
                     <div className="p-infos">
                         <div className="p-title"> 
-                            <span ref={pTitleRef}> { getProjects ? getProjects.name : null } </span>
+                            <span ref={pTitleRef}> { getProjects.name } </span>
                         </div>
                         <div className="p-desc">
                             { 
@@ -269,24 +282,42 @@ export default function Works() {
                     </div>
                 </div>
                 <div className="p-folio">
+
                     {
+                        getProjects
+                        ? 
+                        <FolioItems 
+                            setImageLoaded={setImageLoaded}
+                            imgsRef={imgsRef}
+                            loadImgsRef={loadImgsRef}
+                            imgs={getProjects.imgs} 
+                            src={getProjects.src}
+                        />
+
+                        : null
+                    }
+
+                    
+                    {/* {
                                 
-                        imgs?.map((pic, i)=>{
+                        getProjects.imgs?.map((pic, i)=>{
                             return(
-                                <div
+                                <picture
                                     
                                     key={nanoid()} className="c-pic">
                                     <div ref={el=> loadImgsRef.current[i] = el} className="onload-img"></div>
+                                    <source srcSet={ getProjects.src ? '/images'+ getProjects.src+'/'+ (i+1) +'.webp' : null} 
+                                        type="image/webp" />
                                     <img 
                                         onLoad={()=>{setImageLoaded(true)}}
                                         ref={el=> imgsRef.current[i] = el} 
                                         loading="lazy" 
-                                        src={ getProjects.src ? '/images'+ getProjects.src+'/'+ (i+1) +'.webp' : null} 
+                                        src={ getProjects.src ? '/images'+ getProjects.src+'/'+ (i+1) +'.jpg' : null} 
                                         alt={ 'image-'+i+1} />
-                                </div>
+                                </picture>
                             )
                         })
-                    }
+                    } */}
 
                     {/* <div className="p-folio-map">
                         <div  style={ {"--index": currentImage}  } className="p-folio-pos"></div>
