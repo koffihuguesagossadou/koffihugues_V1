@@ -57,10 +57,10 @@ export default function Hero() {
                     name={'linkedin'}
                     href={getContacts.linkedin}
                 />
-                <SocialMedia
+                {/* <SocialMedia
                     name={'instagram'}
                     href={getContacts.instagram}
-                />
+                /> */}
             </div>
         </div>
     )

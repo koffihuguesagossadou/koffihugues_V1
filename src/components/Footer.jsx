@@ -60,10 +60,10 @@ export default function Footer() {
                         name={'linkedin'}
                         href={getContacts.linkedin}
                     />
-                    <SocialMedia
+                    {/* <SocialMedia
                         name={'instagram'}
                         href={getContacts.instagram}
-                    />
+                    /> */}
                         
                 </div>
             </div>

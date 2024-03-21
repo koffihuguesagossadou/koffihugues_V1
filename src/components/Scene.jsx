@@ -23,7 +23,7 @@ import { Suspense } from 'react';
             <Suspense>
                 <ProjectsCards />
             </Suspense>
-            <Preload/>
+            <Preload all/>
         </Canvas>
         
         
