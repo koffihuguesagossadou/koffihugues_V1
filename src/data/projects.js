@@ -34,7 +34,7 @@ export const projects = [
         "name": "tna collection",
         "slug": "tna-collection",
         "description": [
-            "Tna collection is an only shop that provide"
+            "Discover Tna Collection, shop providing curated gift and event boxes, along with a selection of stylish watches and trendy t-shirts. Elevate every occasion, from Christmas to Ramadan and beyond, with our carefully crafted offerings"
         ],
         "awards": [],
         "link": "",
