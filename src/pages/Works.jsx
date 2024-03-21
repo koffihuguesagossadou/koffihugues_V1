@@ -11,6 +11,7 @@ import { nanoid } from 'nanoid'
 import { ScrollTrigger } from "gsap/all";
 import { projects } from "../data/projects";
 import gsap from 'gsap'
+import { SevenItems } from "../components/FolioPosition";
 gsap.registerPlugin(ScrollTrigger)
 
 
@@ -87,7 +88,7 @@ export default function Works() {
     const toTop = setTimeout(()=>{
         window.scrollTo({ top: 0, behavior: 'smooth' });
         
-    }, 1000)
+    }, 1200)
 
     // go to next project
     const handleCLickNext = useCallback((slug)=>{
@@ -185,6 +186,7 @@ export default function Works() {
 
         return ()=>{
             removeEventListener('scroll', scrollLine)
+            clearTimeout(toTop)
         }
 
         
@@ -211,7 +213,7 @@ export default function Works() {
                         <div className="p-vail"></div>
                         {/* <img loading="lazy" src={ getProjects.src ? "/images"+getProjects.src+'/main.webp' : null} alt={getProjects.name} /> */}
                         <LazyLoadImage
-                            src={ getProjects.src ? "/images"+getProjects.src+'/0.webp': null} 
+                            src={ getProjects.src ? "/images"+getProjects.src+'/0.jpg': null} 
                             alt={getProjects.name}
                             height={'100vh'}
                             width={'100vw'}
@@ -228,7 +230,7 @@ export default function Works() {
                     </div>
                     <div className="p-infos">
                         <div className="p-title"> 
-                            <span ref={pTitleRef}> { getProjects ? getProjects.name : null } </span>
+                            <span ref={pTitleRef}> { getProjects.name } </span>
                         </div>
                         <div className="p-desc">
                             { 
@@ -274,24 +276,42 @@ export default function Works() {
                     </div>
                 </div>
                 <div className="p-folio">
+
                     {
+                        getProjects
+                        ? 
+                        <SevenItems 
+                            setImageLoaded={setImageLoaded}
+                            imgsRef={imgsRef}
+                            loadImgsRef={loadImgsRef}
+                            imgs={getProjects.imgs} 
+                            src={getProjects.src}
+                        />
+
+                        : null
+                    }
+
+                    
+                    {/* {
                                 
-                        imgs?.map((pic, i)=>{
+                        getProjects.imgs?.map((pic, i)=>{
                             return(
-                                <div
+                                <picture
                                     
                                     key={nanoid()} className="c-pic">
                                     <div ref={el=> loadImgsRef.current[i] = el} className="onload-img"></div>
+                                    <source srcSet={ getProjects.src ? '/images'+ getProjects.src+'/'+ (i+1) +'.webp' : null} 
+                                        type="image/webp" />
                                     <img 
                                         onLoad={()=>{setImageLoaded(true)}}
                                         ref={el=> imgsRef.current[i] = el} 
                                         loading="lazy" 
-                                        src={ getProjects.src ? '/images'+ getProjects.src+'/'+ (i+1) +'.webp' : null} 
+                                        src={ getProjects.src ? '/images'+ getProjects.src+'/'+ (i+1) +'.jpg' : null} 
                                         alt={ 'image-'+i+1} />
-                                </div>
+                                </picture>
                             )
                         })
-                    }
+                    } */}
 
                     {/* <div className="p-folio-map">
                         <div  style={ {"--index": currentImage}  } className="p-folio-pos"></div>

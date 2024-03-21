@@ -1,3 +1,10 @@
+import ligneBisCover from '../assets/images/lignebis/main.webp';
+import tnaCover from '../assets/images/tna/main.webp';
+import cookincipeCover from '../assets/images/cookincipe/main.webp';
+import vmsSmsCover from '../assets/images/vms-sms/main.webp';
+import mtvCover from '../assets/images/mtv/main.webp';
+import folioV1Cover from '../assets/images/folio-v1/main.webp';
+
 export const projects = [
     
     
@@ -13,9 +20,9 @@ export const projects = [
         "awards": [],
         "link": "https://www.lignebis.fr/",
         "year": 2023,
-        "image": "",
         "src": "/lignebis",
-        "imgs": [],
+        "imgs": [0,1,2,3,4,5,6,7],
+        "cover" : ligneBisCover,
         "client": "even media",
         "role": "fullstack dev",
         "stacks": ["php", "laravel"]
@@ -24,20 +31,20 @@ export const projects = [
 
     {
         "id": 2,
-        "name": "folio v2",
-        "slug": "folio-v2",
+        "name": "tna collection",
+        "slug": "tna-collection",
         "description": [
-            "Second version of my portfolio made only by me."
+            "Tna collection is an only shop that provide"
         ],
         "awards": [],
-        "link": "https://www.koffihugues.com",
-        "year": 2023,
-        "src": "/folio-v2",
-        "image": "",
-        "imgs": [],
-        "client": "self",
-        "role": "frontend dev & motion",
-        "stacks": ["react", "gsap", "threejs", "json", "lenis"]
+        "link": "",
+        "year": 'On going',
+        "src": "/tna",
+        "cover" : tnaCover,
+        "imgs": [0,1,2,3,4,5,6,7,8,9,10,11],
+        "client": "tna collection",
+        "role": "UI/UX design",
+        "stacks": ["figma"]
         
     },
 
@@ -53,8 +60,8 @@ export const projects = [
         "link": "https://www.figma.com/proto/kcl0MPttDcI9nGq3lsflSa?node-id=0-1&mode=design&t=1dxlM8nSVt39xVek-6",
         "year": 2023,
         "src": "/cookincipe",
-        "image": "",
-        "imgs": [],
+        "cover" : cookincipeCover,
+        "imgs": [0,1,2,3,4,5,6,7],
         "client": "self",
         "role": "ui design",
         "stacks": [ "figma"]
@@ -71,9 +78,9 @@ export const projects = [
         "awards": [],
         "link": "https://www.vms-sms.fr",
         "year": 2023,
-        "image": "",
         "src": "/vms-sms",
-        "imgs": [],
+        "cover" : vmsSmsCover,
+        "imgs": [0,1,2,3,4,5,6,7],
         "client": "even media",
         "role": "fullstack dev",
         "stacks": ["php", "javascript", "laravel", "git"]
@@ -93,8 +100,8 @@ export const projects = [
         "link": "https://www.mon-tchat-voyance.fr",
         "year": 2023,
         "src": "/mtv",
-        "image": "",
-        "imgs": [],
+        "cover" : mtvCover,
+        "imgs": [0,1,2,3,4,5,6,7],
         "client": "even media",
         "role": "fullstack dev",
         "stacks": [ "javascript", "symfony", "bitbucket"]
@@ -112,8 +119,8 @@ export const projects = [
         "link": "https://hugueskoffi.vercel.app",
         "year": 2022,
         "src": "/folio-v1",
-        "image": "",
-        "imgs": [],
+        "cover" : folioV1Cover,
+        "imgs": [0,1,2,3,4,5,6,7],
         "client": "self",
         "role": "frontend dev & motion",
         "stacks": ["react", "js", "vercel"]

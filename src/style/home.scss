@@ -129,6 +129,8 @@ nav{
 
 
     .menu-links-container{
+        mix-blend-mode: difference;
+
         .menu-lists{
             display: flex;
             flex-direction: row;

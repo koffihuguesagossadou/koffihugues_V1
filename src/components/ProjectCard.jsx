@@ -1,7 +1,7 @@
 import { useRef, useMemo, useContext, useCallback, useEffect, useState } from "react"
 import { useFrame, useThree, useLoader } from "@react-three/fiber"
 import { TextureLoader } from "three"
-import { Image, Html } from '@react-three/drei';
+import { Image, Html, useTexture } from '@react-three/drei';
 import {  PageTransitionContext } from "../App";
 import { easing } from 'maath'
 import { useNavigate } from "react-router-dom"; 
@@ -14,19 +14,13 @@ import { projects } from "../data/projects";
 
 
 
-export function ProjectCard({name, src, index,slug}) {
+export function ProjectCard({name, texture, index,slug}) {
     
 
 
     const imageRef = useRef();
     const textRef = useRef();
     const lettersRef = useRef([])
-    const imageSrc = import.meta.env.DEV ? 'images/'  : 'https://dlfsookdovlgl.cloudfront.net'
-
-
-    const texture = useMemo(()=>{
-        return useLoader(TextureLoader,  imageSrc+src+'/main.webp')
-    })
 
     // const texture = useTexture('https://dlfsookdovlgl.cloudfront.net'+src+'/main.webp')
 
@@ -192,6 +186,10 @@ export function ProjectsCards({gap = 0.3, imageW = 2.5 }) {
     }, [$root]);
 
 
+    const imageSrc = import.meta.env.DEV ? 'images/'  : 'https://dlfsookdovlgl.cloudfront.net'
+    const textures = useTexture(projects.map((p)=> p.cover ))
+
+
     // display idem on scroll
     const displayItems = (item, index, active) => {
 
@@ -317,7 +315,7 @@ export function ProjectsCards({gap = 0.3, imageW = 2.5 }) {
                             <ProjectCard
                                 key={i}
                                 index = {i}
-                                src = {project.src}
+                                texture={textures[i]}
                                 name = { project.name}
                                 slug = { project.slug }
                             />
