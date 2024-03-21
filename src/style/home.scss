@@ -8,7 +8,6 @@
 
 nav{
 
-    mix-blend-mode: difference;
     pointer-events: none;
     padding: 0 $padding-4;
     height: 100px;
@@ -20,6 +19,7 @@ nav{
 
     @media screen and (max-width: 768px) {
         padding: 0.1em;
+        position: static;
     }
 
     // &.sticky {
@@ -31,6 +31,8 @@ nav{
 }
 
 .menu-wrapper{
+    mix-blend-mode: difference;
+
     width: 100%;
     justify-content: space-between;
     height: 100%;
@@ -237,6 +239,7 @@ nav{
 
     @media screen and (max-width: 768px) {
         padding: 0 $padding-5;
+        position: static;
     }
     
 
@@ -298,6 +301,70 @@ nav{
         min-height: inherit;
     }
 }
+
+
+/******************************************/ 
+/************** MOBILE HOME ******************/ 
+/******************************************/ 
+
+.home-mobile-w{
+    @include flexColumn;
+    margin-top: 100px;
+}
+
+
+.projects-discover-w{
+    margin-top: $margin-2;
+
+    &:first-child{
+        margin-top: 0;
+    }
+
+}
+
+.project-cover-w{
+    aspect-ratio: 678/1118;
+    width: 90vw;
+    height: auto;
+    margin: 0 auto;
+    @include flexRow;
+    .pc-img-w{
+        width: 100%;
+        height: 100%;
+        source{
+            width: 100%;
+            height: 100%;
+        }
+
+        img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+}
+
+.project-title-w{
+    @include flexRow;
+    margin-top: $margin-5;
+    justify-content: center;
+    h1{
+        font-family: $special-font;
+        font-size: $size-3;
+        text-transform: uppercase
+    }
+}
+
+.discover-text-w{
+    @include flexRow;
+    margin-top: $margin-6;
+    justify-content: center;
+    span{
+        color: rgba(171, 171, 171, 0.518);
+    }
+}
+
+/************** END MOBILE HOME *************/ 
 
 
 

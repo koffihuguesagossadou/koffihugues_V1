@@ -2,7 +2,7 @@ import { nanoid } from "nanoid";
 
 
 
-export function SevenItems({setImageLoaded,loadImgsRef,imgsRef,src, imgs}) {
+export function FolioItems({setImageLoaded,loadImgsRef,imgsRef,src, imgs}) {
     
     const imgsLength = imgs?.length
 

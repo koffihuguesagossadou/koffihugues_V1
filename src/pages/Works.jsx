@@ -11,7 +11,8 @@ import { nanoid } from 'nanoid'
 import { ScrollTrigger } from "gsap/all";
 import { projects } from "../data/projects";
 import gsap from 'gsap'
-import { SevenItems } from "../components/FolioPosition";
+import { FolioItems } from "../components/FolioPosition";
+import { useMediaQuery } from "usehooks-ts";
 gsap.registerPlugin(ScrollTrigger)
 
 
@@ -60,6 +61,10 @@ export default function Works() {
 
     // page title
     useDocumentTitle(`Koffi Hugues | ${projectName}`) 
+
+    // mobile screen
+    const mobile = useMediaQuery('(max-width:768px)')
+
 
     const imgs= [1,2,3,4,5,6,7]
     const timeline = gsap.timeline()
@@ -137,8 +142,9 @@ export default function Works() {
     useEffect(()=>{
 
 
-        // scroll line feature 
-        window.addEventListener('scroll', scrollLine)
+        // display scroll line feature when it's on desktop
+        
+        if (!mobile) window.addEventListener('scroll', scrollLine)
 
     
         // get project informations
@@ -280,7 +286,7 @@ export default function Works() {
                     {
                         getProjects
                         ? 
-                        <SevenItems 
+                        <FolioItems 
                             setImageLoaded={setImageLoaded}
                             imgsRef={imgsRef}
                             loadImgsRef={loadImgsRef}
